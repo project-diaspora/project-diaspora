@@ -4,7 +4,7 @@ Project Diaspora is a peer-to-peer payments network that allows a diaspora to se
 
 ## Download Links
 
-Project Diaspora is available as both and Android and ioS app.
+Project Diaspora is available as both and Android and iOS app.
 
 # Features
 
