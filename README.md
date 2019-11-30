@@ -15,8 +15,15 @@ You can
 2. Send money to your friends and family
 3. Pull up a list of your transactions 
 
-## Build Intructions
-TBD
+## Build Instructions
+
+```
+git clone https://github.com/projectdiaspora/project-diaspora.git
+cd project-diaspora/
+npm install
+./node_modules/nativescript/bin/tns run ios --emulator
+```
+
 
 ## Contribute
 
