@@ -1,12 +1,12 @@
-# JetBrains project files
-.idea
-
-# NPM
-node_modules
-
-# NativeScript application
-hooks
-platforms
-
-.update_backup/
+node_modules/**/*
+.expo/*
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+web-report/
 .DS_Store
