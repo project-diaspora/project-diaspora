@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Modal } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { withNavigation } from 'react-navigation';
+import Colors from '../constants/Colors';
 
 class SendModal extends Component {
   constructor(props) {
@@ -106,7 +107,7 @@ class SendModal extends Component {
         <View style={styles.keyboardRow}>
           <TouchableOpacity style={styles.keyboardButton} onPress={() => this.addDecimal()}><Text style={styles.keyboardText}>.</Text></TouchableOpacity>
           <TouchableOpacity style={styles.keyboardButton} onPress={() => this.add('0')}><Text style={styles.keyboardText}>0</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.keyboardButton} onPress={() => this.backspace()}><Ionicons style={{textAlign: 'center'}} name="ios-backspace" size={30} color="green" /></TouchableOpacity>
+          <TouchableOpacity style={styles.keyboardButton} onPress={() => this.backspace()}><Ionicons style={{textAlign: 'center'}} name="ios-backspace" size={30} color={Colors.green} /></TouchableOpacity>
         </View>
 
         <View style={styles.nextButtonContainer}>
@@ -142,7 +143,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   maxButtonText: {
-    color: 'green',
+    color: Colors.green,
     textTransform: 'uppercase',
     letterSpacing: 0.05,
     fontWeight: '600',
@@ -161,7 +162,7 @@ const styles = StyleSheet.create({
   },
   keyboardText: {
     textAlign: 'center',
-    color: 'green',
+    color: Colors.green,
     fontSize: 28,
     fontWeight: '600'
   },
@@ -170,7 +171,7 @@ const styles = StyleSheet.create({
     width: 30,
   },
   nextButton: {
-    backgroundColor: 'green',
+    backgroundColor: Colors.green,
     paddingVertical: 10,
     paddingHorizontal: 100,
     marginHorizontal: 20,
