@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Modal, Linking, Button } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { withNavigation } from 'react-navigation';
+import Colors from '../constants/Colors';
 
-class SelectAmountModal extends Component {
+class AddMoney extends Component {
   static navigationOptions = ({ navigation }) => {
 
     return {
@@ -39,7 +40,7 @@ class SelectAmountModal extends Component {
 
         <Text style={styles.paymentTypes}>Credit Card</Text>
         <TouchableOpacity style={styles.paymentButton} onPress={ () => Linking.openURL('https://pay.sendwyre.com') }>
-          <Ionicons name="ios-card" size={40} color="green" />
+          <Ionicons name="ios-card" size={40} color={Colors.green} />
           <Text style={styles.paymentText}>Pay with Apple Pay</Text>
         </TouchableOpacity>
 
@@ -63,7 +64,7 @@ class SelectAmountModal extends Component {
   }
 }
 
-export default withNavigation(SelectAmountModal);
+export default withNavigation(AddMoney);
 
 const styles = StyleSheet.create({
   modalContainer: {

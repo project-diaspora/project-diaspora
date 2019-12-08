@@ -7,7 +7,7 @@ export default {
   'ETH': {
     name: 'Ethereum',
     denomination: 'wei',
-    decimals: '8'
+    decimals: '18'
   },
   'DAI': {
     name: 'DAI',

@@ -4,13 +4,13 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
 } from 'react-native';
 
 import { TransactionList } from '../components/TransactionList';
 import WalletActionButtons from '../components/WalletActionButtons';
+import HeaderText from '../components/HeaderText';
 import { withNavigation } from 'react-navigation';
-
+import Colors from '../constants/Colors';
 
 class HomeScreen extends Component {
   render = () => {
@@ -26,7 +26,7 @@ class HomeScreen extends Component {
   
           <WalletActionButtons />
     
-          <Text style={styles.transactions}>Transactions</Text>
+          <HeaderText title="Transactions" />
   
           <TransactionList />
   
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   },
   walletActionButton: {
     width: 140,
-    backgroundColor: 'green',
+    backgroundColor: Colors.green,
     marginHorizontal: 10,
     paddingVertical: 10,
     borderRadius: 10,

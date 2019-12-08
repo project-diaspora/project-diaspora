@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import Colors from '../constants/Colors';
 
 class WalletActionButtons extends Component {
   constructor(props) {
@@ -9,7 +10,7 @@ class WalletActionButtons extends Component {
 
   render = () => {
     return (
-      <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
+      <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', marginBottom: 20 }}>
         <TouchableOpacity style={styles.walletActionButton} onPress = {() => { this.props.navigation.push('AddMoney') }}>
           <Text style={styles.walletActionText}>Add money</Text>
         </TouchableOpacity>
@@ -26,7 +27,7 @@ export default withNavigation(WalletActionButtons);
 const styles = StyleSheet.create({
   walletActionButton: {
     width: 140,
-    backgroundColor: 'green',
+    backgroundColor: Colors.green,
     marginHorizontal: 10,
     paddingVertical: 10,
     borderRadius: 10,

@@ -6,7 +6,9 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest --watchAll"
+    "dev": "ngrok http 3000 & json-server --watch db.json",
+    "test": "jest --watchAll",
+    "postinstall": "./node_modules/.bin/rn-nodeify --install buffer,stream,events --hack;"
   },
   "jest": {
     "preset": "jest-expo"
@@ -15,10 +17,14 @@
     "@expo/samples": "~3.0.3",
     "@expo/vector-icons": "^10.0.3",
     "@react-navigation/web": "^1.0.0-alpha.9",
+    "bip39": "^3.0.2",
+    "buffer": "^4.9.2",
+    "events": "^1.1.1",
     "expo": "^35.0.0",
     "expo-asset": "^7.0.0",
     "expo-constants": "^7.0.0",
     "expo-font": "^7.0.0",
+    "expo-secure-store": "~7.0.0",
     "expo-web-browser": "^7.0.0",
     "react": "16.8.3",
     "react-dom": "16.8.3",
@@ -27,11 +33,33 @@
     "react-native-qrcode-svg": "^6.0.1",
     "react-native-svg": "^9.13.3",
     "react-native-web": "^0.11.7",
-    "react-navigation": "^3.12.0"
+    "react-navigation": "^3.12.0",
+    "readable-stream": "^1.0.33",
+    "rn-nodeify": "^10.2.0",
+    "stream-browserify": "^1.0.0",
+    "expo-random": "~7.0.0"
   },
   "devDependencies": {
     "babel-preset-expo": "^7.0.0",
-    "jest-expo": "^35.0.0"
+    "jest-expo": "^35.0.0",
+    "json-server": "^0.15.1",
+    "ngrok": "^3.2.5"
   },
-  "private": true
+  "private": true,
+  "react-native": {
+    "_stream_transform": "readable-stream/transform",
+    "_stream_readable": "readable-stream/readable",
+    "_stream_writable": "readable-stream/writable",
+    "_stream_duplex": "readable-stream/duplex",
+    "_stream_passthrough": "readable-stream/passthrough",
+    "stream": "stream-browserify"
+  },
+  "browser": {
+    "_stream_transform": "readable-stream/transform",
+    "_stream_readable": "readable-stream/readable",
+    "_stream_writable": "readable-stream/writable",
+    "_stream_duplex": "readable-stream/duplex",
+    "_stream_passthrough": "readable-stream/passthrough",
+    "stream": "stream-browserify"
+  }
 }

@@ -1,14 +1,17 @@
 import React from 'react';
-import { Platform, Button, View, Text } from 'react-native';
+import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
-import SelectAmountModal from '../screens/SelectAmountModal'
+import Colors from '../constants/Colors';
+
+import Wallet from '../screens/Wallet';
+import AddMoney from '../screens/AddMoney'
 import SendModal from '../screens/SendModal'
 import AddCrypto from '../screens/addMoney/AddCrypto'
+
+import Settings from '../screens/Settings';
+import RecoveryPhrase from '../screens/settings/RecoveryPhrase'
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -17,7 +20,7 @@ const config = Platform.select({
 
 const HomeStack = createStackNavigator(
   {
-    Home: HomeScreen,
+    Home: Wallet,
   },
   config
 );
@@ -40,9 +43,12 @@ HomeStack.path = '';
 
 const SettingsStack = createStackNavigator(
   {
-    Settings: SettingsScreen,
-  },
-  config
+    Settings,
+    RecoveryPhrase,
+  }, {
+    mode: 'card',
+    initialRouteName: 'Settings',
+  }
 );
 
 SettingsStack.navigationOptions = {
@@ -57,9 +63,9 @@ SettingsStack.path = '';
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
   SettingsStack,
-}, {
+},{
   tabBarOptions: {
-    activeTintColor: 'green',
+    activeTintColor: Colors.green,
     style: {
       paddingHorizontal: 50
     }
@@ -70,7 +76,7 @@ tabNavigator.path = '';
 
 const AddMoneyStack = createStackNavigator(
   {
-    SelectAmountStack: SelectAmountModal,
+    SelectAmountStack: AddMoney,
     AddCrypto: AddCrypto,
   }, {
     mode: 'card',
