@@ -4,9 +4,9 @@ import {
   Text,
 } from 'react-native';
 
-export default function HeaderText(props) {
+export default function HeaderText({ title }) {
   return (
-    <Text style={styles.headerText}>{props.title}</Text>
+    <Text style={styles.headerText}>{ title }</Text>
   );
 }
 
