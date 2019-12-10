@@ -25,6 +25,9 @@
     ],
     "ios": {
       "supportsTablet": true
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "This app uses FaceID for authentication."
+      }
     }
   }
 }
