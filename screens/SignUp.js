@@ -24,7 +24,7 @@ class SignUp extends Component {
 
   // move this function out
   generateMnemonic = async () => {
-    const randomBytes = await Random.getRandomBytesAsync(32);
+    const randomBytes = await Random.getRandomBytesAsync(16);
     let b = Buffer.from(randomBytes, 'base64').toString('hex');
     return bip39.entropyToMnemonic(b);
   }
