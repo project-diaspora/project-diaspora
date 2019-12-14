@@ -46,7 +46,7 @@ class AddCrypto extends Component {
             />
         </View>
 
-        <Text style={styles.cryptoAddress}>{{ this.walletAddress }}</Text>
+        <Text style={styles.cryptoAddress}>{ this.walletAddress }</Text>
 
         <TouchableOpacity style={styles.copyButton}>
           <Text style={styles.copyText}>Copy</Text>

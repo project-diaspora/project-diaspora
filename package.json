@@ -26,7 +26,6 @@
     "expo-asset": "^7.0.0",
     "expo-constants": "~7.0.0",
     "expo-font": "^7.0.0",
-    "expo-local-authentication": "~7.0.0",
     "expo-random": "~7.0.0",
     "expo-secure-store": "~7.0.0",
     "expo-web-browser": "^7.0.0",

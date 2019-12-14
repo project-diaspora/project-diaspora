@@ -21,7 +21,6 @@ class SignUp extends Component {
   }
   
   signUp = async () => {
-    // const mnemonic = await this.generateMnemonic()
     const mnemonic = await Crypto.generateMnemonic()
     const authObject = {
       username: this.state.username,
@@ -30,12 +29,7 @@ class SignUp extends Component {
     const stringifiedAuthObject = JSON.stringify(authObject)
     SecureStore.setItemAsync('authObject', stringifiedAuthObject)
 
-    const ethAddress = await Crypto.getWalletAddress('ETH')
-    // AsyncStorage.setItemAsync('ETHAddress', ethAddress)
-    const btcAddress = await Crypto.getWalletAddress('BTC')
-    // AsyncStorage.setItemAsync('BTCAddress', btcAddresss)
-    
-    // share pubkeys with backend
+    // const ethAddress = await Crypto.getWalletAddress(mnemonic, 'ETH')
 
     this.props.navigation.push('Main')
   }
