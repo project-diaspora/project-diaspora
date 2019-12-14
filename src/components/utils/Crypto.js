@@ -1,7 +1,7 @@
 import * as Random from 'expo-random';
 const bip39 = require('bip39');
 import { ethers } from 'ethers';
-import Config from '../../config'
+import Config from '../../../config'
 import Currencies from '../../constants/Currencies'
 import * as SecureStore from 'expo-secure-store';
 

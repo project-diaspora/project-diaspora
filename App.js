@@ -1,60 +1,56 @@
-import { AppLoading } from 'expo';
-import { Asset } from 'expo-asset';
-import * as Font from 'expo-font';
-import React, { useState } from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+// Core
+import React from 'react'
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
+import {createBottomTabNavigator} from 'react-navigation-tabs';
 import './shim.js';
+import {setNavigator} from "./src/navigationRef";
 
-import AppNavigator from './navigation/AppNavigator';
+// Providers
+import {Provider as AuthProvider} from "./src/context/AuthContext";
 
-export default function App(props) {
-  const [isLoadingComplete, setLoadingComplete] = useState(false);
+// Screens
+import SignInScreen from "./src/screens/SignInScreen";
+import SignUpScreen from "./src/screens/SignUpScreen";
+import AuthLandingScreen from "./src/screens/AuthLanding";
+import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
+import HomeScreen from "./src/screens/HomeScreen";
+import SettingsScreen from "./src/screens/SettingsScreen";
+import RecoveryPhraseScreen from "./src/screens/RecoveryPhrase";
+import AddMoneyScreen from "./src/screens/AddMoneyScreen";
+import SendMoneyScreen from "./src/screens/SendMoneyScreenl";
+import AddCryptoScreen from "./src/screens/AddCryptoScreen";
 
-  if (!isLoadingComplete && !props.skipLoadingScreen) {
-    return (
-      <AppLoading
-        startAsync={loadResourcesAsync}
-        onError={handleLoadingError}
-        onFinish={() => handleFinishLoading(setLoadingComplete)}
-      />
-    );
-  } else {
-    return (
-      <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <AppNavigator />
-      </View>
-    );
-  }
-}
 
-async function loadResourcesAsync() {
-  await Promise.all([
-    Asset.loadAsync([
-      require('./assets/images/robot-dev.png'),
-      require('./assets/images/robot-prod.png'),
-    ]),
-    Font.loadAsync({
-      // This is the font that we are using for our tab bar
-      ...Ionicons.font,
+const switchNavigator = createSwitchNavigator({
+  ResolveAuth: ResolveAuthScreen,
+  loginFlow: createStackNavigator({
+    AuthLanding: AuthLandingScreen,
+    SignUp: SignUpScreen,
+    SignIn: SignInScreen
+  }),
+  mainFlow: createBottomTabNavigator({
+    homeFlow: createStackNavigator({
+      Home: HomeScreen,
+      AddMoney: AddMoneyScreen,
+      SendMoney: SendMoneyScreen,
+      AddCrypto: AddCryptoScreen
     }),
-  ]);
-}
-
-function handleLoadingError(error) {
-  // In this case, you might want to report the error to your error reporting
-  // service, for example Sentry
-  console.warn(error);
-}
-
-function handleFinishLoading(setLoadingComplete) {
-  setLoadingComplete(true);
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
+    settingsFlow: createStackNavigator({
+      Settings: SettingsScreen,
+      RecoveryPhrase: RecoveryPhraseScreen
+    })
+  })
 });
+
+const App = createAppContainer(switchNavigator)
+
+export default () => {
+  return (
+      <AuthProvider>
+        <App ref={(navigator) => {
+          setNavigator(navigator)
+        }}/>
+      </AuthProvider>
+  )
+}
