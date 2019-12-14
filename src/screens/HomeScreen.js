@@ -1,46 +1,31 @@
-import React, { Component } from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import React from 'react';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 
-import { TransactionList } from '../components/TransactionList';
+import {TransactionList} from '../components/TransactionList';
 import WalletActionButtons from '../components/WalletActionButtons';
 import HeaderText from '../components/HeaderText';
-import { withNavigation } from 'react-navigation';
 import Colors from '../constants/Colors';
 
-class HomeScreen extends Component {
-  render = () => {
-    return (
-      <View style={styles.container}>
-        <ScrollView
-          style={styles.container}
-          contentContainerStyle={styles.contentContainer}>
-  
-          <View style={styles.walletBalanceContainer}>
-            <Text style={styles.walletBalanceText}>$1,302.15</Text>
-          </View>
-  
-          <WalletActionButtons />
-    
-          <HeaderText title="Transactions" />
-  
-          <TransactionList />
-  
-        </ScrollView>
-      </View>
-    );  
-  }
-}
+const HomeScreen = () => {
+  return (
+    <View style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.contentContainer}>
+        <View style={styles.walletBalanceContainer}>
+          <Text style={styles.walletBalanceText}>$1,302.15</Text>
+        </View>
+        <WalletActionButtons/>
+        <HeaderText title="Transactions"/>
+        <TransactionList/>
+      </ScrollView>
+    </View>
+  );
+};
 
 HomeScreen.navigationOptions = {
   header: null,
 };
-
-export default withNavigation(HomeScreen);
 
 const styles = StyleSheet.create({
   container: {
@@ -85,3 +70,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   }
 });
+
+export default HomeScreen;
+
