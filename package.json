@@ -8,6 +8,7 @@
     "eject": "expo eject",
     "dev": "ngrok http 3000 & json-server --watch db.json",
     "test": "jest --watchAll",
+    "lint": "eslint .",
     "postinstall": "./node_modules/.bin/rn-nodeify --install buffer,stream,events --hack;"
   },
   "jest": {
