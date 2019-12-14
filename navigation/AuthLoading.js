@@ -1,7 +1,7 @@
 import React from 'react';
 import { Platform, Button, Modal, Image, TouchableHighlight, View, Text, StyleSheet } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
-import * as LocalAuthentication from 'expo-local-authentication';
+// import * as LocalAuthentication from 'expo-local-authentication';
 import Constants from 'expo-constants';
 
 

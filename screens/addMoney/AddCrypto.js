@@ -8,6 +8,18 @@ import Currencies from '../../constants/Currencies'
 class AddCrypto extends Component {
   constructor(props) {
     super(props);
+    state = {
+      crypto: props.navigation.getParam('crypto'),
+      walletAddress: ''
+    };
+    this._getWalletAddressFromStorage();
+  }
+
+  _getWalletAddressFromStorage = async () => {
+    const addressFromStorage = await AsyncStorage.getItemAsync(`${crypto}Address`);
+    this.setState({
+      walletAddress: addressFromStorage
+    })
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -22,20 +34,19 @@ class AddCrypto extends Component {
   };
 
   render = () => {  
-    const crypto = this.props.navigation.getParam('crypto').toUpperCase()
     return (
       <View style={styles.modalContainer}>
 
-        <Text style={styles.cryptoHeader}>{ Currencies[crypto].name } ({ crypto })</Text>
+        <Text style={styles.cryptoHeader}>{ Currencies[this.crypto].name } ({ this.crypto })</Text>
 
         <View style={styles.qrCode}>
           <QRCode
-            value='1andreas3batLhQa2FawWjeyjCqyBzypd'
+            value={this.walletAddress}
             size={200}
             />
         </View>
 
-        <Text style={styles.cryptoAddress}>1andreas3batLhQa2FawWjeyjCqyBzypd</Text>
+        <Text style={styles.cryptoAddress}>{{ this.walletAddress }}</Text>
 
         <TouchableOpacity style={styles.copyButton}>
           <Text style={styles.copyText}>Copy</Text>
@@ -67,7 +78,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#edf2f7',
     paddingHorizontal: 10,
-    paddingVertical: 8,
+    paddingVertical: 10,
     borderRadius: 5,
     marginHorizontal: 50,
     marginBottom: 15,

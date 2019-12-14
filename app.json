@@ -1,13 +1,12 @@
 {
   "expo": {
-    "name": "rnfun",
-    "slug": "rnfun",
+    "name": "Project Diaspora",
+    "slug": "project-diaspora",
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "platforms": [
       "ios",
-      "android",
-      "web"
+      "android"
     ],
     "version": "1.0.0",
     "orientation": "portrait",
@@ -24,10 +23,14 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "org.projectdiaspora.projectdiaspora",
+      "supportsTablet": true,
       "infoPlist": {
         "NSFaceIDUsageDescription": "This app uses FaceID for authentication."
       }
+    },
+    "android": {
+      "package": "org.projectdiaspora.projectdiaspora"
     }
   }
 }

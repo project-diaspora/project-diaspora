@@ -27,32 +27,28 @@ class AddMoney extends Component {
   };
 
   render = () => {
-    addEthereum = () => {
-      console.log('ethereum')
-    }
-  
-    addDai = () => {
-      console.log('dai')
-    }
-  
     return (
       <View style={styles.modalContainer}>
 
         <Text style={styles.paymentTypes}>Credit Card</Text>
+        
         <TouchableOpacity style={styles.paymentButton} onPress={ () => Linking.openURL('https://pay.sendwyre.com') }>
-          <Ionicons name="ios-card" size={40} color={Colors.green} />
+          <Ionicons name="ios-card" size={35} color={Colors.green} />
           <Text style={styles.paymentText}>Pay with Apple Pay</Text>
         </TouchableOpacity>
 
         <Text style={styles.paymentTypes}>Digital Currencies</Text>
+
         <TouchableOpacity style={styles.paymentButton} onPress = { () => { this.props.navigation.navigate('AddCrypto', { crypto: 'BTC' }) }}>
-        <Image source={require('../assets/images/btc.png')} style={styles.paymentImage} />
+          <Image source={require('../assets/images/btc.png')} style={styles.paymentImage} />
           <Text style={styles.paymentText}>Add Bitcoin</Text>
         </TouchableOpacity>
+
         <TouchableOpacity style={styles.paymentButton} onPress = { () => { this.props.navigation.navigate('AddCrypto', { crypto: 'ETH' }) }}>
-        <Image source={require('../assets/images/eth.png')} style={styles.paymentImage} />
+          <Image source={require('../assets/images/eth.png')} style={styles.paymentImage} />
           <Text style={styles.paymentText}>Add Ethereum</Text>
         </TouchableOpacity>
+
         <TouchableOpacity style={styles.paymentButton} onPress = { () => { this.props.navigation.navigate('AddCrypto', { crypto: 'DAI' }) }}>
           <Image source={require('../assets/images/dai.png')} style={styles.paymentImage} />
           <Text style={styles.paymentText}>Add DAI (US dollar)</Text>
