@@ -11,10 +11,10 @@ const generateMnemonic = async () => {
   return bip39.entropyToMnemonic(b);
 };
 
-const getWalletAddress = (currency) => {
+const getWalletAddress = async (currency) => {
   switch (currency) {
     case 'ETH':
-      const ethWallet = getEthersWallet()
+      const ethWallet = await getEthersWallet()
       return ethWallet.address
   }
 };
@@ -26,10 +26,22 @@ const getStoredMnemonic = async () => {
 }
 
 const getEthersWallet = async () => {
-  const provider = new ethers.providers.InfuraProvider('kovan', APIKEY);
+  const provider = new ethers.providers.InfuraProvider('kovan', 'cbbe19ff896840748997c040127968ff');
   const mnemonic = await getStoredMnemonic()
   const wallet = new ethers.Wallet.fromMnemonic(mnemonic)
   return wallet.connect(provider)
+}
+
+const getBalance = async () => {
+  const provider = new ethers.providers.InfuraProvider('kovan', 'cbbe19ff896840748997c040127968ff');
+  const walletAddress = await getWalletAddress('ETH')
+  const DAIContract = Config['DEV'].DAI;
+  // const ethBalanceInWei = await provider.getBalance(walletAddress)
+  // const ethBalanceInEth = ethers.utils.formatEther(ethBalanceInWei)
+  const contractDai = new ethers.Contract(DAIContract.contractAddress, DAIContract.contractAbi, provider)
+  const daiBalanceinWei = await contractDai.balanceOf(walletAddress)
+  const daiBalanceInDai = Number(ethers.utils.formatEther(daiBalanceinWei)).toFixed(2)
+  return daiBalanceInDai
 }
 
 const signDAITransaction = async (amountInDai, toAddress) => {
@@ -48,4 +60,4 @@ const signDAITransaction = async (amountInDai, toAddress) => {
   return tx
 }
 
-export default { generateMnemonic, getWalletAddress, getStoredMnemonic, getEthersWallet, signDAITransaction }
+export default { generateMnemonic, getWalletAddress, getStoredMnemonic, getEthersWallet, getBalance, signDAITransaction }

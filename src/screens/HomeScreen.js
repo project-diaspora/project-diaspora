@@ -1,19 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 
 import {TransactionList} from '../components/TransactionList';
 import WalletActionButtons from '../components/WalletActionButtons';
 import HeaderText from '../components/HeaderText';
 import Colors from '../constants/Colors';
+import Crypto from '../components/utils/Crypto'
 
 const HomeScreen = () => {
+  const [balance, setBalance] = useState('')
+
+  useEffect(() => {
+    (async () => {
+      const ethBalance = await Crypto.getBalance();
+      setBalance(ethBalance)
+    })();
+  }, []);
+
   return (
     <View style={styles.container}>
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}>
         <View style={styles.walletBalanceContainer}>
-          <Text style={styles.walletBalanceText}>$1,302.15</Text>
+          <Text style={styles.walletBalanceText}>${balance}</Text>
         </View>
         <WalletActionButtons/>
         <HeaderText title="Transactions"/>

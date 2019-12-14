@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, Image, TouchableOpacity, Modal} from 'react-nati
 import {Ionicons} from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 
-const SendMoneyScreen = () => {
+const SelectAmountScreen = ({navigation}) => {
   const [integers, setIntegers] = useState('0');
   const [decimals, setDecimals] = useState(null);
 
@@ -47,11 +47,6 @@ const SendMoneyScreen = () => {
       }
     }
   };
-
-  const next = () => {
-    console.log('next')
-  };
-
 
   return (
     <View style={styles.modalContainer}>
@@ -98,7 +93,7 @@ const SendMoneyScreen = () => {
       </View>
 
       <View style={styles.nextButtonContainer}>
-        <TouchableOpacity style={styles.nextButton} onPress={() => next()}><Text
+        <TouchableOpacity style={styles.nextButton} onPress={() => navigation.navigate('SelectContact', {amount: integers.concat(decimals)})}><Text
           style={styles.nextButtonText}>Next</Text></TouchableOpacity>
       </View>
     </View>
@@ -107,7 +102,7 @@ const SendMoneyScreen = () => {
 };
 
 
-SendMoneyScreen.navigationOptions = ({navigation}) => {
+SelectAmountScreen.navigationOptions = ({navigation}) => {
   return {
     title: 'Select Amount',
     headerRight: (
@@ -168,7 +163,7 @@ const styles = StyleSheet.create({
   keyboardButton: {
     justifyContent: 'center',
     width: '33%',
-    height: 100,
+    height: 70,
   },
   keyboardText: {
     textAlign: 'center',
@@ -205,4 +200,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SendMoneyScreen;
+export default SelectAmountScreen;

@@ -38,7 +38,8 @@ const clearErrorMessage = dispatch => () => {
 
 const signup = (dispatch) => async ({username: username}) => {
   try {
-    const mnemonic = await Crypto.generateMnemonic()
+    // const mnemonic = await Crypto.generateMnemonic()
+    const mnemonic = 'belt year volcano since fire code vast gap usual market power save'
     const authObject = JSON.stringify({
       username: username,
       mnemonic
