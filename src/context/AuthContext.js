@@ -65,8 +65,9 @@ const signin = (dispatch) => async ({email: email, password: password}) => {
 }
 
 
-const signout = (dispatch) => async () => {
+const signout = () => async () => {
   try {
+    console.log('signout')
     await SecureStore.deleteItemAsync('authObject')
     navigate('loginFlow')
   } catch (err) {

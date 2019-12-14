@@ -17,12 +17,7 @@ const AddMoneyScreen = ({navigation}) => {
 
       <Text style={styles.paymentTypes}>Digital Currencies</Text>
 
-      <TouchableOpacity style={styles.paymentButton} onPress={() => {
-        navigation.navigate('AddCrypto', {crypto: 'BTC'})
-      }}>
-        <Image source={require('../../assets/images/btc.png')} style={styles.paymentImage}/>
-        <Text style={styles.paymentText}>Add Bitcoin</Text>
-      </TouchableOpacity>
+      
 
       <TouchableOpacity style={styles.paymentButton} onPress={() => {
         navigation.navigate('AddCrypto', {crypto: 'ETH'})

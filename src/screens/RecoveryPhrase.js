@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import * as SecureStore from 'expo-secure-store';
+import Crypto from '../components/utils/Crypto'
 
 const RecoveryPhraseScreen = () => {
 
@@ -12,10 +12,11 @@ const RecoveryPhraseScreen = () => {
 
 
   const getMnemonicfromSecureStorage = async () => {
-    const authObjectString = await SecureStore.getItemAsync('authObject');
-    const authObject = JSON.parse(authObjectString);
-    setMnemonic(authObject.mnemonic)
-  };
+    const mnemonic = await Crypto.getStoredMnemonic()
+    setMnemonic(
+      mnemonic
+    )
+  }
 
   return (
     <View style={styles.container}>

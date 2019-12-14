@@ -1,13 +1,15 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Switch} from 'react-native';
 import Colors from '../constants/Colors';
 import {Ionicons} from '@expo/vector-icons';
+import {Context as AuthContext} from "../context/AuthContext";
 
 const USER_IMG = 'https://images.unsplash.com/photo-1484862149534-102beb3bd0ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&w=512&h=512&facepad=4'
 
 const SettingsScreen = ({navigation}) => {
 
-  const [privacy, setPrivacy] = useState(false)
+  const {state, signout, clearErrorMessage} = useContext(AuthContext);
+  const [privacy, setPrivacy] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -66,7 +68,7 @@ const SettingsScreen = ({navigation}) => {
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.option, styles.optionView]} onPress={() => {
-          this.signout()
+          signout()
         }}>
           <Text style={styles.logout}>Sign Out</Text>
         </TouchableOpacity>
