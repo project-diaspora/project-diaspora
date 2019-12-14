@@ -11,8 +11,8 @@ export default {
   },
   'DAI': {
     name: 'DAI',
-    denomination: 'cents',
-    decimals: '2'
+    denomination: 'wei',
+    decimals: '18',
   },
   'USD': {
     name: 'US dollar',
