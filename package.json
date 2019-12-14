@@ -19,11 +19,13 @@
     "@react-navigation/web": "^1.0.0-alpha.9",
     "bip39": "^3.0.2",
     "buffer": "^4.9.2",
+    "ethers": "^4.0.40",
     "events": "^1.1.1",
     "expo": "^35.0.0",
     "expo-asset": "^7.0.0",
     "expo-constants": "^7.0.0",
     "expo-font": "^7.0.0",
+    "expo-random": "~7.0.0",
     "expo-secure-store": "~7.0.0",
     "expo-web-browser": "^7.0.0",
     "react": "16.8.3",
@@ -36,11 +38,12 @@
     "react-navigation": "^3.12.0",
     "readable-stream": "^1.0.33",
     "rn-nodeify": "^10.2.0",
-    "stream-browserify": "^1.0.0",
-    "expo-random": "~7.0.0"
+    "stream-browserify": "^1.0.0"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.3",
     "babel-preset-expo": "^7.0.0",
+    "eslint": "^6.7.2",
     "jest-expo": "^35.0.0",
     "json-server": "^0.15.1",
     "ngrok": "^3.2.5"
