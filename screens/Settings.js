@@ -5,18 +5,22 @@ import {
   View,
   Image,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  Switch
 } from 'react-native';
 import Colors from '../constants/Colors';
 import { withNavigation } from 'react-navigation';
 import * as SecureStore from 'expo-secure-store';
 import { Ionicons } from '@expo/vector-icons';
 
-const userImg = 'https://images.unsplash.com/photo-1484862149534-102beb3bd0ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&w=64&h=64&facepad=4'
+const userImg = 'https://images.unsplash.com/photo-1484862149534-102beb3bd0ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&w=512&h=512&facepad=4'
 
 class Settings extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      value: true
+    }
   }
 
   signout = async () => {
@@ -49,7 +53,17 @@ class Settings extends Component {
               <Ionicons name="ios-arrow-forward" size={20} color={Colors.grey} />
             </View>
           </TouchableOpacity>
-  
+          <View style={[styles.option, styles.optionView]}>
+            <Text style={{fontSize: 16}}>Allow others to find me</Text>
+              <Switch
+                style={styles.switch}
+                value={this.state.value}
+                trackColor= {Colors.green}
+                onValueChange={v => {
+                  this.setState({value: v})
+                }}
+              />
+          </View>
           <Text style={styles.subHeader}>Other</Text>
           <TouchableOpacity>
             <View style={[styles.option, styles.optionView, styles.optionTop]}>
@@ -156,5 +170,8 @@ const styles = StyleSheet.create({
   logout: {
     color: Colors.red,
     fontSize: 16,
+  },
+  switch: {
+    marginVertical: -5
   }
 })

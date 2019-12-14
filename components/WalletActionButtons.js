@@ -26,10 +26,10 @@ export default withNavigation(WalletActionButtons);
 
 const styles = StyleSheet.create({
   walletActionButton: {
-    width: 140,
+    width: 160,
     backgroundColor: Colors.green,
     marginHorizontal: 10,
-    paddingVertical: 10,
+    paddingVertical: 12,
     borderRadius: 10,
   },
   walletActionText: {
