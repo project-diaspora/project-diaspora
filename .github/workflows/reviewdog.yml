@@ -9,8 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: eslint
-        run: |
-          reviewdog -reporter=github-pr-check -runners=eslint
+        uses: reviewdog/action-eslint@v1
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review # Change reporter.
