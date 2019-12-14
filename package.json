@@ -18,7 +18,6 @@
     "@expo/vector-icons": "^10.0.3",
     "@react-navigation/web": "^1.0.0-alpha.9",
     "bip39": "^3.0.2",
-    "bitcoinjs-lib": "^5.1.6",
     "buffer": "^4.9.2",
     "ethers": "^4.0.40",
     "events": "^1.1.1",
