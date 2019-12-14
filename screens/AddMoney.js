@@ -39,11 +39,6 @@ class AddMoney extends Component {
 
         <Text style={styles.paymentTypes}>Digital Currencies</Text>
 
-        <TouchableOpacity style={styles.paymentButton} onPress = { () => { this.props.navigation.navigate('AddCrypto', { crypto: 'BTC' }) }}>
-          <Image source={require('../assets/images/btc.png')} style={styles.paymentImage} />
-          <Text style={styles.paymentText}>Add Bitcoin</Text>
-        </TouchableOpacity>
-
         <TouchableOpacity style={styles.paymentButton} onPress = { () => { this.props.navigation.navigate('AddCrypto', { crypto: 'ETH' }) }}>
           <Image source={require('../assets/images/eth.png')} style={styles.paymentImage} />
           <Text style={styles.paymentText}>Add Ethereum</Text>

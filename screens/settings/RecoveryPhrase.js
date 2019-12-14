@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Platform, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 
+import Crypto from '../../components/utils/Crypto'
+
 export default class RecoveryPhrase extends Component {
   constructor(props) {
     super(props);
@@ -23,10 +25,9 @@ export default class RecoveryPhrase extends Component {
   };
 
   _getMnemonicfromSecureStorage = async () => {
-    const authObjectString = await SecureStore.getItemAsync('authObject');
-    const authObject = JSON.parse(authObjectString);
+    const mnemonic = await Crypto.getStoredMnemonic()
     this.setState({
-      mnemonic: authObject.mnemonic
+      mnemonic
     })
   }
 
