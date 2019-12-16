@@ -1,12 +1,24 @@
-import React from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import React, { useState, useContext, useEffect } from 'react';
+import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import {TransactionList} from '../components/TransactionList';
 import WalletActionButtons from '../components/WalletActionButtons';
 import HeaderText from '../components/HeaderText';
 import Colors from '../constants/Colors';
+import Crypto from '../components/utils/Crypto'
+import { Context as AuthContext } from "../context/AuthContext";
 
 const HomeScreen = () => {
+  const [balance, setBalance] = useState('')
+  const { state } = useContext(AuthContext);
+
+  useEffect(() => {
+    (async () => {
+      const ethBalance = await Crypto.getBalance();
+      setBalance(ethBalance)
+    })();
+  }, []);
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -18,13 +30,10 @@ const HomeScreen = () => {
         <WalletActionButtons/>
         <HeaderText title="Transactions"/>
         <TransactionList/>
+        <Text>{}</Text>
       </ScrollView>
     </View>
   );
-};
-
-HomeScreen.navigationOptions = {
-  header: null,
 };
 
 const styles = StyleSheet.create({

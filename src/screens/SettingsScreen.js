@@ -1,8 +1,9 @@
 import React, {useState, useContext} from 'react';
-import {StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Switch} from 'react-native';
+import {Platform, StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Switch} from 'react-native';
 import Colors from '../constants/Colors';
 import {Ionicons} from '@expo/vector-icons';
 import {Context as AuthContext} from "../context/AuthContext";
+import TabBarIcon from '../components/TabBarIcon';
 
 const USER_IMG = 'https://images.unsplash.com/photo-1484862149534-102beb3bd0ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&w=512&h=512&facepad=4'
 
@@ -85,7 +86,6 @@ SettingsScreen.navigationOptions = {
     borderBottomWidth: 0,
     backgroundColor: Colors.green,
   },
-  headerBackTitle: 'Settings',
 };
 
 const styles = StyleSheet.create({

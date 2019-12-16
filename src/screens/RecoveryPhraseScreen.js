@@ -3,7 +3,6 @@ import {View, Text, StyleSheet} from 'react-native';
 import Crypto from '../components/utils/Crypto'
 
 const RecoveryPhraseScreen = () => {
-
   const [mnemonic, setMnemonic] = useState('');
 
   useEffect(() => {
