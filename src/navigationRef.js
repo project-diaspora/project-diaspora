@@ -13,4 +13,4 @@ export const navigate = (routeName, params) => {
       params: params
     })
   )
-}
+};

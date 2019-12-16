@@ -8,6 +8,7 @@
     "eject": "expo eject",
     "dev": "ngrok http 3000 & json-server --watch db.json",
     "test": "jest --watchAll",
+    "lint": "eslint .",
     "postinstall": "./node_modules/.bin/rn-nodeify --install buffer,stream,events --hack;"
   },
   "jest": {
@@ -49,6 +50,10 @@
     "babel-eslint": "^10.0.3",
     "babel-preset-expo": "^7.0.0",
     "eslint": "^6.7.2",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.17.0",
     "jest-expo": "^35.0.0",
     "json-server": "^0.15.1",
     "ngrok": "^3.2.5"
