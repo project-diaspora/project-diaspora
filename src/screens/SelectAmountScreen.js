@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, Image, TouchableOpacity, Modal} from 'react-nati
 import {Ionicons} from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 
-const SendMoneyScreen = () => {
+const SelectAmountScreen = ({navigation}) => {
   const [integers, setIntegers] = useState('0');
   const [decimals, setDecimals] = useState(null);
 
@@ -48,11 +48,6 @@ const SendMoneyScreen = () => {
     }
   };
 
-  const next = () => {
-    console.log('next')
-  };
-
-
   return (
     <View style={styles.modalContainer}>
       <View style={styles.amountContainer}>
@@ -64,41 +59,43 @@ const SendMoneyScreen = () => {
         <TouchableOpacity style={styles.maxButton}><Text style={styles.maxButtonText}>Max</Text></TouchableOpacity>
       </View>
 
-      <View style={styles.keyboardRow}>
-        <TouchableOpacity style={styles.keyboardButton} onPress={() => add('1')}><Text
-          style={styles.keyboardText}>1</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.keyboardButton} onPress={() => add('2')}><Text
-          style={styles.keyboardText}>2</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.keyboardButton} onPress={() => add('3')}><Text
-          style={styles.keyboardText}>3</Text></TouchableOpacity>
-      </View>
-      <View style={styles.keyboardRow}>
-        <TouchableOpacity style={styles.keyboardButton} onPress={() => add('4')}><Text
-          style={styles.keyboardText}>4</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.keyboardButton} onPress={() => add('5')}><Text
-          style={styles.keyboardText}>5</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.keyboardButton} onPress={() => add('6')}><Text
-          style={styles.keyboardText}>6</Text></TouchableOpacity>
-      </View>
-      <View style={styles.keyboardRow}>
-        <TouchableOpacity style={styles.keyboardButton} onPress={() => add('7')}><Text
-          style={styles.keyboardText}>7</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.keyboardButton} onPress={() => add('8')}><Text
-          style={styles.keyboardText}>8</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.keyboardButton} onPress={() => add('9')}><Text
-          style={styles.keyboardText}>9</Text></TouchableOpacity>
-      </View>
-      <View style={styles.keyboardRow}>
-        <TouchableOpacity style={styles.keyboardButton} onPress={() => addDecimal()}><Text
-          style={styles.keyboardText}>.</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.keyboardButton} onPress={() => add('0')}><Text
-          style={styles.keyboardText}>0</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.keyboardButton} onPress={() => backspace()}><Ionicons
-          style={{textAlign: 'center'}} name="ios-backspace" size={30} color={Colors.green}/></TouchableOpacity>
+      <View style={styles.keyboard}>
+        <View style={styles.keyboardRow}>
+          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('1')}><Text
+            style={styles.keyboardText}>1</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('2')}><Text
+            style={styles.keyboardText}>2</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('3')}><Text
+            style={styles.keyboardText}>3</Text></TouchableOpacity>
+        </View>
+        <View style={styles.keyboardRow}>
+          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('4')}><Text
+            style={styles.keyboardText}>4</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('5')}><Text
+            style={styles.keyboardText}>5</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('6')}><Text
+            style={styles.keyboardText}>6</Text></TouchableOpacity>
+        </View>
+        <View style={styles.keyboardRow}>
+          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('7')}><Text
+            style={styles.keyboardText}>7</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('8')}><Text
+            style={styles.keyboardText}>8</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('9')}><Text
+            style={styles.keyboardText}>9</Text></TouchableOpacity>
+        </View>
+        <View style={styles.keyboardRow}>
+          <TouchableOpacity style={styles.keyboardButton} onPress={() => addDecimal()}><Text
+            style={styles.keyboardText}>.</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('0')}><Text
+            style={styles.keyboardText}>0</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.keyboardButton} onPress={() => backspace()}><Ionicons
+            style={{ textAlign: 'center' }} name="ios-backspace" size={30} color={Colors.green} /></TouchableOpacity>
+        </View>
       </View>
 
       <View style={styles.nextButtonContainer}>
-        <TouchableOpacity style={styles.nextButton} onPress={() => next()}><Text
+        <TouchableOpacity style={styles.nextButton} onPress={() => navigation.navigate('SelectContact', {amount: integers.concat(decimals)})}><Text
           style={styles.nextButtonText}>Next</Text></TouchableOpacity>
       </View>
     </View>
@@ -107,7 +104,7 @@ const SendMoneyScreen = () => {
 };
 
 
-SendMoneyScreen.navigationOptions = ({navigation}) => {
+SelectAmountScreen.navigationOptions = ({navigation}) => {
   return {
     title: 'Select Amount',
     headerRight: (
@@ -165,10 +162,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly'
   },
+  keyboard: {
+    flex: 1,
+    justifyContent: 'space-evenly'
+  },
   keyboardButton: {
     justifyContent: 'center',
+    alignItems: 'center',
     width: '33%',
-    height: 100,
+    height: '25%',
   },
   keyboardText: {
     textAlign: 'center',
@@ -205,4 +207,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SendMoneyScreen;
+export default SelectAmountScreen;
