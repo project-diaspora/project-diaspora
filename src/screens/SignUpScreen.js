@@ -14,7 +14,7 @@ const SignUpScreen = ({navigation}) => {
       <Text style={styles.header}>Enter a username</Text>
       <TextInput
         style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-        onChangeText={username => setUsername(username)}
+        onChangeText={usernameUpdate => setUsername(usernameUpdate)}
       />
       <TouchableOpacity style={[styles.button, styles.signUpButton]} onPress={() => {
         signup(username)
