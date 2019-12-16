@@ -21,7 +21,7 @@ You can
 git clone https://github.com/projectdiaspora/project-diaspora.git
 cd project-diaspora/
 npm install
-./node_modules/nativescript/bin/tns run ios --emulator
+expo start
 ```
 
 
