@@ -48,6 +48,7 @@ const signup = (dispatch) => async ({username: username}) => {
     dispatch({type: 'signin', payload: {username: username, address: mnemonic}})
     navigate('mainFlow')
   } catch (err) {
+    console.log(err)
     dispatch({type: 'add_error', payload: 'Something went wrong with sign up'})
   }
 }

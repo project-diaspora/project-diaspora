@@ -47,9 +47,18 @@ const switchNavigator = createSwitchNavigator({
         mode: 'modal',
         headerMode: 'none'
     }),
-    settingsFlow: createStackNavigator({
-      Settings: SettingsScreen,
-      RecoveryPhrase: RecoveryPhraseScreen
+    sendMoneyFlow: createStackNavigator({
+      SelectAmount: SelectAmountScreen,
+      SelectContact: SelectContactScreen,
+      ConfirmTransaction: ConfirmTransactionScreen
+    }, {
+      mode: 'card',
+    }),
+    AddMoneyFlow: createStackNavigator({
+      AddMoney: AddMoneyScreen,
+      AddCrypto: AddCryptoScreen
+    }, {
+      mode: 'card',
     })
   })
 });
