@@ -8,28 +8,50 @@ import * as SecureStore from 'expo-secure-store';
 const generateMnemonic = async () => {
   const randomBytes = await Random.getRandomBytesAsync(16);
   let b = Buffer.from(randomBytes, 'base64').toString('hex');
-  return bip39.entropyToMnemonic(b);
+  const mnemonic = bip39.entropyToMnemonic(b);
+  return await SecureStore.setItemAsync('mnemonic', mnemonic)
 };
 
-const getWalletAddress = (currency) => {
-  switch (currency) {
-    case 'ETH':
-      const ethWallet = getEthersWallet()
-      return ethWallet.address
+const _deriveWalletAddress = async () => {
+  let mnemonic = await SecureStore.getItemAsync('mnemonic')
+  const wallet = new ethers.Wallet.fromMnemonic(mnemonic)
+  mnemonic = null
+  await SecureStore.setItemAsync('walletAddress', wallet.address)
+  return wallet.address
+}
+
+const getWalletAddress = async () => {
+  let walletAddress = await SecureStore.getItemAsync('walletAddress')
+
+  if (!walletAddress) {
+    walletAddress = await _deriveWalletAddress()
   }
-};
+
+  return walletAddress
+}
 
 const getStoredMnemonic = async () => {
-  const authObjectString = await SecureStore.getItemAsync('authObject')
-  const authObject = JSON.parse(authObjectString)
-  return authObject.mnemonic
+  return await SecureStore.getItemAsync('mnemonic')
 }
 
 const getEthersWallet = async () => {
-  const provider = new ethers.providers.InfuraProvider('kovan', APIKEY);
-  const mnemonic = await getStoredMnemonic()
+  const provider = new ethers.providers.InfuraProvider('kovan', 'cbbe19ff896840748997c040127968ff');
+  let mnemonic = await SecureStore.getItemAsync('mnemonic')
   const wallet = new ethers.Wallet.fromMnemonic(mnemonic)
+  mnemonic = null
   return wallet.connect(provider)
+}
+
+const getBalance = async () => {
+  const provider = new ethers.providers.InfuraProvider('kovan', 'cbbe19ff896840748997c040127968ff');
+  const walletAddress = await getWalletAddress()
+  const DAIContract = Config['DEV'].DAI;
+  // const ethBalanceInWei = await provider.getBalance(walletAddress)
+  // const ethBalanceInEth = ethers.utils.formatEther(ethBalanceInWei)
+  const contractDai = new ethers.Contract(DAIContract.contractAddress, DAIContract.contractAbi, provider)
+  const daiBalanceinWei = await contractDai.balanceOf(walletAddress)
+  const daiBalanceInDai = Number(ethers.utils.formatEther(daiBalanceinWei)).toFixed(2)
+  return daiBalanceInDai
 }
 
 const signDAITransaction = async (amountInDai, toAddress) => {
@@ -48,4 +70,4 @@ const signDAITransaction = async (amountInDai, toAddress) => {
   return tx
 }
 
-export default { generateMnemonic, getWalletAddress, getStoredMnemonic, getEthersWallet, signDAITransaction }
+export default { generateMnemonic, getWalletAddress, getEthersWallet, getStoredMnemonic, getBalance, signDAITransaction }

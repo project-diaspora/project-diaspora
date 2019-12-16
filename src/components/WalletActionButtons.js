@@ -13,7 +13,7 @@ const WalletActionButtons = ({navigation}) => {
         <Text style={styles.walletActionText}>Add money</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.walletActionButton} onPress={() => {
-        navigation.navigate('SendMoney')
+        navigation.navigate('sendMoneyFlow')
       }}>
         <Text style={styles.walletActionText}>Send</Text>
       </TouchableOpacity>

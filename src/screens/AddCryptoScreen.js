@@ -1,49 +1,43 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import React, { useState, useContext, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import Currencies from '../constants/Currencies'
-import * as AsyncStorage from "expo-secure-store";
+import { Context as AuthContext } from "../context/AuthContext";
 
-const AddCryptoScreen = ({navigation}) => {
-
-  const [crypto, setCrypto] = useState('');
-  const [walletAddress, setWalletAddress] = useState('');
+const AddCryptoScreen = ({ navigation }) => {
+  const [crypto, setCrypto] = useState(null);
+  const { state } = useContext(AuthContext);
+  console.log(crypto)
 
   useEffect(() => {
-    getWalletAddressFromStorage().catch(console.log);
-    getCrypto();
+    (async () => {
+      await getCrypto();
+    })();
   }, []);
 
-
-  const getCrypto = () => {
-    console.log(navigation.getParam('crypto'))
-    setCrypto(navigation.getParam('crypto'))
+  const getCrypto = async () => {
+    await setCrypto(navigation.getParam('crypto'))
   };
-
-  const getWalletAddressFromStorage = async () => {
-    const addressFromStorage = await AsyncStorage.getItemAsync(`${crypto}Address`);
-    setWalletAddress(addressFromStorage)
-  };
-
 
   return (
     <View style={styles.modalContainer}>
-      {/*<Text style={styles.cryptoHeader}>{Currencies[crypto].name} ({crypto})</Text>*/}
-      <Text style={styles.cryptoHeader}>{Currencies[crypto]} ({crypto})</Text>
-      <View style={styles.qrCode}>
-        <QRCode
-          value={walletAddress}
-          size={200}
-        />
-      </View>
-      <Text style={styles.cryptoAddress}>{walletAddress}</Text>
-      <TouchableOpacity style={styles.copyButton}>
-        <Text style={styles.copyText}>Copy</Text>
-      </TouchableOpacity>
-    </View>
-  );
-
-
+      {crypto && (
+        <View>
+          <Text style={styles.cryptoHeader}>{Currencies[crypto].name} ({crypto})</Text>
+          <View style={styles.qrCode}>
+            <QRCode
+              value={state.walletAddress}
+              size={200}
+            />
+          </View>
+          <Text style={styles.cryptoAddress}>{state.walletAddress}</Text>
+          <TouchableOpacity style={styles.copyButton}>
+            <Text style={styles.copyText}>Copy</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+    </View >
+  )
 };
 
 AddCryptoScreen.navigationOptions = () => {

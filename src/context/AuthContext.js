@@ -1,19 +1,20 @@
 import createDataContext from "./createDataContext";
-// import trackerApi from '../api/tracker'
-import {navigate} from "../navigationRef";
-import Crypto from "../components/utils/Crypto";
+
+import { navigate } from "../navigationRef";
+
 import * as SecureStore from 'expo-secure-store';
+import Crypto from '../components/utils/Crypto'
 
 const authReducer = (state, action) => {
   switch (action.type) {
     case 'add_error':
-      return {...state, errorMessage: action.payload}
+      return { ...state, errorMessage: action.payload }
     case 'signin':
-      return {errorMessage: '', username: action.payload.username, address: action.payload.address}
+      return { errorMessage: '', username: action.payload.username, walletAddress: action.payload.walletAddress }
     case 'signout':
-      return {errorMessage: '', token: null}
+      return { errorMessage: '', username: null, walletAddress: null }
     case 'clear_error_message':
-      return {...state, errorMessage: ''}
+      return { ...state, errorMessage: '' }
     default:
       return state
   }
@@ -21,11 +22,11 @@ const authReducer = (state, action) => {
 
 const tryLocalSignin = dispatch => async () => {
 
-  const authObject = await SecureStore.getItemAsync('authObject');
-  console.log(authObject);
+  const username = await SecureStore.getItemAsync('username');
+  const walletAddress = await SecureStore.getItemAsync('walletAddress');
 
-  if (authObject) {
-    dispatch({type: 'signin', payload: authObject})
+  if (username && walletAddress) {
+    dispatch({ type: 'signin', payload: { username, walletAddress } })
     navigate('mainFlow')
   } else {
     navigate('loginFlow')
@@ -33,26 +34,28 @@ const tryLocalSignin = dispatch => async () => {
 };
 
 const clearErrorMessage = dispatch => () => {
-  dispatch({type: 'clear_error_message'})
+  dispatch({ type: 'clear_error_message' })
 }
 
-const signup = (dispatch) => async ({username: username}) => {
+const signup = (dispatch) => async (username) => {
   try {
-    const mnemonic = await Crypto.generateMnemonic()
-    const authObject = JSON.stringify({
-      username: username,
-      mnemonic
-    });
-    await SecureStore.setItemAsync('authObject', authObject);
-    dispatch({type: 'signin', payload: {username: username, address: mnemonic}})
+    await Crypto.generateMnemonic();
+    const walletAddress = await Crypto.getWalletAddress()
+    await SecureStore.setItemAsync('username', username);
+    dispatch({ type: 'signin', payload: { username, walletAddress } })
+
+
+
+
     navigate('mainFlow')
   } catch (err) {
-    dispatch({type: 'add_error', payload: 'Something went wrong with sign up'})
+    console.log(err)
+    dispatch({ type: 'add_error', payload: 'Something went wrong with sign up' })
   }
 }
 
 
-const signin = (dispatch) => async ({email: email, password: password}) => {
+const signin = (dispatch) => async ({ email: email, password: password }) => {
   // TODO: FIX ME
   // try {
   //   const response = await trackerApi.post('/signin', {email, password})
@@ -69,6 +72,7 @@ const signout = () => async () => {
   try {
     console.log('signout')
     await SecureStore.deleteItemAsync('authObject')
+    // more deleting
     navigate('loginFlow')
   } catch (err) {
 
@@ -77,10 +81,10 @@ const signout = () => async () => {
 };
 
 
-export const {Provider, Context} = createDataContext(
+export const { Provider, Context } = createDataContext(
   authReducer,
-  {signin, signout, signup, clearErrorMessage, tryLocalSignin},
-  {username: null, address: null, errorMessage: ''}
+  { signin, signout, signup, clearErrorMessage, tryLocalSignin },
+  { username: null, walletAddress: null, errorMessage: '' }
 )
 
 

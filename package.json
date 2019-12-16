@@ -42,7 +42,9 @@
     "react-navigation-tabs": "^2.6.2",
     "readable-stream": "^1.0.33",
     "rn-nodeify": "^10.2.0",
-    "stream-browserify": "^1.0.0"
+    "stream-browserify": "^1.0.0",
+    "expo-barcode-scanner": "~7.0.0",
+    "expo-permissions": "~7.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
