@@ -26,14 +26,14 @@ const getStoredMnemonic = async () => {
 }
 
 const getEthersWallet = async () => {
-  const provider = new ethers.providers.InfuraProvider('kovan', APIKEY);
+  const provider = new ethers.providers.InfuraProvider('kovan', 'cbbe19ff896840748997c040127968ff');
   let mnemonic = await SecureStore.getItemAsync('mnemonic')
   const wallet = new ethers.Wallet.fromMnemonic(mnemonic)
   return wallet.connect(provider)
 }
 
 const getBalance = async () => {
-  const provider = new ethers.providers.InfuraProvider('kovan', APIKEY);
+  const provider = new ethers.providers.InfuraProvider('kovan', 'cbbe19ff896840748997c040127968ff');
   const walletAddress = await getWalletAddress()
   const DAIContract = Config['DEV'].DAI;
   // const ethBalanceInWei = await provider.getBalance(walletAddress)
