@@ -1,14 +1,15 @@
 // Core
 import React from 'react'
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { Platform } from 'react-native';
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
+import {createBottomTabNavigator} from 'react-navigation-tabs';
+import {Platform} from 'react-native';
 import './shim.js';
-import { setNavigator } from "./src/navigationRef";
+import {setNavigator} from "./src/navigationRef";
 
 // Providers
-import { Provider as AuthProvider } from "./src/context/AuthContext";
+import {Provider as AuthProvider} from "./src/context/AuthContext";
+import {Provider as TransactionProvider} from './src/context/TransactionContext'
 
 // Screens
 import SignInScreen from "./src/screens/SignInScreen";
@@ -40,8 +41,8 @@ const switchNavigator = createSwitchNavigator({
         screen: HomeScreen,
         navigationOptions: {
           tabBarLabel: 'Wallet',
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-wallet' : 'md-wallet'} />
+          tabBarIcon: ({focused}) => (
+            <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-wallet' : 'md-wallet'}/>
           ),
         }
       },
@@ -63,8 +64,8 @@ const switchNavigator = createSwitchNavigator({
         mode: 'card',
         navigationOptions: {
           tabBarLabel: 'Settings',
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-settings' : 'md-settings'} />
+          tabBarIcon: ({focused}) => (
+            <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-settings' : 'md-settings'}/>
           ),
         }
       }),
@@ -101,9 +102,11 @@ const App = createAppContainer(switchNavigator)
 export default () => {
   return (
     <AuthProvider>
-      <App ref={(navigator) => {
-        setNavigator(navigator)
-      }} />
+      <TransactionProvider>
+        <App ref={(navigator) => {
+          setNavigator(navigator)
+        }}/>
+      </TransactionProvider>
     </AuthProvider>
   )
 }
