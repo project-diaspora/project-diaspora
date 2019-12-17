@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react';
-import {Platform, ScrollView, StyleSheet, Text, View} from 'react-native';
+import { Platform, ScrollView, RefreshControl, StyleSheet, Text, View} from 'react-native';
 
 import TransactionList from '../components/TransactionList';
 import WalletActionButtons from '../components/WalletActionButtons';
@@ -9,6 +9,7 @@ import Crypto from '../components/utils/Crypto'
 
 const HomeScreen = () => {
   const [balance, setBalance] = useState('')
+  const [refreshing, setRefreshing] = useState(false);
 
 
   useEffect(() => {
@@ -18,11 +19,26 @@ const HomeScreen = () => {
     })();
   }, []);
 
+  _onRefresh = async () => {
+    setRefreshing(true);
+    const ethBalance = await Crypto.getBalance();
+    setBalance(ethBalance)
+    setRefreshing(false);
+  }
+
   return (
     <View style={styles.container}>
       <ScrollView
         style={styles.container}
-        contentContainerStyle={styles.contentContainer}>
+        contentContainerStyle={styles.contentContainer}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={_onRefresh}
+            tintColor={Colors.green}
+            colors={Colors.green}
+          />
+        }>
         <View style={styles.walletBalanceContainer}>
           <Text style={styles.walletBalanceText}>${balance}</Text>
         </View>

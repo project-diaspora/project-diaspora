@@ -20,10 +20,6 @@ const TransactionList = () => {
     return moment.unix(timeStamp).fromNow()
   };
 
-  const formatWei = (amountInWei) => {
-    return Crypto.weiToInteger(amountInWei)
-  }
-
   const transactionName = (item) => {
     if (item.to === authState.walletAddress) {
       return 'Deposit'
@@ -60,7 +56,7 @@ const TransactionList = () => {
               <Text style={styles.transactionName}>{transactionName(item)}</Text>
               <Text style={styles.transactionDate}>{toDateString(item.timeStamp)}</Text>
             </View>
-            <Text style={[styles.amount, item.credit ? styles.amountGreen : styles.amountGreen ]}>{plusMinus(item)} ${formatWei(item.value)}</Text>
+            <Text style={[styles.amount, item.credit ? styles.amountGreen : styles.amountGreen]}>{plusMinus(item)} ${Crypto.weiToInteger(item.value)}</Text>
           </View>
         }
         keyExtractor={item => item.transactionIndex}
@@ -89,13 +85,14 @@ const styles = StyleSheet.create({
   transactionName: {
     fontWeight: '600',
     color: '#2d3748',
-    fontSize: 16,
+    fontSize: 18,
   },
   transactionDate: {
     color: '#a0aec0',
+    fontSize: 16,
   },
   amount: {
-    fontSize: 16,
+    fontSize: 18,
   },
   amountRed: {
     color: Colors.red,
