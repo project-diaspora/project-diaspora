@@ -36,12 +36,21 @@ const switchNavigator = createSwitchNavigator({
   }),
   mainFlow: createStackNavigator({
     homeFlow: createBottomTabNavigator({
-      Home: {
+      Wallets: {
         screen: HomeScreen,
         navigationOptions: {
-          tabBarLabel: 'Wallet',
+          tabBarLabel: 'Accounts',
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-wallet' : 'md-wallet'} />
+          ),
+        }
+      },
+      Pay: {
+        screen: HomeScreen,
+        navigationOptions: {
+          tabBarLabel: 'Pay',
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-paper-plane' : 'md-paper-plane'} />
           ),
         }
       },
@@ -70,6 +79,7 @@ const switchNavigator = createSwitchNavigator({
       }),
 
     }, {
+      initialRouteName: 'Pay',
       tabBarOptions: {
         activeTintColor: Colors.green,
         style: {
