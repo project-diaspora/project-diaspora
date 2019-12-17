@@ -13,7 +13,7 @@ const TransactionList = () => {
   const { state: authState } = useContext(AuthContext);
 
   useEffect(() => {
-    getTransactions();
+    getTransactions(authState.walletAddress);
   }, []);
 
   const toDateString = (timeStamp) => {

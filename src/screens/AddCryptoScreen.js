@@ -7,7 +7,6 @@ import { Context as AuthContext } from "../context/AuthContext";
 const AddCryptoScreen = ({ navigation }) => {
   const [crypto, setCrypto] = useState(null);
   const { state } = useContext(AuthContext);
-  console.log(crypto)
 
   useEffect(() => {
     (async () => {
