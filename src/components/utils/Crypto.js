@@ -70,4 +70,8 @@ const signDAITransaction = async (amountInDai, toAddress) => {
   return tx
 }
 
-export default { generateMnemonic, getWalletAddress, getEthersWallet, getStoredMnemonic, getBalance, signDAITransaction }
+const weiToInteger = (amountInWei) => {
+  return Number(ethers.utils.formatEther(amountInWei)).toLocaleString(undefined, { maximumFractionDigits: 2 })
+}
+
+export default { generateMnemonic, getWalletAddress, getEthersWallet, getStoredMnemonic, getBalance, signDAITransaction, weiToInteger }

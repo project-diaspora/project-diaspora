@@ -1,27 +1,31 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity,} from 'react-native';
+import {
+  StyleSheet, Text, View, TouchableOpacity,
+} from 'react-native';
 import Colors from '../constants/Colors';
 
 
-const AuthLandingScreen = ({navigation}) => {
+const AuthLandingScreen = ({ navigation }) => (
+  <View style={styles.container}>
+    <TouchableOpacity
+      style={[styles.button, styles.signUpButton]}
+      onPress={() => {
+        navigation.navigate('SignUp');
+      }}
+    >
+      <Text style={[styles.buttonText, styles.signUpButtonText]}>Sign up</Text>
+    </TouchableOpacity>
+    <TouchableOpacity
+      style={styles.button}
+      onPress={() => {
+        navigation.navigate('SignIn');
+      }}
+    >
+      <Text style={styles.buttonText}>Sign in</Text>
+    </TouchableOpacity>
 
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity style={[styles.button, styles.signUpButton]} onPress={() => {
-        navigation.navigate('SignUp')
-      }}>
-        <Text style={[styles.buttonText, styles.signUpButtonText]}>Sign up</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => {
-        navigation.navigate('SignIn')
-      }}>
-        <Text style={styles.buttonText}>Sign in</Text>
-      </TouchableOpacity>
-
-    </View>
-  );
-
-}
+  </View>
+);
 
 AuthLandingScreen.navigationOptions = {
   header: null,
@@ -64,5 +68,3 @@ const styles = StyleSheet.create({
 });
 
 export default AuthLandingScreen;
-
-

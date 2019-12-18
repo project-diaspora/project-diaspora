@@ -1,30 +1,34 @@
-import React, {useState, useContext} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, TextInput} from 'react-native';
+import React, { useState, useContext } from 'react';
+import {
+  StyleSheet, Text, View, TouchableOpacity, TextInput
+} from 'react-native';
 import Colors from '../constants/Colors';
-import {Context as AuthContext} from "../context/AuthContext";
+import { Context as AuthContext } from '../context/AuthContext';
 
 
-const SignUpScreen = ({navigation}) => {
-  const {state, signup, clearErrorMessage} = useContext(AuthContext)
-  const [username, setUsername] = useState('')
+const SignUpScreen = ({ navigation }) => {
+  const { state, signup, clearErrorMessage } = useContext(AuthContext);
+  const [username, setUsername] = useState('');
 
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Enter a username</Text>
       <TextInput
-        style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-        onChangeText={usernameUpdate => setUsername(usernameUpdate)}
+        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+        onChangeText={(usernameUpdate) => setUsername(usernameUpdate)}
       />
-      <TouchableOpacity style={[styles.button, styles.signUpButton]} onPress={() => {
-        signup(username)
-      }}>
+      <TouchableOpacity
+        style={[styles.button, styles.signUpButton]}
+        onPress={() => {
+          signup(username);
+        }}
+      >
         <Text style={[styles.buttonText, styles.signUpButtonText]}>Sign up</Text>
       </TouchableOpacity>
     </View>
   );
-
-}
+};
 
 
 const styles = StyleSheet.create({

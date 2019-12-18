@@ -1,9 +1,11 @@
-import React, {useState} from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity, Modal} from 'react-native';
-import {Ionicons} from '@expo/vector-icons';
+import React, { useState } from 'react';
+import {
+  View, Text, StyleSheet, Image, TouchableOpacity, Modal
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 
-const SelectAmountScreen = ({navigation}) => {
+const SelectAmountScreen = ({ navigation }) => {
   const [integers, setIntegers] = useState('0');
   const [decimals, setDecimals] = useState(null);
 
@@ -11,39 +13,37 @@ const SelectAmountScreen = ({navigation}) => {
   const add = (number) => {
     if (decimals) {
       if (decimals && decimals.length < 3) {
-        setDecimals(decimals.concat(number))
+        setDecimals(decimals.concat(number));
       } else if (decimals && decimals.length === 3) {
-        setDecimals(decimals)
+        setDecimals(decimals);
       } else {
-        setDecimals(number)
+        setDecimals(number);
       }
+    } else if (integers === '0') {
+      setIntegers(number);
     } else {
-      if (integers === '0') {
-        setIntegers(number)
-      } else {
-        setIntegers(integers.concat(number))
-      }
+      setIntegers(integers.concat(number));
     }
   };
 
   const addDecimal = () => {
-    setDecimals('.')
+    setDecimals('.');
   };
 
   const backspace = () => {
     if (decimals) {
       if (decimals.length === 3) {
-        setDecimals(decimals.slice(0, 2))
+        setDecimals(decimals.slice(0, 2));
       } else if (decimals.length === 2) {
-        setDecimals(decimals.slice(0, 1))
+        setDecimals(decimals.slice(0, 1));
       } else {
-        setDecimals(null)
+        setDecimals(null);
       }
     } else if (integers !== '0') {
       if (integers.length === 1) {
-        setIntegers('0')
+        setIntegers('0');
       } else {
-        setIntegers(integers.slice(0, integers.length - 1))
+        setIntegers(integers.slice(0, integers.length - 1));
       }
     }
   };
@@ -62,69 +62,110 @@ const SelectAmountScreen = ({navigation}) => {
       <View style={styles.keyboard}>
         <View style={styles.keyboardRow}>
           <TouchableOpacity style={styles.keyboardButton} onPress={() => add('1')}><Text
-            style={styles.keyboardText}>1</Text></TouchableOpacity>
+            style={styles.keyboardText}
+          >1
+          </Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.keyboardButton} onPress={() => add('2')}><Text
-            style={styles.keyboardText}>2</Text></TouchableOpacity>
+            style={styles.keyboardText}
+          >2
+          </Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.keyboardButton} onPress={() => add('3')}><Text
-            style={styles.keyboardText}>3</Text></TouchableOpacity>
+            style={styles.keyboardText}
+          >3
+          </Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.keyboardRow}>
           <TouchableOpacity style={styles.keyboardButton} onPress={() => add('4')}><Text
-            style={styles.keyboardText}>4</Text></TouchableOpacity>
+            style={styles.keyboardText}
+          >4
+          </Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.keyboardButton} onPress={() => add('5')}><Text
-            style={styles.keyboardText}>5</Text></TouchableOpacity>
+            style={styles.keyboardText}
+          >5
+          </Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.keyboardButton} onPress={() => add('6')}><Text
-            style={styles.keyboardText}>6</Text></TouchableOpacity>
+            style={styles.keyboardText}
+          >6
+          </Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.keyboardRow}>
           <TouchableOpacity style={styles.keyboardButton} onPress={() => add('7')}><Text
-            style={styles.keyboardText}>7</Text></TouchableOpacity>
+            style={styles.keyboardText}
+          >7
+          </Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.keyboardButton} onPress={() => add('8')}><Text
-            style={styles.keyboardText}>8</Text></TouchableOpacity>
+            style={styles.keyboardText}
+          >8
+          </Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.keyboardButton} onPress={() => add('9')}><Text
-            style={styles.keyboardText}>9</Text></TouchableOpacity>
+            style={styles.keyboardText}
+          >9
+          </Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.keyboardRow}>
           <TouchableOpacity style={styles.keyboardButton} onPress={() => addDecimal()}><Text
-            style={styles.keyboardText}>.</Text></TouchableOpacity>
+            style={styles.keyboardText}
+          >.
+          </Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.keyboardButton} onPress={() => add('0')}><Text
-            style={styles.keyboardText}>0</Text></TouchableOpacity>
+            style={styles.keyboardText}
+          >0
+          </Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.keyboardButton} onPress={() => backspace()}><Ionicons
-            style={{ textAlign: 'center' }} name="ios-backspace" size={30} color={Colors.green} /></TouchableOpacity>
+            style={{ textAlign: 'center' }}
+            name="ios-backspace"
+            size={30}
+            color={Colors.green}
+          />
+          </TouchableOpacity>
         </View>
       </View>
 
       <View style={styles.nextButtonContainer}>
-        <TouchableOpacity style={styles.nextButton} onPress={() => navigation.navigate('SelectContact', {amount: integers.concat(decimals)})}><Text
-          style={styles.nextButtonText}>Next</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.nextButton} onPress={() => navigation.navigate('SelectContact', { amount: integers.concat(decimals) })}><Text
+          style={styles.nextButtonText}
+        >Next
+        </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
-
 };
 
 
-SelectAmountScreen.navigationOptions = ({navigation}) => {
-  return {
-    title: 'Select Amount',
-    headerRight: (
-      <TouchableOpacity style={styles.closeButton} onPress={() => {
-        navigation.popToTop()
-      }}>
-        <Ionicons name="ios-close" size={40} color="black"/>
-      </TouchableOpacity>
-    ),
-    headerLeft: null,
-    headerRightContainerStyle: {
-      paddingRight: 20
-    },
-    headerStyle: {
-      shadowColor: 'transparent',
-      elevation: 0,
-      borderBottomWidth: 0,
-    }
+SelectAmountScreen.navigationOptions = ({ navigation }) => ({
+  title: 'Select Amount',
+  headerRight: (
+    <TouchableOpacity
+      style={styles.closeButton}
+      onPress={() => {
+        navigation.popToTop();
+      }}
+    >
+      <Ionicons name="ios-close" size={40} color="black" />
+    </TouchableOpacity>
+  ),
+  headerLeft: null,
+  headerRightContainerStyle: {
+    paddingRight: 20
+  },
+  headerStyle: {
+    shadowColor: 'transparent',
+    elevation: 0,
+    borderBottomWidth: 0,
   }
-};
+});
 
 
 const styles = StyleSheet.create({

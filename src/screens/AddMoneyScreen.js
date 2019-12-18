@@ -1,64 +1,68 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity, Linking} from 'react-native';
-import {Ionicons} from '@expo/vector-icons';
+import {
+  View, Text, StyleSheet, Image, TouchableOpacity, Linking
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 
-const AddMoneyScreen = ({navigation}) => {
+const AddMoneyScreen = ({ navigation }) => (
+  <View style={styles.modalContainer}>
 
-  return (
-    <View style={styles.modalContainer}>
+    <Text style={styles.paymentTypes}>Credit Card</Text>
 
-      <Text style={styles.paymentTypes}>Credit Card</Text>
+    <TouchableOpacity style={styles.paymentButton} onPress={() => Linking.openURL('https://pay.sendwyre.com')}>
+      <Ionicons name="ios-card" size={35} color={Colors.green} />
+      <Text style={styles.paymentText}>Pay with Apple Pay</Text>
+    </TouchableOpacity>
 
-      <TouchableOpacity style={styles.paymentButton} onPress={() => Linking.openURL('https://pay.sendwyre.com')}>
-        <Ionicons name="ios-card" size={35} color={Colors.green}/>
-        <Text style={styles.paymentText}>Pay with Apple Pay</Text>
-      </TouchableOpacity>
+    <Text style={styles.paymentTypes}>Digital Currencies</Text>
 
-      <Text style={styles.paymentTypes}>Digital Currencies</Text>
 
-      
+    <TouchableOpacity
+      style={styles.paymentButton}
+      onPress={() => {
+        navigation.navigate('AddCrypto', { crypto: 'ETH' });
+      }}
+    >
+      <Image source={require('../../assets/images/eth.png')} style={styles.paymentImage} />
+      <Text style={styles.paymentText}>Add Ethereum</Text>
+    </TouchableOpacity>
 
-      <TouchableOpacity style={styles.paymentButton} onPress={() => {
-        navigation.navigate('AddCrypto', {crypto: 'ETH'})
-      }}>
-        <Image source={require('../../assets/images/eth.png')} style={styles.paymentImage}/>
-        <Text style={styles.paymentText}>Add Ethereum</Text>
-      </TouchableOpacity>
+    <TouchableOpacity
+      style={styles.paymentButton}
+      onPress={() => {
+        navigation.navigate('AddCrypto', { crypto: 'DAI' });
+      }}
+    >
+      <Image source={require('../../assets/images/dai.png')} style={styles.paymentImage} />
+      <Text style={styles.paymentText}>Add DAI (US dollar)</Text>
+    </TouchableOpacity>
 
-      <TouchableOpacity style={styles.paymentButton} onPress={() => {
-        navigation.navigate('AddCrypto', {crypto: 'DAI'})
-      }}>
-        <Image source={require('../../assets/images/dai.png')} style={styles.paymentImage}/>
-        <Text style={styles.paymentText}>Add DAI (US dollar)</Text>
-      </TouchableOpacity>
+  </View>
+);
 
-    </View>
-  );
-
-};
-
-AddMoneyScreen.navigationOptions = ({navigation}) => {
-  return {
-    title: 'Add Money',
-    headerRight: (
-      <TouchableOpacity style={styles.closeButton} onPress={() => {
-        navigation.popToTop()
-      }}>
-        <Ionicons name="ios-close" size={40} color="black"/>
-      </TouchableOpacity>
-    ),
-    headerLeft: null,
-    headerRightContainerStyle: {
-      paddingRight: 20
-    },
-    headerStyle: {
-      shadowColor: 'transparent',
-      elevation: 0,
-      borderBottomWidth: 0,
-    },
-  }
-};
+AddMoneyScreen.navigationOptions = ({ navigation }) => ({
+  title: 'Add Money',
+  headerRight: (
+    <TouchableOpacity
+      style={styles.closeButton}
+      onPress={() => {
+        navigation.popToTop();
+      }}
+    >
+      <Ionicons name="ios-close" size={40} color="black" />
+    </TouchableOpacity>
+  ),
+  headerLeft: null,
+  headerRightContainerStyle: {
+    paddingRight: 20
+  },
+  headerStyle: {
+    shadowColor: 'transparent',
+    elevation: 0,
+    borderBottomWidth: 0,
+  },
+});
 
 
 const styles = StyleSheet.create({
@@ -99,4 +103,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AddMoneyScreen
+export default AddMoneyScreen;

@@ -1,35 +1,53 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  Platform, ScrollView, RefreshControl, StyleSheet, Text, View
+} from 'react-native';
 
-import {TransactionList} from '../components/TransactionList';
+import TransactionList from '../components/TransactionList';
 import WalletActionButtons from '../components/WalletActionButtons';
 import HeaderText from '../components/HeaderText';
 import Colors from '../constants/Colors';
-import Crypto from '../components/utils/Crypto'
-import { Context as AuthContext } from "../context/AuthContext";
+import Crypto from '../components/utils/Crypto';
 
 const HomeScreen = () => {
-  const [balance, setBalance] = useState('')
-  const { state } = useContext(AuthContext);
+  const [balance, setBalance] = useState('');
+  const [refreshing, setRefreshing] = useState(false);
+
 
   useEffect(() => {
     (async () => {
       const ethBalance = await Crypto.getBalance();
-      setBalance(ethBalance)
+      setBalance(ethBalance);
     })();
   }, []);
+
+  _onRefresh = async () => {
+    setRefreshing(true);
+    const ethBalance = await Crypto.getBalance();
+    setBalance(ethBalance);
+    setRefreshing(false);
+  };
 
   return (
     <View style={styles.container}>
       <ScrollView
         style={styles.container}
-        contentContainerStyle={styles.contentContainer}>
+        contentContainerStyle={styles.contentContainer}
+        refreshControl={(
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={_onRefresh}
+            tintColor={Colors.green}
+            colors={Colors.green}
+          />
+        )}
+      >
         <View style={styles.walletBalanceContainer}>
           <Text style={styles.walletBalanceText}>${balance}</Text>
         </View>
-        <WalletActionButtons/>
-        <HeaderText title="Transactions"/>
-        <TransactionList/>
+        <WalletActionButtons />
+        <HeaderText title="Transactions" />
+        <TransactionList />
         <Text>{}</Text>
       </ScrollView>
     </View>
@@ -81,4 +99,3 @@ const styles = StyleSheet.create({
 });
 
 export default HomeScreen;
-

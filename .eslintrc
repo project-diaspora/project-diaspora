@@ -8,6 +8,7 @@
   "rules": {
     "no-use-before-define": "off",
     "react/jsx-filename-extension": "off",
+    "react/jsx-one-expression-per-line": 0,
     "react/prop-types": "off",
     "comma-dangle": "off"
   },

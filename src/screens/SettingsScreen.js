@@ -1,21 +1,22 @@
-import React, {useState, useContext} from 'react';
-import {Platform, StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Switch} from 'react-native';
+import React, { useState, useContext } from 'react';
+import {
+  Platform, StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Switch
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
-import {Ionicons} from '@expo/vector-icons';
-import {Context as AuthContext} from "../context/AuthContext";
+import { Context as AuthContext } from '../context/AuthContext';
 import TabBarIcon from '../components/TabBarIcon';
 
-const USER_IMG = 'https://images.unsplash.com/photo-1484862149534-102beb3bd0ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&w=512&h=512&facepad=4'
+const USER_IMG = 'https://images.unsplash.com/photo-1484862149534-102beb3bd0ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&w=512&h=512&facepad=4';
 
-const SettingsScreen = ({navigation}) => {
-
-  const {state, signout, clearErrorMessage} = useContext(AuthContext);
+const SettingsScreen = ({ navigation }) => {
+  const { state, signout, clearErrorMessage } = useContext(AuthContext);
   const [privacy, setPrivacy] = useState(false);
 
   return (
     <View style={styles.container}>
       <View style={styles.profileHeader}>
-        <Image source={{uri: USER_IMG}} style={styles.profileImage}/>
+        <Image source={{ uri: USER_IMG }} style={styles.profileImage} />
         <View style={styles.profileNames}>
           <Text style={styles.username}>@nada</Text>
           <Text style={styles.fullName}>Nada Khoury</Text>
@@ -25,59 +26,62 @@ const SettingsScreen = ({navigation}) => {
       <ScrollView>
         <Text style={styles.subHeader}>Security</Text>
         <TouchableOpacity onPress={() => {
-          navigation.navigate('RecoveryPhrase')
-        }}>
+          navigation.navigate('RecoveryPhrase');
+        }}
+        >
           <View style={[styles.option, styles.optionView, styles.optionTop]}>
-            <Text style={{fontSize: 16}}>Recovery Phrase</Text>
-            <Ionicons name="ios-arrow-forward" size={20} color={Colors.grey}/>
+            <Text style={{ fontSize: 16 }}>Recovery Phrase</Text>
+            <Ionicons name="ios-arrow-forward" size={20} color={Colors.grey} />
           </View>
         </TouchableOpacity>
         <TouchableOpacity>
           <View style={[styles.option, styles.optionView]}>
-            <Text style={{fontSize: 16}}>App Lock</Text>
-            <Ionicons name="ios-arrow-forward" size={20} color={Colors.grey}/>
+            <Text style={{ fontSize: 16 }}>App Lock</Text>
+            <Ionicons name="ios-arrow-forward" size={20} color={Colors.grey} />
           </View>
         </TouchableOpacity>
         <View style={[styles.option, styles.optionView]}>
-          <Text style={{fontSize: 16}}>Allow others to find me</Text>
+          <Text style={{ fontSize: 16 }}>Allow others to find me</Text>
           <Switch
             style={styles.switch}
             value={privacy}
             trackColor={Colors.green}
-            onValueChange={v => {
-              setPrivacy(!privacy)
+            onValueChange={(v) => {
+              setPrivacy(!privacy);
             }}
           />
         </View>
         <Text style={styles.subHeader}>Other</Text>
         <TouchableOpacity>
           <View style={[styles.option, styles.optionView, styles.optionTop]}>
-            <Text style={{fontSize: 16}}>Local Currency</Text>
+            <Text style={{ fontSize: 16 }}>Local Currency</Text>
             <Text style={styles.optionText}>USD</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity>
           <View style={[styles.option, styles.optionView]}>
-            <Text style={{fontSize: 16}}>Support</Text>
-            <Ionicons name="ios-arrow-forward" size={20} color={Colors.grey}/>
+            <Text style={{ fontSize: 16 }}>Support</Text>
+            <Ionicons name="ios-arrow-forward" size={20} color={Colors.grey} />
           </View>
         </TouchableOpacity>
         <TouchableOpacity>
           <View style={[styles.option, styles.optionView]}>
-            <Text style={{fontSize: 16}}>Legal</Text>
-            <Ionicons name="ios-arrow-forward" size={20} color={Colors.grey}/>
+            <Text style={{ fontSize: 16 }}>Legal</Text>
+            <Ionicons name="ios-arrow-forward" size={20} color={Colors.grey} />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.option, styles.optionView]} onPress={() => {
-          signout()
-        }}>
+        <TouchableOpacity
+          style={[styles.option, styles.optionView]}
+          onPress={() => {
+            signout();
+          }}
+        >
           <Text style={styles.logout}>Sign Out</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
   );
-
-}
+};
 
 SettingsScreen.navigationOptions = {
   headerStyle: {
@@ -160,6 +164,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SettingsScreen
-
-
+export default SettingsScreen;
