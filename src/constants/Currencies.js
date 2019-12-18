@@ -1,20 +1,20 @@
 export default {
-  'BTC': {
+  BTC: {
     name: 'Bitcoin',
     denomination: 'satoshi',
     decimals: '8'
   },
-  'ETH': {
+  ETH: {
     name: 'Ethereum',
     denomination: 'wei',
     decimals: '18'
   },
-  'DAI': {
+  DAI: {
     name: 'DAI',
     denomination: 'wei',
     decimals: '18',
   },
-  'USD': {
+  USD: {
     name: 'US dollar',
     denomination: 'cents',
     decimals: '2'

@@ -1,26 +1,33 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View, Text, StyleSheet, TouchableOpacity
+} from 'react-native';
+import { withNavigation } from 'react-navigation';
 import Colors from '../constants/Colors';
-import {withNavigation} from 'react-navigation'
 
-const WalletActionButtons = ({navigation}) => {
-
-  return (
-    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', marginBottom: 20}}>
-      <TouchableOpacity style={styles.walletActionButton} onPress={() => {
-        navigation.navigate('AddMoney')
-      }}>
-        <Text style={styles.walletActionText}>Add money</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.walletActionButton} onPress={() => {
-        navigation.navigate('sendMoneyFlow')
-      }}>
-        <Text style={styles.walletActionText}>Send</Text>
-      </TouchableOpacity>
-    </View>
-  );
-
-}
+const WalletActionButtons = ({ navigation }) => (
+  <View style={{
+    flex: 1, flexDirection: 'row', justifyContent: 'center', marginBottom: 20
+  }}
+  >
+    <TouchableOpacity
+      style={styles.walletActionButton}
+      onPress={() => {
+        navigation.navigate('AddMoney');
+      }}
+    >
+      <Text style={styles.walletActionText}>Add money</Text>
+    </TouchableOpacity>
+    <TouchableOpacity
+      style={styles.walletActionButton}
+      onPress={() => {
+        navigation.navigate('sendMoneyFlow');
+      }}
+    >
+      <Text style={styles.walletActionText}>Send</Text>
+    </TouchableOpacity>
+  </View>
+);
 
 const styles = StyleSheet.create({
   walletActionButton: {

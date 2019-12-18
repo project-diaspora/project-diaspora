@@ -1,54 +1,72 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Modal } from 'react-native';
+import React from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
-import Crypto from '../components/utils/Crypto'
+import Crypto from '../components/utils/Crypto';
 
 const ConfirmTransactionScreen = ({ navigation }) => {
-
   const sendMothafucka = async (amount, toAddress) => {
-    const tx = await Crypto.signDAITransaction(amount.toString(), toAddress)
-    console.log(tx.hash)
-  }
+    const tx = await Crypto.signDAITransaction(amount.toString(), toAddress);
+    console.log(tx.hash);
+  };
 
   return (
     <View style={styles.modalContainer}>
       <View>
-        <Text>Amount: {navigation.getParam('amount')}</Text>
-        <Text>toAddress: {navigation.getParam('toAddress').split(':')[1]}</Text>
+        <Text>
+Amount:
+          {navigation.getParam('amount')}
+        </Text>
+        <Text>
+toAddress:
+          {navigation.getParam('toAddress').split(':')[1]}
+        </Text>
       </View>
 
       <View style={styles.nextButtonContainer}>
-        <TouchableOpacity style={styles.nextButton} onPress={() => sendMothafucka(navigation.getParam('amount'), navigation.getParam('toAddress').split(':')[1])}><Text
-          style={styles.nextButtonText}>Confirm</Text></TouchableOpacity>
+        <TouchableOpacity
+          style={styles.nextButton}
+          onPress={() => sendMothafucka(navigation.getParam('amount'), navigation.getParam('toAddress').split(':')[1])}
+        >
+          <Text
+            style={styles.nextButtonText}
+          >
+Confirm
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
-
 };
 
 
-ConfirmTransactionScreen.navigationOptions = ({ navigation }) => {
-  return {
-    title: 'Select Amount',
-    headerRight: (
-      <TouchableOpacity style={styles.closeButton} onPress={() => {
-        navigation.popToTop()
-      }}>
-        <Ionicons name="ios-close" size={40} color="black" />
-      </TouchableOpacity>
-    ),
-    headerLeft: null,
-    headerRightContainerStyle: {
-      paddingRight: 20
-    },
-    headerStyle: {
-      shadowColor: 'transparent',
-      elevation: 0,
-      borderBottomWidth: 0,
-    }
+ConfirmTransactionScreen.navigationOptions = ({ navigation }) => ({
+  title: 'Select Amount',
+  headerRight: (
+    <TouchableOpacity
+      style={styles.closeButton}
+      onPress={() => {
+        navigation.popToTop();
+      }}
+    >
+      <Ionicons name="ios-close" size={40} color="black" />
+    </TouchableOpacity>
+  ),
+  headerLeft: null,
+  headerRightContainerStyle: {
+    paddingRight: 20
+  },
+  headerStyle: {
+    shadowColor: 'transparent',
+    elevation: 0,
+    borderBottomWidth: 0,
   }
-};
+});
 
 
 const styles = StyleSheet.create({
@@ -82,8 +100,7 @@ const styles = StyleSheet.create({
   maxButton: {
     padding: 10,
   },
-  containerForText: {
-  },
+  containerForText: {},
   keyboardButton: {
     justifyContent: 'center',
     width: '33%',
