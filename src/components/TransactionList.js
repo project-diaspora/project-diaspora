@@ -1,6 +1,9 @@
 import React, { useContext, useEffect } from 'react';
 import {
-  View, Text, Image, StyleSheet
+  View,
+  Text,
+  Image,
+  StyleSheet
 } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import * as moment from 'moment';
@@ -54,7 +57,11 @@ const TransactionList = () => {
               <Text style={styles.transactionName}>{transactionName(item)}</Text>
               <Text style={styles.transactionDate}>{toDateString(item.timeStamp)}</Text>
             </View>
-            <Text style={[styles.amount, item.credit ? styles.amountGreen : styles.amountGreen]}>{plusMinus(item)} ${Crypto.weiToInteger(item.value)}</Text>
+            <Text
+              style={[styles.amount, item.credit ? styles.amountGreen : styles.amountGreen]}
+            >
+              {plusMinus(item)} ${Crypto.weiToInteger(item.value)}
+            </Text>
           </View>
         )}
         keyExtractor={(item) => item.transactionIndex}
