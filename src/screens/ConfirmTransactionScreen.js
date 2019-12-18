@@ -18,14 +18,8 @@ const ConfirmTransactionScreen = ({ navigation }) => {
   return (
     <View style={styles.modalContainer}>
       <View>
-        <Text>
-Amount:
-          {navigation.getParam('amount')}
-        </Text>
-        <Text>
-toAddress:
-          {navigation.getParam('toAddress').split(':')[1]}
-        </Text>
+        <Text>Amount:{navigation.getParam('amount')}</Text>
+        <Text>toAddress:{navigation.getParam('toAddress').split(':')[1]}</Text>
       </View>
 
       <View style={styles.nextButtonContainer}>
@@ -33,11 +27,7 @@ toAddress:
           style={styles.nextButton}
           onPress={() => sendMothafucka(navigation.getParam('amount'), navigation.getParam('toAddress').split(':')[1])}
         >
-          <Text
-            style={styles.nextButtonText}
-          >
-Confirm
-          </Text>
+          <Text style={styles.nextButtonText}>Confirm</Text>
         </TouchableOpacity>
       </View>
     </View>

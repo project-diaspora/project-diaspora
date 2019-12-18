@@ -1,19 +1,18 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity,} from 'react-native';
+import {
+  StyleSheet, Text, View, TouchableOpacity,
+} from 'react-native';
 
-const SignInScreen = ({navigation}) => {
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-        <Text style={styles.buttonText}>Sign up</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
-        <Text style={styles.buttonText}>Sign in</Text>
-      </TouchableOpacity>
-    </View>
-  );
-
-}
+const SignInScreen = ({ navigation }) => (
+  <View style={styles.container}>
+    <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+      <Text style={styles.buttonText}>Sign up</Text>
+    </TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
+      <Text style={styles.buttonText}>Sign in</Text>
+    </TouchableOpacity>
+  </View>
+);
 
 SignInScreen.navigationOptions = {
   header: null,
@@ -33,5 +32,3 @@ const styles = StyleSheet.create({
 });
 
 export default SignInScreen;
-
-

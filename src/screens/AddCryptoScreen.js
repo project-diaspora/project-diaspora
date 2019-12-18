@@ -1,8 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View, Text, StyleSheet, TouchableOpacity
+} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
-import Currencies from '../constants/Currencies'
-import { Context as AuthContext } from "../context/AuthContext";
+import Currencies from '../constants/Currencies';
+import { Context as AuthContext } from '../context/AuthContext';
 
 const AddCryptoScreen = ({ navigation }) => {
   const [crypto, setCrypto] = useState(null);
@@ -15,7 +17,7 @@ const AddCryptoScreen = ({ navigation }) => {
   }, []);
 
   const getCrypto = async () => {
-    await setCrypto(navigation.getParam('crypto'))
+    await setCrypto(navigation.getParam('crypto'));
   };
 
   return (
@@ -35,20 +37,18 @@ const AddCryptoScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       )}
-    </View >
-  )
+    </View>
+  );
 };
 
-AddCryptoScreen.navigationOptions = () => {
-  return {
-    title: 'Add Crypto',
-    headerStyle: {
-      shadowColor: 'transparent',
-      elevation: 0,
-      borderBottomWidth: 0,
-    },
-  }
-};
+AddCryptoScreen.navigationOptions = () => ({
+  title: 'Add Crypto',
+  headerStyle: {
+    shadowColor: 'transparent',
+    elevation: 0,
+    borderBottomWidth: 0,
+  },
+});
 
 
 const styles = StyleSheet.create({
@@ -96,4 +96,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AddCryptoScreen
+export default AddCryptoScreen;

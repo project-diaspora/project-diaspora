@@ -1,65 +1,63 @@
-import React, {useContext, useEffect} from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
-import {Context as TransactionContext} from "../context/TransactionContext";
-import * as moment from "moment"
-import Crypto from '../components/utils/Crypto'
-import { Context as AuthContext } from "../context/AuthContext";
+import React, { useContext, useEffect } from 'react';
+import {
+  View, Text, Image, StyleSheet
+} from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+import * as moment from 'moment';
+import { Context as TransactionContext } from '../context/TransactionContext';
+import Crypto from './utils/Crypto';
+import { Context as AuthContext } from '../context/AuthContext';
 import Colors from '../constants/Colors';
 
 const TransactionList = () => {
-
-  const {state, getTransactions} = useContext(TransactionContext);
+  const { state, getTransactions } = useContext(TransactionContext);
   const { state: authState } = useContext(AuthContext);
 
   useEffect(() => {
     getTransactions(authState.walletAddress);
   }, []);
 
-  const toDateString = (timeStamp) => {
-    return moment.unix(timeStamp).fromNow()
-  };
+  const toDateString = (timeStamp) => moment.unix(timeStamp).fromNow();
 
   const transactionName = (item) => {
     if (item.to === authState.walletAddress) {
-      return 'Deposit'
-    } else if (item.from === authState.walletAddress) {
-      return 'Withdrawal'
-    } else {
-      return 'Blockchain'
+      return 'Deposit';
+    } if (item.from === authState.walletAddress) {
+      return 'Withdrawal';
     }
-  }
-  
+    return 'Blockchain';
+  };
+
   const plusMinus = (item) => {
     if (item.to === authState.walletAddress) {
-      item.type = 'credit'
-      return '+'
-    } else if (item.from === authState.walletAddress) {
-      item.type = 'debit'
-      return '-'
-    } else {
-      return ''
+      item.type = 'credit';
+      return '+';
+    } if (item.from === authState.walletAddress) {
+      item.type = 'debit';
+      return '-';
     }
-  }
+    return '';
+  };
 
 
   return (
     <View>
       <FlatList
         data={state.transactions}
-        renderItem={({item}) =>
+        renderItem={({ item }) => (
           <View style={styles.transactionListContainer}>
             <Image
               source={require('../../assets/images/dai.png')}
-              style={styles.imageStyle}/>
+              style={styles.imageStyle}
+            />
             <View style={styles.transactionInformation}>
               <Text style={styles.transactionName}>{transactionName(item)}</Text>
               <Text style={styles.transactionDate}>{toDateString(item.timeStamp)}</Text>
             </View>
             <Text style={[styles.amount, item.credit ? styles.amountGreen : styles.amountGreen]}>{plusMinus(item)} ${Crypto.weiToInteger(item.value)}</Text>
           </View>
-        }
-        keyExtractor={item => item.transactionIndex}
+        )}
+        keyExtractor={(item) => item.transactionIndex}
       />
     </View>
   );

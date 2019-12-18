@@ -1,22 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import {
+  Text, View, StyleSheet, Button
+} from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
-export default function SelectContactScreen({navigation}) {
+export default function SelectContactScreen({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
   useEffect(() => {
     (async () => {
-      const { status } = await Permissions.askAsync(Permissions.CAMERA)
+      const { status } = await Permissions.askAsync(Permissions.CAMERA);
       setHasPermission(status === 'granted');
     })();
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    navigation.navigate('ConfirmTransaction', { amount: navigation.getParam('amount'), toAddress: data })
+    navigation.navigate('ConfirmTransaction', { amount: navigation.getParam('amount'), toAddress: data });
   };
 
   if (hasPermission === null) {
@@ -32,14 +34,15 @@ export default function SelectContactScreen({navigation}) {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-end',
-      }}>
+      }}
+    >
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
 
       {scanned && (
-        <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />
+        <Button title="Tap to Scan Again" onPress={() => setScanned(false)} />
       )}
     </View>
   );
