@@ -49,7 +49,7 @@ const SelectAmountScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.modalContainer}>
+    <View style={styles.keyboardContainer}>
       <View style={styles.amountContainer}>
         <Text style={styles.amountText}>
           $
@@ -169,9 +169,9 @@ SelectAmountScreen.navigationOptions = ({ navigation }) => ({
 
 
 const styles = StyleSheet.create({
-  modalContainer: {
+  keyboardContainer: {
     flex: 1,
-    flexDirection: 'column',
+    justifyContent: 'space-around',
     paddingHorizontal: 10,
   },
   closeButton: {
@@ -206,14 +206,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   keyboard: {
-    flex: 1,
-    // justifyContent: 'space-evenly'
+    marginBottom: 100,
   },
   keyboardButton: {
     justifyContent: 'center',
     alignItems: 'center',
     width: '33%',
-    height: 120
+    height: 80,
   },
   keyboardText: {
     textAlign: 'center',

@@ -12,7 +12,7 @@ const generateMnemonic = async () => {
   return await SecureStore.setItemAsync('mnemonic', mnemonic)
 };
 
-const _deriveWalletAddress = async () => {
+const deriveWalletAddress = async () => {
   let mnemonic = await SecureStore.getItemAsync('mnemonic')
   const wallet = new ethers.Wallet.fromMnemonic(mnemonic)
   mnemonic = null
@@ -24,7 +24,7 @@ const getWalletAddress = async () => {
   let walletAddress = await SecureStore.getItemAsync('walletAddress')
 
   if (!walletAddress) {
-    walletAddress = await _deriveWalletAddress()
+    walletAddress = await deriveWalletAddress()
   }
 
   return walletAddress
@@ -74,4 +74,4 @@ const weiToInteger = (amountInWei) => {
   return Number(ethers.utils.formatEther(amountInWei)).toLocaleString(undefined, { maximumFractionDigits: 2 })
 }
 
-export default { generateMnemonic, getWalletAddress, getEthersWallet, getStoredMnemonic, getBalance, signDAITransaction, weiToInteger }
+export default { generateMnemonic, deriveWalletAddress, getWalletAddress, getEthersWallet, getStoredMnemonic, getBalance, signDAITransaction, weiToInteger }

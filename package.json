@@ -12,7 +12,10 @@
     "postinstall": "./node_modules/.bin/rn-nodeify --install buffer,stream,events --hack;"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|sentry-expo|native-base)"
+    ]
   },
   "dependencies": {
     "@expo/samples": "~3.0.3",
@@ -59,7 +62,8 @@
     "eslint-plugin-react": "^7.17.0",
     "jest-expo": "^35.0.0",
     "json-server": "^0.15.1",
-    "ngrok": "^3.2.5"
+    "ngrok": "^3.2.5",
+    "react-test-renderer": "^16.12.0"
   },
   "private": true,
   "react-native": {
