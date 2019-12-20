@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity,
+  Alert, View, Text, StyleSheet, Linking, TouchableOpacity
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
+import { Context as AuthContext } from '../context/AuthContext';
 
-const SelectAmountScreen = ({ navigation }) => {
+const AddCardScreen = ({ navigation }) => {
+  const { state } = useContext(AuthContext);
+
   const [integers, setIntegers] = useState('0');
   const [decimals, setDecimals] = useState(null);
 
@@ -48,6 +51,26 @@ const SelectAmountScreen = ({ navigation }) => {
     }
   };
 
+  const next = () => {
+    let amountInUsd = integers;
+    if (decimals && decimals !== '.') {
+      amountInUsd = amountInUsd.concat(decimals);
+    }
+    Alert.alert(
+      'Sending you to Wyre',
+      'We\'re about to send you to Wyre to process your transactions. All details on the following page have been pre-filled and should not be changed.',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        { text: 'OK', onPress: () => Linking.openURL(`https://pay.sendwyre.com/purchase?destCurrency=DAI&sourceAmount=${amountInUsd}&dest=ethereum:${state.walletAddress}&paymentMethod=apple-pay`) },
+      ],
+      { cancelable: false }
+    );
+  };
+
   return (
     <View style={styles.modalContainer}>
       <View style={styles.amountContainer}>
@@ -56,71 +79,84 @@ const SelectAmountScreen = ({ navigation }) => {
           {integers}
           {decimals}
         </Text>
-        <TouchableOpacity style={styles.maxButton}><Text style={styles.maxButtonText}>Max</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.maxButton}>
+          <Text style={styles.maxButtonText}>Max</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.keyboard}>
         <View style={styles.keyboardRow}>
-          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('1')}><Text
-            style={styles.keyboardText}
-          >1
-          </Text>
+          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('1')}>
+            <Text
+              style={styles.keyboardText}
+            >1
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('2')}><Text
-            style={styles.keyboardText}
-          >2
-          </Text>
+          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('2')}>
+            <Text
+              style={styles.keyboardText}
+            >2
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('3')}><Text
-            style={styles.keyboardText}
-          >3
-          </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.keyboardRow}>
-          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('4')}><Text
-            style={styles.keyboardText}
-          >4
-          </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('5')}><Text
-            style={styles.keyboardText}
-          >5
-          </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('6')}><Text
-            style={styles.keyboardText}
-          >6
-          </Text>
+          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('3')}>
+            <Text
+              style={styles.keyboardText}
+            >3
+            </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.keyboardRow}>
-          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('7')}><Text
-            style={styles.keyboardText}
-          >7
-          </Text>
+          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('4')}>
+            <Text
+              style={styles.keyboardText}
+            >4
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('8')}><Text
-            style={styles.keyboardText}
-          >8
-          </Text>
+          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('5')}>
+            <Text
+              style={styles.keyboardText}
+            >5
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('9')}><Text
-            style={styles.keyboardText}
-          >9
-          </Text>
+          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('6')}>
+            <Text
+              style={styles.keyboardText}
+            >6
+            </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.keyboardRow}>
-          <TouchableOpacity style={styles.keyboardButton} onPress={() => addDecimal()}><Text
-            style={styles.keyboardText}
-          >.
-          </Text>
+          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('7')}>
+            <Text
+              style={styles.keyboardText}
+            >7
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('0')}><Text
-            style={styles.keyboardText}
-          >0
-          </Text>
+          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('8')}>
+            <Text
+              style={styles.keyboardText}
+            >8
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('9')}>
+            <Text
+              style={styles.keyboardText}
+            >9
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.keyboardRow}>
+          <TouchableOpacity style={styles.keyboardButton} onPress={() => addDecimal()}>
+            <Text
+              style={styles.keyboardText}
+            >.
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('0')}>
+            <Text
+              style={styles.keyboardText}
+            >0
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.keyboardButton} onPress={() => backspace()}><Ionicons
             style={{ textAlign: 'center' }}
@@ -133,10 +169,11 @@ const SelectAmountScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.nextButtonContainer}>
-        <TouchableOpacity style={styles.nextButton} onPress={() => navigation.navigate('SelectContact', { amount: integers.concat(decimals) })}><Text
-          style={styles.nextButtonText}
-        >Next
-        </Text>
+        <TouchableOpacity style={styles.nextButton} onPress={() => next()}>
+          <Text
+            style={styles.nextButtonText}
+          >Next
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -144,40 +181,20 @@ const SelectAmountScreen = ({ navigation }) => {
 };
 
 
-SelectAmountScreen.navigationOptions = ({ navigation }) => ({
+AddCardScreen.navigationOptions = () => ({
   title: 'Select Amount',
-  headerRight: (
-    <TouchableOpacity
-      style={styles.closeButton}
-      onPress={() => {
-        navigation.popToTop();
-      }}
-    >
-      <Ionicons name="ios-close" size={40} color="black" />
-    </TouchableOpacity>
-  ),
-  headerLeft: null,
-  headerRightContainerStyle: {
-    paddingRight: 20
-  },
   headerStyle: {
     shadowColor: 'transparent',
     elevation: 0,
     borderBottomWidth: 0,
-  }
+  },
 });
-
 
 const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     flexDirection: 'column',
     paddingHorizontal: 10,
-  },
-  closeButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    margin: -10,
   },
   amountText: {
     fontSize: 40,
@@ -228,7 +245,7 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     backgroundColor: Colors.green,
-    paddingVertical: 10,
+    paddingVertical: 12,
     paddingHorizontal: 100,
     marginHorizontal: 20,
     borderRadius: 10,
@@ -251,4 +268,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SelectAmountScreen;
+export default AddCardScreen;

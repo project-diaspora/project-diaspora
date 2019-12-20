@@ -10,13 +10,17 @@ const AddMoneyScreen = ({ navigation }) => (
 
     <Text style={styles.paymentTypes}>Credit Card</Text>
 
-    <TouchableOpacity style={styles.paymentButton} onPress={() => Linking.openURL('https://pay.sendwyre.com')}>
+    <TouchableOpacity
+      style={styles.paymentButton}
+      onPress={() => {
+        navigation.navigate('AddCard');
+      }}
+    >
       <Ionicons name="ios-card" size={35} color={Colors.green} />
       <Text style={styles.paymentText}>Pay with Apple Pay</Text>
     </TouchableOpacity>
 
     <Text style={styles.paymentTypes}>Digital Currencies</Text>
-
 
     <TouchableOpacity
       style={styles.paymentButton}
@@ -73,7 +77,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   closeButton: {
-    padding: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     margin: -10,
   },
   paymentTypes: {

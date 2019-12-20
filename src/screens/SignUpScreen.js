@@ -10,7 +10,6 @@ const SignUpScreen = ({ navigation }) => {
   const { state, signup, clearErrorMessage } = useContext(AuthContext);
   const [username, setUsername] = useState('');
 
-
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Enter a username</Text>

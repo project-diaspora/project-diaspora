@@ -1,66 +1,80 @@
 import React, { useState, useContext } from 'react';
 import {
-  StyleSheet, Text, View, Image, TouchableHighlight, TouchableOpacity, ScrollView
+  StyleSheet, Text, View, Image, TouchableHighlight, Linking, ScrollView
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import { Context as AuthContext } from '../context/AuthContext';
 
-const USER_IMG = 'https://images.unsplash.com/photo-1484862149534-102beb3bd0ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&w=512&h=512&facepad=4';
 
-const SettingsScreen = ({ navigation }) => {
+const SupportScreen = ({ navigation }) => {
   const { state, signout, clearErrorMessage } = useContext(AuthContext);
 
   return (
     <View style={styles.container}>
       <View style={styles.profileHeader}>
-        <Image source={{ uri: USER_IMG }} style={styles.profileImage} />
+        <Image source={require('../../assets/images/dai.png')} style={styles.profileImage} />
         <View style={styles.profileNames}>
-          <Text style={styles.username}>@{state.username}</Text>
+          <Text style={styles.username}>Project Diaspora</Text>
         </View>
       </View>
 
       <ScrollView>
-        <Text style={styles.subHeader}>Security</Text>
+        <Text style={styles.subHeader}>Social Media</Text>
         <TouchableHighlight onPress={() => {
-          navigation.navigate('RecoveryPhrase');
+          Linking.openURL('https://discord.gg/gNdnuzr');
         }}
         >
           <View style={[styles.option, styles.optionView, styles.optionTop]}>
-            <Text style={{ fontSize: 16 }}>Recovery Phrase</Text>
-            <Ionicons name="ios-arrow-forward" size={20} color={Colors.grey} />
+            <Image source={require('../../assets/images/discord.png')} style={{ height: 20, width: 20 }} />
+            <Text style={{ paddingLeft: 10, fontSize: 16 }}>Discord Community Forum</Text>
+          </View>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={() => {
+          Linking.openURL('https://twitter.com/ProjctDiaspora');
+        }}
+        >
+          <View style={[styles.option, styles.optionView]}>
+            <Ionicons name="logo-twitter" size={20} color="#1DA1F2" />
+            <Text style={{ paddingLeft: 10, fontSize: 16 }}>Twitter</Text>
+          </View>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={() => {
+          Linking.openURL('https://www.instagram.com/projectdiasporaleb/');
+        }}
+        >
+          <View style={[styles.option, styles.optionView]}>
+            <Ionicons name="logo-instagram" size={20} color="#E1306C" />
+            <Text style={{ paddingLeft: 10, fontSize: 16 }}>Instagram</Text>
+          </View>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={() => {
+          Linking.openURL('https://github.com/project-diaspora');
+        }}
+        >
+          <View style={[styles.option, styles.optionView]}>
+            <Ionicons name="logo-github" size={20} color={Colors.grey800} />
+            <Text style={{ paddingLeft: 10, fontSize: 16 }}>Github</Text>
           </View>
         </TouchableHighlight>
 
         <Text style={styles.subHeader}>Other</Text>
-        <TouchableHighlight>
+        <TouchableHighlight onPress={() => {
+          Linking.openURL('https://medium.com/p/343da7e50da2');
+        }}
+        >
           <View style={[styles.option, styles.optionView, styles.optionTop]}>
-            <Text style={{ fontSize: 16 }}>Local Currency</Text>
-            <Text style={styles.optionText}>USD</Text>
+            <Ionicons name="ios-paper" size={20} color={Colors.grey800} />
+            <Text style={{ paddingLeft: 10, fontSize: 16 }}>Our Manifesto</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight onPress={() => {
-          navigation.navigate('Support');
+          Linking.openURL('mailto:project.diaspora.leb@gmail.com');
         }}
         >
           <View style={[styles.option, styles.optionView]}>
-            <Text style={{ fontSize: 16 }}>Support</Text>
-            <Ionicons name="ios-arrow-forward" size={20} color={Colors.grey} />
-          </View>
-        </TouchableHighlight>
-        <TouchableHighlight>
-          <View style={[styles.option, styles.optionView]}>
-            <Text style={{ fontSize: 16 }}>Legal</Text>
-            <Ionicons name="ios-arrow-forward" size={20} color={Colors.grey} />
-          </View>
-        </TouchableHighlight>
-        <TouchableHighlight
-          onPress={() => {
-            signout();
-          }}
-        >
-          <View style={[styles.option, styles.optionView]}>
-            <Text style={styles.logout}>Sign Out</Text>
+            <Ionicons name="ios-at" size={20} color={Colors.grey800} />
+            <Text style={{ paddingLeft: 10, fontSize: 16 }}>project.diaspora.leb@gmail.com</Text>
           </View>
         </TouchableHighlight>
       </ScrollView>
@@ -68,13 +82,14 @@ const SettingsScreen = ({ navigation }) => {
   );
 };
 
-SettingsScreen.navigationOptions = {
+SupportScreen.navigationOptions = {
   headerStyle: {
     shadowColor: 'transparent',
     elevation: 0,
     borderBottomWidth: 0,
     backgroundColor: Colors.green,
   },
+  headerTintColor: 'white'
 };
 
 const styles = StyleSheet.create({
@@ -130,7 +145,6 @@ const styles = StyleSheet.create({
   },
   optionView: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
   },
   optionTop: {
     borderTopWidth: 2,
@@ -149,4 +163,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SettingsScreen;
+export default SupportScreen;
