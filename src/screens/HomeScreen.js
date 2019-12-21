@@ -20,16 +20,15 @@ const HomeScreen = () => {
 
   useEffect(() => {
     (async () => {
-      const ethBalance = await Crypto.getBalance();
-      setBalance(ethBalance);
+      setBalance(await Crypto.getBalance());
       getTransactions(authState.walletAddress)
     })();
   }, []);
 
   _onRefresh = async () => {
     setRefreshing(true);
-    const ethBalance = await Crypto.getBalance();
-    setBalance(ethBalance);
+    setBalance(await Crypto.getBalance());
+    await getTransactions(authState.walletAddress)
     setRefreshing(false);
   };
 
@@ -48,7 +47,7 @@ const HomeScreen = () => {
         )}
       >
         <View style={styles.walletBalanceContainer}>
-          <Text style={styles.walletBalanceText}>${balance}</Text>
+          <Text style={styles.walletBalanceText}>${Crypto.weiToInteger(balance)}</Text>
         </View>
         <WalletActionButtons />
         <HeaderText title="Transactions" />

@@ -106,14 +106,17 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
   },
-  nextButton: {
+  submitButton: {
     backgroundColor: Colors.green,
     paddingVertical: 10,
     paddingHorizontal: 100,
     marginHorizontal: 20,
     borderRadius: 10,
   },
-  nextButtonText: {
+  buttonDisabled: {
+    opacity: 0.5
+  },
+  submitButtonText: {
     color: 'white',
     fontSize: 16,
     textAlign: 'center',
