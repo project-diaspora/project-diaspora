@@ -1,23 +1,31 @@
 import React, { useState, useContext, useEffect } from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity
+  View, Text, StyleSheet, TouchableOpacity, Clipboard
 } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import Currencies from '../constants/Currencies';
 import { Context as AuthContext } from '../context/AuthContext';
+import Colors from '../constants/Colors'
 
 const AddCryptoScreen = ({ navigation }) => {
   const [crypto, setCrypto] = useState(null);
   const { state } = useContext(AuthContext);
+  let copyText = 'Copy'
 
   useEffect(() => {
-    (async () => {
-      await getCrypto();
-    })();
-  }, []);
+    getCrypto();
+  });
 
-  const getCrypto = async () => {
-    await setCrypto(navigation.getParam('crypto'));
+  const copyWallet = (wallet) => {
+    Clipboard.setString(wallet)
+    copyText = 'Copied!'
+    setTimeout(() => {
+      copyText = 'Copy'
+    }, 2000);
+  }
+
+  const getCrypto = () => {
+    setCrypto(navigation.getParam('crypto'));
   };
 
   return (
@@ -32,8 +40,8 @@ const AddCryptoScreen = ({ navigation }) => {
             />
           </View>
           <Text style={styles.cryptoAddress}>{state.walletAddress}</Text>
-          <TouchableOpacity style={styles.copyButton}>
-            <Text style={styles.copyText}>Copy</Text>
+          <TouchableOpacity style={styles.copyButton} onPress={() => copyWallet(state.walletAddress)}>
+            <Text style={styles.copyText}>{copyText}</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -67,9 +75,9 @@ const styles = StyleSheet.create({
   copyButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#edf2f7',
+    backgroundColor: Colors.grey200,
     paddingHorizontal: 10,
-    paddingVertical: 10,
+    paddingVertical: 15,
     borderRadius: 5,
     marginHorizontal: 50,
     marginBottom: 15,
@@ -86,8 +94,9 @@ const styles = StyleSheet.create({
   copyText: {
     marginLeft: 5,
     textTransform: 'uppercase',
-    fontWeight: '600',
+    fontWeight: '700',
     letterSpacing: 0.05,
+    fontSize: 16
   },
   cryptoAddress: {
     fontSize: 12,

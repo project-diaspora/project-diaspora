@@ -9,15 +9,20 @@ import HeaderText from '../components/HeaderText';
 import Colors from '../constants/Colors';
 import Crypto from '../components/utils/Crypto';
 
+import { Context as TransactionContext } from '../context/TransactionContext';
+import { Context as AuthContext } from '../context/AuthContext';
+
 const HomeScreen = () => {
+  const { state: authState } = useContext(AuthContext);
+  const { getTransactions } = useContext(TransactionContext);
   const [balance, setBalance] = useState('');
   const [refreshing, setRefreshing] = useState(false);
-
 
   useEffect(() => {
     (async () => {
       const ethBalance = await Crypto.getBalance();
       setBalance(ethBalance);
+      getTransactions(authState.walletAddress)
     })();
   }, []);
 
@@ -48,7 +53,6 @@ const HomeScreen = () => {
         <WalletActionButtons />
         <HeaderText title="Transactions" />
         <TransactionList />
-        <Text>{}</Text>
       </ScrollView>
     </View>
   );
