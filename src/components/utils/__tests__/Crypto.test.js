@@ -14,3 +14,21 @@ test('Get stored mnemonic', async () => {
     SecureStore.getItemAsync.mockResolvedValue(mnemonic)
     expect(await Crypto.getStoredMnemonic()).toEqual(mnemonic)
 })
+
+test('Validate a valid mnemonic', async () => {
+    SecureStore.setItemAsync.mockResolvedValue(true)
+    expect(await Crypto.tryMnemonic(mnemonic)).not.toBeFalsy()
+})
+
+test('Validate an invalid mnemonic', async () => {
+    SecureStore.setItemAsync.mockResolvedValue(true)
+    const invalidMnemonic = 'concert sunny girl regular civil pencil scrap hazard dry task can bitcoin'
+    let error;
+
+    try {
+        await Crypto.tryMnemonic(invalidMnemonic)
+    } catch (e) {
+        error = e
+    }
+    expect(error).toEqual('Invalid mnemonic')
+})

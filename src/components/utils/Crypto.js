@@ -7,13 +7,21 @@ import * as SecureStore from 'expo-secure-store';
 import getEnvVars from '../../../environment';
 const env = getEnvVars();
 
-ethers.errors.setLogLevel("error")
+ethers.errors.setLogLevel('error')
 
 const generateMnemonic = async () => {
   const randomBytes = await Random.getRandomBytesAsync(16);
   const mnemonic = ethers.utils.HDNode.entropyToMnemonic(randomBytes)
   return await SecureStore.setItemAsync('mnemonic', mnemonic)
 };
+
+const tryMnemonic = async (mnemonicFromUser) => {
+  if (ethers.utils.HDNode.isValidMnemonic(mnemonicFromUser)) {
+    return await SecureStore.setItemAsync('mnemonic', mnemonicFromUser)
+  } else {
+    throw 'Invalid mnemonic'
+  }
+}
 
 const deriveWalletAddress = async () => {
   let mnemonic = await SecureStore.getItemAsync('mnemonic')
@@ -74,4 +82,4 @@ const weiToInteger = (amountInWei) => {
   return Number(ethers.utils.formatEther(amountInWei)).toLocaleString(undefined, { maximumFractionDigits: 2 })
 }
 
-export default { generateMnemonic, deriveWalletAddress, getWalletAddress, getEthersWallet, getStoredMnemonic, getBalance, signDAITransaction, weiToInteger }
+export default { generateMnemonic, deriveWalletAddress, tryMnemonic, getWalletAddress, getEthersWallet, getStoredMnemonic, getBalance, signDAITransaction, weiToInteger }
