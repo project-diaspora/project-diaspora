@@ -156,6 +156,7 @@ SelectAmountScreen.navigationOptions = ({ navigation }) => ({
       <Ionicons name="ios-close" size={40} color="black" />
     </TouchableOpacity>
   ),
+  headerBackTitle: null,
   headerLeft: null,
   headerRightContainerStyle: {
     paddingRight: 20

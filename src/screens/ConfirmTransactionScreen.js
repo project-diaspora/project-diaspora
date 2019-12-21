@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -10,9 +10,16 @@ import Colors from '../constants/Colors';
 import Crypto from '../components/utils/Crypto';
 
 const ConfirmTransactionScreen = ({ navigation }) => {
-  const sendMothafucka = async (amount, toAddress) => {
-    const tx = await Crypto.signDAITransaction(amount.toString(), toAddress);
-    console.log(tx.hash);
+  const [processing, setProcessing] = useState(false);
+
+  const submitTransaction = async (amount, toAddress) => {
+    setProcessing(true)
+    try {
+      const tx = await Crypto.signDAITransaction(amount.toString(), toAddress);      
+      setProcessing(false)
+    } catch (err) {
+      console.log(err)
+    }
   };
 
   return (
@@ -22,12 +29,13 @@ const ConfirmTransactionScreen = ({ navigation }) => {
         <Text>toAddress:{navigation.getParam('toAddress').split(':')[1]}</Text>
       </View>
 
-      <View style={styles.nextButtonContainer}>
+      <View style={styles.submitButtonContainer}>
         <TouchableOpacity
-          style={styles.nextButton}
-          onPress={() => sendMothafucka(navigation.getParam('amount'), navigation.getParam('toAddress').split(':')[1])}
+          style={[styles.submitButton, processing ? styles.buttonDisabled : '']}
+          onPress={() => submitTransaction(navigation.getParam('amount'), navigation.getParam('toAddress').split(':')[1])}
+          disabled={processing}
         >
-          <Text style={styles.nextButtonText}>Confirm</Text>
+          <Text style={styles.submitButtonText}>{processing ? 'Processing...' : 'Submit'}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -124,7 +132,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.05,
     fontWeight: '600',
   },
-  nextButtonContainer: {
+  submitButtonContainer: {
     position: 'absolute',
     bottom: 0,
     left: 0,
