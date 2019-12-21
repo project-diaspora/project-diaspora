@@ -1,16 +1,17 @@
 import * as Random from 'expo-random';
-const bip39 = require('bip39');
 import { ethers } from 'ethers';
+import 'ethers/dist/shims.js';
 import Currencies from '../../constants/Currencies'
 import * as SecureStore from 'expo-secure-store';
 
 import getEnvVars from '../../../environment';
 const env = getEnvVars();
 
+ethers.errors.setLogLevel("error")
+
 const generateMnemonic = async () => {
   const randomBytes = await Random.getRandomBytesAsync(16);
-  let b = Buffer.from(randomBytes, 'base64').toString('hex');
-  const mnemonic = bip39.entropyToMnemonic(b);
+  const mnemonic = ethers.utils.HDNode.entropyToMnemonic(randomBytes)
   return await SecureStore.setItemAsync('mnemonic', mnemonic)
 };
 
@@ -66,7 +67,6 @@ const signDAITransaction = async (amountInDai, toAddress) => {
   };
 
   const tx = await contract.transfer(toAddress, numberOfTokensToSend, options)
-  console.log(tx)
   return tx
 }
 

@@ -4,7 +4,6 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Platform, StatusBar } from 'react-native';
-import './shim';
 import { setNavigator } from './src/navigationRef';
 
 // Providers

@@ -4,13 +4,11 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web",
     "eject": "expo eject",
     "dev": "ngrok http 3000 & json-server --watch db.json",
     "test": "jest --watchAll",
     "test:ci": "jest",
-    "lint": "eslint .",
-    "postinstall": "./node_modules/.bin/rn-nodeify --install buffer,stream,events --hack;"
+    "lint": "eslint ."
   },
   "jest": {
     "preset": "jest-expo",
@@ -23,10 +21,7 @@
     "@expo/vector-icons": "^10.0.3",
     "@react-navigation/web": "^1.0.0-alpha.9",
     "axios": "^0.19.0",
-    "bip39": "^3.0.2",
-    "buffer": "^4.9.2",
     "ethers": "^4.0.40",
-    "events": "^1.1.1",
     "expo": "^35.0.0",
     "expo-asset": "^7.0.0",
     "expo-barcode-scanner": "~7.0.0",
@@ -48,10 +43,7 @@
     "react-native-web": "^0.11.7",
     "react-navigation": "^3.12.0",
     "react-navigation-stack": "^1.10.3",
-    "react-navigation-tabs": "^2.6.2",
-    "readable-stream": "^1.0.33",
-    "rn-nodeify": "^10.2.0",
-    "stream-browserify": "^1.0.0"
+    "react-navigation-tabs": "^2.6.2"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
@@ -66,21 +58,5 @@
     "ngrok": "^3.2.5",
     "react-test-renderer": "^16.12.0"
   },
-  "private": true,
-  "react-native": {
-    "_stream_transform": "readable-stream/transform",
-    "_stream_readable": "readable-stream/readable",
-    "_stream_writable": "readable-stream/writable",
-    "_stream_duplex": "readable-stream/duplex",
-    "_stream_passthrough": "readable-stream/passthrough",
-    "stream": "stream-browserify"
-  },
-  "browser": {
-    "_stream_transform": "readable-stream/transform",
-    "_stream_readable": "readable-stream/readable",
-    "_stream_writable": "readable-stream/writable",
-    "_stream_duplex": "readable-stream/duplex",
-    "_stream_passthrough": "readable-stream/passthrough",
-    "stream": "stream-browserify"
-  }
+  "private": true
 }
