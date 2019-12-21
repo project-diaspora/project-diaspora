@@ -41,6 +41,10 @@ const getWalletAddress = async () => {
   return walletAddress
 }
 
+const validateAddress = (address) => {
+  return ethers.utils.getAddress(address)
+}
+
 const getStoredMnemonic = async () => {
   return await SecureStore.getItemAsync('mnemonic')
 }

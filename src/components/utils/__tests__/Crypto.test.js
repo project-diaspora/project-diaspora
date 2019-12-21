@@ -32,3 +32,11 @@ test('Validate an invalid mnemonic', async () => {
     }
     expect(error).toEqual('Invalid mnemonic')
 })
+
+test('Validate a valid address', () => {
+    expect(Crypto.validateAddress('0x76c929f92878b6DF73E81B2d30F0039c5A68AC35')).toBeTruthy()
+})
+
+test('Validate an invalid address', () => {
+    expect(() => Crypto.validateAddress('0x76c929f92878b6DF73E81B2d30F0039c5A68AC3C')).toThrowError()
+})
