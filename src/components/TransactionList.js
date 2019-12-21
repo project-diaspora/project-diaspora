@@ -7,9 +7,9 @@ import {
 } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import * as moment from 'moment';
+import { Context as AuthContext } from '../context/AuthContext';
 import { Context as TransactionContext } from '../context/TransactionContext';
 import Crypto from './utils/Crypto';
-import { Context as AuthContext } from '../context/AuthContext';
 import Colors from '../constants/Colors';
 
 const TransactionList = () => {
@@ -23,25 +23,15 @@ const TransactionList = () => {
   const toDateString = (timeStamp) => moment.unix(timeStamp).fromNow();
 
   const transactionName = (item) => {
-    if (item.to === authState.walletAddress) {
-      return 'Deposit';
-    } if (item.from === authState.walletAddress) {
-      return 'Withdrawal';
+    switch (item.type) {
+      case 'credit':
+        return 'Deposit'        
+      case 'debit':
+        return 'Withdrawal'
+      default:
+        return 'Blockchain'
     }
-    return 'Blockchain';
   };
-
-  const plusMinus = (item) => {
-    if (item.to === authState.walletAddress) {
-      item.type = 'credit';
-      return '+';
-    } if (item.from === authState.walletAddress) {
-      item.type = 'debit';
-      return '-';
-    }
-    return '';
-  };
-
 
   return (
     <View>
@@ -58,13 +48,13 @@ const TransactionList = () => {
               <Text style={styles.transactionDate}>{toDateString(item.timeStamp)}</Text>
             </View>
             <Text
-              style={[styles.amount, item.credit ? styles.amountGreen : styles.amountGreen]}
+              style={[styles.amount, item.type === 'credit' ? styles.amountGreen : styles.amountRed]}
             >
-              {plusMinus(item)} ${Crypto.weiToInteger(item.value)}
+              {item.type === 'credit' ? '+' : '-'} ${Crypto.weiToInteger(item.value)}
             </Text>
           </View>
         )}
-        keyExtractor={(item) => item.transactionIndex}
+        keyExtractor={(item) => item.confirmations}
       />
     </View>
   );
@@ -75,7 +65,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     marginHorizontal: 25,
-    marginBottom: 20,
+    marginBottom: 25,
   },
   imageStyle: {
     width: 40,

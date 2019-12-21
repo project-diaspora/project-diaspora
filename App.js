@@ -3,8 +3,7 @@ import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { Platform } from 'react-native';
-import './shim';
+import { Platform, StatusBar } from 'react-native';
 import { setNavigator } from './src/navigationRef';
 
 // Providers
@@ -14,6 +13,7 @@ import { Provider as TransactionProvider } from './src/context/TransactionContex
 // Screens
 import SignInScreen from './src/screens/SignInScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
+import OnboardingScreen from './src/screens/OnboardingScreen';
 import AuthLandingScreen from './src/screens/AuthLanding';
 import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
 import HomeScreen from './src/screens/HomeScreen';
@@ -24,6 +24,8 @@ import SelectAmountScreen from './src/screens/SelectAmountScreen';
 import SelectContactScreen from './src/screens/SelectContactScreen';
 import ConfirmTransactionScreen from './src/screens/ConfirmTransactionScreen';
 import AddCryptoScreen from './src/screens/AddCryptoScreen';
+import AddCardScreen from './src/screens/AddCardScreen';
+import SupportScreen from './src/screens/SupportScreen';
 
 import TabBarIcon from './src/components/TabBarIcon';
 import Colors from './src/constants/Colors';
@@ -33,8 +35,9 @@ const switchNavigator = createSwitchNavigator({
   loginFlow: createStackNavigator({
     AuthLanding: AuthLandingScreen,
     SignUp: SignUpScreen,
-    SignIn: SignInScreen
+    SignIn: SignInScreen,
   }),
+  Onboarding: OnboardingScreen,
   mainFlow: createStackNavigator({
     homeFlow: createBottomTabNavigator({
       Home: {
@@ -59,7 +62,8 @@ const switchNavigator = createSwitchNavigator({
             headerBackTitle: 'Settings',
           },
         },
-        RecoveryPhrase: RecoveryPhraseScreen
+        RecoveryPhrase: RecoveryPhraseScreen,
+        Support: SupportScreen,
       }, {
         mode: 'card',
         navigationOptions: {
@@ -87,6 +91,7 @@ const switchNavigator = createSwitchNavigator({
     }),
     AddMoneyFlow: createStackNavigator({
       AddMoney: AddMoneyScreen,
+      AddCard: AddCardScreen,
       AddCrypto: AddCryptoScreen
     }, {
       mode: 'card',
@@ -102,6 +107,7 @@ const App = createAppContainer(switchNavigator);
 export default () => (
   <AuthProvider>
     <TransactionProvider>
+      <StatusBar barStyle="dark-content" />
       <App ref={(navigator) => {
         setNavigator(navigator);
       }}

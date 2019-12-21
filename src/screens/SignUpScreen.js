@@ -6,10 +6,9 @@ import Colors from '../constants/Colors';
 import { Context as AuthContext } from '../context/AuthContext';
 
 
-const SignUpScreen = ({ navigation }) => {
+const SignUpScreen = () => {
   const { state, signup, clearErrorMessage } = useContext(AuthContext);
   const [username, setUsername] = useState('');
-
 
   return (
     <View style={styles.container}>
@@ -24,7 +23,7 @@ const SignUpScreen = ({ navigation }) => {
           signup(username);
         }}
       >
-        <Text style={[styles.buttonText, styles.signUpButtonText]}>Sign up</Text>
+        <Text style={[styles.buttonText, styles.signUpButtonText]}>Sign Up</Text>
       </TouchableOpacity>
     </View>
   );
