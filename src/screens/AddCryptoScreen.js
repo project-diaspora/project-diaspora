@@ -9,8 +9,8 @@ import Colors from '../constants/Colors'
 
 const AddCryptoScreen = ({ navigation }) => {
   const [crypto, setCrypto] = useState(null);
+  const [copyText, setcopyText] = useState('Copy');
   const { state } = useContext(AuthContext);
-  let copyText = 'Copy'
 
   useEffect(() => {
     getCrypto();
@@ -18,9 +18,9 @@ const AddCryptoScreen = ({ navigation }) => {
 
   const copyWallet = (wallet) => {
     Clipboard.setString(wallet)
-    copyText = 'Copied!'
+    setcopyText('Copied!')
     setTimeout(() => {
-      copyText = 'Copy'
+      setcopyText('Copy')
     }, 2000);
   }
 
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   copyButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.grey200,
+    backgroundColor: Colors.grey300,
     paddingHorizontal: 10,
     paddingVertical: 15,
     borderRadius: 5,
