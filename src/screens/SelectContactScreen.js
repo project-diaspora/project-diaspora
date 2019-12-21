@@ -7,12 +7,15 @@ import Crypto from '../components/utils/Crypto'
 import * as Permissions from 'expo-permissions';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Ionicons } from '@expo/vector-icons';
+import api from '../api/backend';
+
 
 export default function SelectContactScreen({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scannerVisible, setScannerVisible] = useState(false);
   const [scanned, setScanned] = useState(false);
   const [username, setUsername] = useState('');
+  const [addressError, setAddressError] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -22,6 +25,7 @@ export default function SelectContactScreen({ navigation }) {
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
+    setAddressError(null)
     setScanned(true);
     let address
     if (data.includes(':')) {
@@ -29,10 +33,13 @@ export default function SelectContactScreen({ navigation }) {
     }
     try {
       Crypto.validateAddress(address)
+      setScannerVisible(false)
       next(address)
-    } catch (error) {
-      // error
+    } catch (err) {
+      setAddressError('Invalid address')
     }
+    setScanned(false);
+    return
   };
 
   const openScanner = async () => {
@@ -45,8 +52,28 @@ export default function SelectContactScreen({ navigation }) {
     setScannerVisible(true)
   }
 
-  const next = (address) => {
-    navigation.navigate('ConfirmTransaction', { amount: navigation.getParam('amount'), toAddress: address });
+  const checkInput = async (input) => {
+    setAddressError(null)
+    try {
+      Crypto.validateAddress(input)
+      next(input)
+    } catch (error) {
+      const user = await api.checkUsername(input)
+      if (user) {
+        next(user.walletAddress, user.username)
+      } else {
+        setAddressError('Invalid username')
+      }
+    }
+  }
+
+  const next = (address, username) => {
+    let navObject = { amount: navigation.getParam('amount'), toAddress: address }
+    if (username) {
+      navObject.toUsername = username
+    }
+    console.log(navObject)
+    navigation.navigate('ConfirmTransaction', navObject);
   }
 
   return (
@@ -73,8 +100,12 @@ export default function SelectContactScreen({ navigation }) {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.nextButton} onPress={() => next(username)}>
-        <Text style={styles.nextButtonText}>Next</Text>
+      {addressError && (<View>
+        <Text style={styles.errorText}>{addressError}</Text>
+      </View>)}
+
+      <TouchableOpacity style={styles.nextButton} onPress={() => checkInput(username)}>
+        <Text style={styles.nextButtonText}>Search</Text>
       </TouchableOpacity>
 
       <Modal
@@ -115,6 +146,7 @@ SelectContactScreen.navigationOptions = () => ({
     elevation: 0,
     borderBottomWidth: 0,
   },
+  headerBackTitle: null,
 });
 
 const styles = StyleSheet.create({
@@ -153,6 +185,10 @@ const styles = StyleSheet.create({
   },
   inputSearch: {
     paddingVertical: 15
+  },
+  errorText: {
+    color: Colors.red,
+    padding: 5,
   },
   nextButton: {
     backgroundColor: Colors.green,

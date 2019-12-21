@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
   Text,
@@ -15,24 +15,39 @@ const ConfirmTransactionScreen = ({ navigation }) => {
   const submitTransaction = async (amount, toAddress) => {
     setProcessing(true)
     try {
-      const tx = await Crypto.signDAITransaction(amount.toString(), toAddress);      
+      await Crypto.signDAITransaction(amount, toAddress);      
       setProcessing(false)
+      navigation.dismiss()
     } catch (err) {
       console.log(err)
     }
   };
 
+  const shortenAddress = (address) => {
+    const firstSix = address.substring(0, 6)
+    const lastSix = address.substring(address.length - 6, address.length)
+    return `${firstSix}...${lastSix}`
+  }
+
   return (
-    <View style={styles.modalContainer}>
-      <View>
-        <Text>Amount:{navigation.getParam('amount')}</Text>
-        <Text>toAddress:{navigation.getParam('toAddress').split(':')[1]}</Text>
+    <View style={styles.container}>
+      <View style={{ flex: 1, justifyContent: 'center', marginBottom: 100, paddingHorizontal: 50 }}>
+        <View>
+          <Text style={styles.header}>Send</Text>
+          <Text style={styles.amountText}>${Crypto.formatToCurrency(navigation.getParam('amount'))}</Text>
+
+          <Text style={[styles.header, styles.top]}>To</Text>
+          {navigation.getParam('toUsername') && (
+            <Text style={styles.amountText}>@{navigation.getParam('toUsername')}</Text>
+          )}
+          <Text style={[navigation.getParam('toUsername') ? styles.smalleAddress : styles.largeAddress]}>{shortenAddress(navigation.getParam('toAddress'))}</Text>
+        </View>
       </View>
 
       <View style={styles.submitButtonContainer}>
         <TouchableOpacity
           style={[styles.submitButton, processing ? styles.buttonDisabled : '']}
-          onPress={() => submitTransaction(navigation.getParam('amount'), navigation.getParam('toAddress').split(':')[1])}
+          onPress={() => submitTransaction(navigation.getParam('amount'), navigation.getParam('toAddress'))}
           disabled={processing}
         >
           <Text style={styles.submitButtonText}>{processing ? 'Processing...' : 'Submit'}</Text>
@@ -44,18 +59,17 @@ const ConfirmTransactionScreen = ({ navigation }) => {
 
 
 ConfirmTransactionScreen.navigationOptions = ({ navigation }) => ({
-  title: 'Select Amount',
+  title: 'Confirm Transfer',
   headerRight: (
     <TouchableOpacity
       style={styles.closeButton}
       onPress={() => {
-        navigation.popToTop();
+        navigation.dismiss();
       }}
     >
       <Ionicons name="ios-close" size={40} color="black" />
     </TouchableOpacity>
   ),
-  headerLeft: null,
   headerRightContainerStyle: {
     paddingRight: 20
   },
@@ -68,51 +82,55 @@ ConfirmTransactionScreen.navigationOptions = ({ navigation }) => ({
 
 
 const styles = StyleSheet.create({
-  modalContainer: {
+  container: {
     flex: 1,
-    flexDirection: 'column',
     paddingHorizontal: 10,
   },
   closeButton: {
     padding: 10,
     margin: -10,
   },
+  header: {
+    fontSize: 18,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+    fontWeight: '700',
+    color: Colors.grey600,
+  },
+  top: {
+    marginTop: 50
+  },
   amountText: {
+    fontSize: 48,
+    color: '#2d3748',
+    fontWeight: '600',
+    textAlign: 'center',
+    marginBottom: 5,
+    color: Colors.green
+  },
+  largeText: {
     fontSize: 40,
     color: '#2d3748',
     fontWeight: '600',
     textAlign: 'center',
     marginBottom: 5,
+    color: Colors.green
   },
-  amountContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50,
-    marginVertical: 20,
-  },
-  maxButtonText: {
-    color: Colors.green,
-    textTransform: 'uppercase',
-    letterSpacing: 0.05,
+  largeAddress: {
+    fontSize: 26,
+    color: '#2d3748',
     fontWeight: '600',
-  },
-  maxButton: {
-    padding: 10,
-  },
-  containerForText: {},
-  keyboardButton: {
-    justifyContent: 'center',
-    width: '33%',
-    height: 100,
-  },
-  keyboardText: {
     textAlign: 'center',
-    color: Colors.green,
-    fontSize: 28,
-    fontWeight: '600'
+    marginBottom: 5,
+    color: Colors.green
   },
-  backspace: {
-    height: 30,
-    width: 30,
+  smalleAddress: {
+    fontSize: 20,
+    color: '#2d3748',
+    fontWeight: '600',
+    textAlign: 'center',
+    marginBottom: 5,
+    color: Colors.gray700
   },
   submitButton: {
     backgroundColor: Colors.green,

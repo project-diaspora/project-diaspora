@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import {
-  Alert, View, Text, StyleSheet, Linking, TouchableOpacity
+  Platform, Alert, View, Text, StyleSheet, Linking, TouchableOpacity
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
@@ -56,6 +56,15 @@ const AddCardScreen = ({ navigation }) => {
     if (decimals && decimals !== '.') {
       amountInUsd = amountInUsd.concat(decimals);
     }
+    let paymentProtocol
+    switch (Platform.OS) {
+      case 'ios':
+        paymentProtocol = 'apple-pay'
+        break;
+      default:
+        paymentProtocol = 'google-pay'
+        break;
+    }
     Alert.alert(
       'Sending you to Wyre',
       'We\'re about to send you to Wyre to process your transactions. All details on the following page have been pre-filled and should not be changed.',
@@ -65,7 +74,7 @@ const AddCardScreen = ({ navigation }) => {
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
-        { text: 'OK', onPress: () => Linking.openURL(`https://pay.sendwyre.com/purchase?destCurrency=DAI&sourceAmount=${amountInUsd}&dest=ethereum:${state.walletAddress}&paymentMethod=apple-pay`) },
+        { text: 'OK', onPress: () => Linking.openURL(`https://pay.sendwyre.com/purchase?destCurrency=DAI&sourceAmount=${amountInUsd}&dest=ethereum:${state.walletAddress}&paymentMethod=${paymentProtocol}`) },
       ],
       { cancelable: false }
     );

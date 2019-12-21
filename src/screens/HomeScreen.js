@@ -37,14 +37,13 @@ const HomeScreen = () => {
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
-        refreshControl={(
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={_onRefresh}
-            tintColor={Colors.green}
-            colors={Colors.green}
-          />
-        )}
+          refreshControl={(
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={_onRefresh}
+              tintColor={Colors.green}
+            />
+          )}
       >
         <View style={styles.walletBalanceContainer}>
           <Text style={styles.walletBalanceText}>${Crypto.weiToInteger(balance)}</Text>

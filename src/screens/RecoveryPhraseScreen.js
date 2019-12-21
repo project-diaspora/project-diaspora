@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Crypto from '../components/utils/Crypto';
+import Colors from '../constants/Colors';
 
 const RecoveryPhraseScreen = () => {
   const [mnemonic, setMnemonic] = useState('');
@@ -24,14 +25,16 @@ const RecoveryPhraseScreen = () => {
   );
 };
 
-RecoveryPhraseScreen.navigationOptions = () => ({
+RecoveryPhraseScreen.navigationOptions = {
   title: 'Recovery Phrase',
   headerStyle: {
     shadowColor: 'transparent',
     elevation: 0,
     borderBottomWidth: 0,
+    backgroundColor: Colors.green,
   },
-});
+  headerTintColor: 'white',
+};
 
 const styles = StyleSheet.create({
   container: {

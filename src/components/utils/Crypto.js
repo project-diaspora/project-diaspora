@@ -71,7 +71,7 @@ const signDAITransaction = async (amountInDai, toAddress) => {
   const contract = new ethers.Contract(env.DAI.contractAddress, env.DAI.contractAbi, wallet)
 
   var options = {
-    gasLimit: 150000,
+    gasLimit: 200000,
     gasPrice: ethers.utils.parseUnits('10.0', 'gwei')
   };
 
@@ -85,7 +85,11 @@ const signDAITransaction = async (amountInDai, toAddress) => {
 }
 
 const weiToInteger = (amountInWei) => {
-  return Number(ethers.utils.formatEther(amountInWei)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+  return formatToCurrency(Number(ethers.utils.formatEther(amountInWei)))
 }
 
-export default { generateMnemonic, deriveWalletAddress, tryMnemonic, getWalletAddress, validateAddress, getEthersWallet, getStoredMnemonic, getBalance, signDAITransaction, weiToInteger }
+const formatToCurrency = (number) => {
+  return Number(number).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+}
+
+export default { generateMnemonic, deriveWalletAddress, tryMnemonic, getWalletAddress, validateAddress, getEthersWallet, getStoredMnemonic, getBalance, signDAITransaction, weiToInteger, formatToCurrency }
