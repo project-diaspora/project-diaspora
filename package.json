@@ -6,6 +6,7 @@
     "ios": "expo start --ios",
     "eject": "expo eject",
     "dev": "ngrok http 3000 & json-server --watch db.json",
+    "dev:local": "json-server --watch db.json",
     "test": "jest --watchAll",
     "test:ci": "jest",
     "lint": "eslint ."

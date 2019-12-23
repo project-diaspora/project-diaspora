@@ -1,20 +1,20 @@
 {
   "expo": {
-    "name": "Project Diaspora",
-    "slug": "project-diaspora",
-    "privacy": "public",
+    "name": "Massari",
+    "slug": "massari",
+    "privacy": "unlisted",
     "sdkVersion": "35.0.0",
     "platforms": [
       "ios",
       "android"
     ],
-    "version": "1.0.0",
+    "version": "0.1.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/logo.png",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#00A651"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -23,14 +23,14 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "org.projectdiaspora.projectdiaspora",
+      "bundleIdentifier": "org.projectdiaspora.massari",
       "supportsTablet": true,
       "infoPlist": {
         "NSFaceIDUsageDescription": "This app uses FaceID for authentication."
       }
     },
     "android": {
-      "package": "org.projectdiaspora.projectdiaspora"
+      "package": "org.projectdiaspora.massari"
     }
   }
 }
