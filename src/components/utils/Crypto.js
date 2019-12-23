@@ -84,6 +84,15 @@ const signDAITransaction = async (amountInDai, toAddress) => {
   }
 }
 
+const signMessage = async (message) => {
+  const wallet = await getEthersWallet()
+  return wallet.signMessage(message)
+}
+
+const verifyMessage = async (message, signature) => {
+  return ethers.utils.verifyMessage(message, signature)
+}
+
 const weiToInteger = (amountInWei) => {
   return formatToCurrency(Number(ethers.utils.formatEther(amountInWei)))
 }
@@ -92,4 +101,4 @@ const formatToCurrency = (number) => {
   return Number(number).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 }
 
-export default { generateMnemonic, deriveWalletAddress, tryMnemonic, getWalletAddress, validateAddress, getEthersWallet, getStoredMnemonic, getBalance, signDAITransaction, weiToInteger, formatToCurrency }
+export default { generateMnemonic, deriveWalletAddress, tryMnemonic, getWalletAddress, validateAddress, getEthersWallet, getStoredMnemonic, getBalance, signDAITransaction, weiToInteger, formatToCurrency, signMessage, verifyMessage }
