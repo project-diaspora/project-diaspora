@@ -72,7 +72,6 @@ export default function SelectContactScreen({ navigation }) {
     if (username) {
       navObject.toUsername = username
     }
-    console.log(navObject)
     navigation.navigate('ConfirmTransaction', navObject);
   }
 
