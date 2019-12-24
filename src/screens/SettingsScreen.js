@@ -6,15 +6,13 @@ import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import { Context as AuthContext } from '../context/AuthContext';
 
-const USER_IMG = 'https://images.unsplash.com/photo-1484862149534-102beb3bd0ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&w=512&h=512&facepad=4';
-
 const SettingsScreen = ({ navigation }) => {
   const { state, signout, clearErrorMessage } = useContext(AuthContext);
 
   return (
     <View style={styles.container}>
       <View style={styles.profileHeader}>
-        <Image source={{ uri: USER_IMG }} style={styles.profileImage} />
+        <Image source={require('../../assets/images/inverse-logo.png')} style={styles.profileImage} />
         <View style={styles.profileNames}>
           <Text style={styles.username}>@{state.username}</Text>
         </View>

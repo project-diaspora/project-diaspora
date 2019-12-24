@@ -48,6 +48,14 @@ const SelectAmountScreen = ({ navigation }) => {
     }
   };
 
+  const next = () => {
+    let amountInUsd = integers;
+    if (decimals && decimals !== '.') {
+      amountInUsd = amountInUsd.concat(decimals);
+    }
+    navigation.navigate('SelectContact', { amount: amountInUsd })
+  }
+
   return (
     <View style={styles.keyboardContainer}>
       <View style={styles.amountContainer}>
@@ -133,7 +141,7 @@ const SelectAmountScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.nextButtonContainer}>
-        <TouchableOpacity style={styles.nextButton} onPress={() => navigation.navigate('SelectContact', { amount: integers.concat(decimals) })}><Text
+        <TouchableOpacity style={styles.nextButton} onPress={() => next()}><Text
           style={styles.nextButtonText}
         >Next
         </Text>
@@ -156,6 +164,7 @@ SelectAmountScreen.navigationOptions = ({ navigation }) => ({
       <Ionicons name="ios-close" size={40} color="black" />
     </TouchableOpacity>
   ),
+  headerBackTitle: null,
   headerLeft: null,
   headerRightContainerStyle: {
     paddingRight: 20

@@ -13,9 +13,9 @@ const SupportScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.profileHeader}>
-        <Image source={require('../../assets/images/dai.png')} style={styles.profileImage} />
+        <Image source={require('../../assets/images/inverse-logo.png')} style={styles.profileImage} />
         <View style={styles.profileNames}>
-          <Text style={styles.username}>Project Diaspora</Text>
+          <Text style={styles.username}>Massari</Text>
         </View>
       </View>
 

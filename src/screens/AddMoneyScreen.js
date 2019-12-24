@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  View, Text, StyleSheet, Image, TouchableOpacity, Linking
+  Platform, View, Text, StyleSheet, Image, TouchableOpacity, Linking
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
@@ -17,7 +17,7 @@ const AddMoneyScreen = ({ navigation }) => (
       }}
     >
       <Ionicons name="ios-card" size={35} color={Colors.green} />
-      <Text style={styles.paymentText}>Pay with Apple Pay</Text>
+      <Text style={styles.paymentText}>{Platform.OS === 'ios' ? 'Pay with Apple Pay' : 'Pay with Google Pay'}</Text>
     </TouchableOpacity>
 
     <Text style={styles.paymentTypes}>Digital Currencies</Text>
@@ -57,6 +57,7 @@ AddMoneyScreen.navigationOptions = ({ navigation }) => ({
       <Ionicons name="ios-close" size={40} color="black" />
     </TouchableOpacity>
   ),
+  headerBackTitle: null,
   headerLeft: null,
   headerRightContainerStyle: {
     paddingRight: 20

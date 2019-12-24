@@ -41,6 +41,10 @@ const getWalletAddress = async () => {
   return walletAddress
 }
 
+const validateAddress = (address) => {
+  return ethers.utils.getAddress(address)
+}
+
 const getStoredMnemonic = async () => {
   return await SecureStore.getItemAsync('mnemonic')
 }
@@ -56,30 +60,45 @@ const getEthersWallet = async () => {
 const getBalance = async () => {
   const provider = new ethers.providers.InfuraProvider('kovan', env.infuraKey);
   const walletAddress = await getWalletAddress()
-  const DAIContract = env.DAI;
-  const contractDai = new ethers.Contract(DAIContract.contractAddress, DAIContract.contractAbi, provider)
+  const contractDai = new ethers.Contract(env.DAI.contractAddress, env.DAI.contractAbi, provider)
   const daiBalanceinWei = await contractDai.balanceOf(walletAddress)
-  const daiBalanceInDai = Number(ethers.utils.formatEther(daiBalanceinWei)).toFixed(2)
-  return daiBalanceInDai
+  return daiBalanceinWei
 }
 
 const signDAITransaction = async (amountInDai, toAddress) => {
   const wallet = await getEthersWallet()
-  const DAIContract = env.DAI;
   const numberOfTokensToSend = ethers.utils.parseUnits(amountInDai, Currencies.DAI.decimals)
-  const contract = new ethers.Contract(DAIContract.contractAddress, DAIContract.contractAbi, wallet)
+  const contract = new ethers.Contract(env.DAI.contractAddress, env.DAI.contractAbi, wallet)
 
   var options = {
-    gasLimit: 150000,
+    gasLimit: 200000,
     gasPrice: ethers.utils.parseUnits('10.0', 'gwei')
   };
 
-  const tx = await contract.transfer(toAddress, numberOfTokensToSend, options)
-  return tx
+  try {
+    const tx = await contract.transfer(toAddress, numberOfTokensToSend, options)
+    await tx.wait()
+    return tx
+  } catch (error) {
+    throw error
+  }
+}
+
+const signMessage = async (message) => {
+  const wallet = await getEthersWallet()
+  return wallet.signMessage(message)
+}
+
+const verifyMessage = async (message, signature) => {
+  return ethers.utils.verifyMessage(message, signature)
 }
 
 const weiToInteger = (amountInWei) => {
-  return Number(ethers.utils.formatEther(amountInWei)).toLocaleString(undefined, { maximumFractionDigits: 2 })
+  return formatToCurrency(Number(ethers.utils.formatEther(amountInWei)))
 }
 
-export default { generateMnemonic, deriveWalletAddress, tryMnemonic, getWalletAddress, getEthersWallet, getStoredMnemonic, getBalance, signDAITransaction, weiToInteger }
+const formatToCurrency = (number) => {
+  return Number(number).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+}
+
+export default { generateMnemonic, deriveWalletAddress, tryMnemonic, getWalletAddress, validateAddress, getEthersWallet, getStoredMnemonic, getBalance, signDAITransaction, weiToInteger, formatToCurrency, signMessage, verifyMessage }
