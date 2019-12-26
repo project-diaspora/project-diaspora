@@ -58,7 +58,7 @@ export default function SelectContactScreen({ navigation }) {
       Crypto.validateAddress(input)
       next(input)
     } catch (error) {
-      const user = await api.checkUsername(input)
+      const user = await api.searchUser(input)
       if (user) {
         next(user.walletAddress, user.username)
       } else {

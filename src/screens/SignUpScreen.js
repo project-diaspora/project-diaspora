@@ -15,6 +15,11 @@ const SignUpScreen = () => {
       <Text style={styles.header}>Enter a username</Text>
       <TextInput
         style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+        autoCompleteType={'off'}
+        autoCapitalize={'none'}
+        autoCorrect={false}
+        autoFocus={true}
+        importantForAutofill={'no'}
         onChangeText={(usernameUpdate) => setUsername(usernameUpdate)}
       />
       <TouchableOpacity

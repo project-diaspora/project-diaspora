@@ -1,5 +1,6 @@
 import * as SecureStore from 'expo-secure-store';
 import createDataContext from './createDataContext';
+import api from '../api/backend';
 
 import { navigate } from '../navigationRef';
 
@@ -38,9 +39,14 @@ const clearErrorMessage = (dispatch) => () => {
 
 const signup = (dispatch) => async (username) => {
   try {
+    await SecureStore.deleteItemAsync('walletAddress')
+    await SecureStore.deleteItemAsync('mnemonic')
+    await SecureStore.deleteItemAsync('username')
     await Crypto.generateMnemonic();
     const walletAddress = await Crypto.getWalletAddress();
+    await api.createUser(username, walletAddress)
     await SecureStore.setItemAsync('username', username);
+    await SecureStore.setItemAsync('walletAddress', walletAddress)
     dispatch({ type: 'signin', payload: { username, walletAddress } });
     navigate('Onboarding');
   } catch (err) {

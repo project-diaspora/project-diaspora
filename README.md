@@ -4,26 +4,23 @@ Project Diaspora is a peer-to-peer payments network that allows a diaspora to se
 
 ## Download Links
 
-Project Diaspora is available as both and Android and iOS app.
+Project Diaspora is soon to be available for both Android and iOS.
 
 # Features
 
-Project Diaspora functions very similarly to a typical banking app but without any of the restrictions that banks impose. We support transactions in Bitcoin, Ethereum and DAI.
+Project Diaspora functions very similarly to a typical banking app but without many of the restrictions. Supported transactions in DAI.
 
-You can
-1. Add money to your account
-2. Send money to your friends and family
-3. Pull up a list of your transactions 
+1. Add money to account
+2. Send money to friends and family
 
 ## Build Instructions
 
 ```
-git clone https://github.com/projectdiaspora/project-diaspora.git
+git clone https://github.com/project-diaspora/project-diaspora.git
 cd project-diaspora/
 npm install
 expo start
 ```
-
 
 ## Contribute
 

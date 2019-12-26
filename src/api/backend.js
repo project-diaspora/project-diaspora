@@ -18,7 +18,6 @@ const constructOptions = async (options) => {
   options.url = `${env.apiUrl}/${options.path}`
   options.headers = {
     'x-massari-signature': signature,
-    'x-massari-path': options.path,
     'x-massari-timestamp': timestamp,
   }
   delete options.path;
@@ -32,8 +31,12 @@ export default {
       path: `users/${username}`
     };
     const options = await constructOptions(prepareOptions)
-    const res = await axios(options);
-    return res.data
+    try {
+      const res = await axios(options);
+      return res.data
+    } catch (err) {
+      throw err
+    }
   },
 
   createUser: async (username, walletAddress) => {
@@ -42,11 +45,15 @@ export default {
       path: 'users',
       data: {
         username: username,
-        wallet_address: walletAddress
+        walletAddress: walletAddress
       }
     };
     const options = await constructOptions(prepareOptions)
-    const res = await axios(options);
-    return res.data
+    try {
+      const res = await axios(options);
+      return res.data
+    } catch (err) {
+      throw err
+    }
   },
 }
