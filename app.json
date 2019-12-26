@@ -30,7 +30,8 @@
       }
     },
     "android": {
-      "package": "org.projectdiaspora.massari"
+      "package": "org.projectdiaspora.massari",
+      "permissions" : ["CAMERA"]
     }
   }
 }
