@@ -5,6 +5,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Platform, StatusBar } from 'react-native';
 import { setNavigator } from './src/navigationRef';
+import { registerRootComponent } from 'expo';
 
 // Providers
 import { Provider as AuthProvider } from './src/context/AuthContext';
@@ -115,3 +116,5 @@ export default () => (
     </TransactionProvider>
   </AuthProvider>
 );
+
+registerRootComponent(App);
