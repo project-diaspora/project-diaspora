@@ -23,14 +23,14 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "org.projectdiaspora.massari",
+      "bundleIdentifier": "app.massari.massari",
       "supportsTablet": true,
       "infoPlist": {
         "NSFaceIDUsageDescription": "This app uses FaceID for authentication."
       }
     },
     "android": {
-      "package": "org.projectdiaspora.massari",
+      "package": "app.massari.massari",
       "permissions" : ["CAMERA"]
     }
   }

@@ -13,7 +13,7 @@
     "react/jsx-one-expression-per-line": 0,
     "react/prop-types": "off",
     "comma-dangle": "off",
-    "jsx-a11y/accessible-emoji": off,
+    "jsx-a11y/accessible-emoji": "off"
   },
   "globals": {
     "fetch": false

@@ -1,104 +1,112 @@
 import * as Random from 'expo-random';
 import { ethers } from 'ethers';
-import 'ethers/dist/shims.js';
-import Currencies from '../../constants/Currencies'
+import 'ethers/dist/shims';
 import * as SecureStore from 'expo-secure-store';
-
+import Currencies from '../../constants/Currencies';
 import getEnvVars from '../../../environment';
+
 const env = getEnvVars();
 
-ethers.errors.setLogLevel('error')
+ethers.errors.setLogLevel('error');
 
 const generateMnemonic = async () => {
   const randomBytes = await Random.getRandomBytesAsync(16);
-  const mnemonic = ethers.utils.HDNode.entropyToMnemonic(randomBytes)
-  return await SecureStore.setItemAsync('mnemonic', mnemonic)
+  const mnemonic = ethers.utils.HDNode.entropyToMnemonic(randomBytes);
+  return await SecureStore.setItemAsync('mnemonic', mnemonic);
 };
 
 const tryMnemonic = async (mnemonicFromUser) => {
   if (ethers.utils.HDNode.isValidMnemonic(mnemonicFromUser)) {
-    return await SecureStore.setItemAsync('mnemonic', mnemonicFromUser)
-  } else {
-    throw 'Invalid mnemonic'
+    return SecureStore.setItemAsync('mnemonic', mnemonicFromUser);
   }
-}
+  throw new Error('Invalid mnemonic');
+};
 
 const deriveWalletAddress = async () => {
-  let mnemonic = await SecureStore.getItemAsync('mnemonic')
-  const wallet = new ethers.Wallet.fromMnemonic(mnemonic)
-  mnemonic = null
-  await SecureStore.setItemAsync('walletAddress', wallet.address)
-  return wallet.address
-}
+  let mnemonic = await SecureStore.getItemAsync('mnemonic');
+  const wallet = new ethers.Wallet.fromMnemonic(mnemonic);
+  mnemonic = null;
+  await SecureStore.setItemAsync('walletAddress', wallet.address);
+  return wallet.address;
+};
 
 const getWalletAddress = async () => {
-  let walletAddress = await SecureStore.getItemAsync('walletAddress')
+  let walletAddress = await SecureStore.getItemAsync('walletAddress');
 
   if (!walletAddress) {
-    walletAddress = await deriveWalletAddress()
+    walletAddress = await deriveWalletAddress();
   }
 
-  return walletAddress
-}
+  return walletAddress;
+};
 
-const validateAddress = (address) => {
-  return ethers.utils.getAddress(address)
-}
+/**
+ * Returns ?
+ * @param address
+ * @returns {string}
+ */
+const validateAddress = (address) => ethers.utils.getAddress(address);
 
-const getStoredMnemonic = async () => {
-  return await SecureStore.getItemAsync('mnemonic')
-}
+const getStoredMnemonic = async () => SecureStore.getItemAsync('mnemonic');
 
 const getEthersWallet = async () => {
   const provider = new ethers.providers.InfuraProvider('kovan', env.infuraKey);
-  let mnemonic = await SecureStore.getItemAsync('mnemonic')
-  const wallet = new ethers.Wallet.fromMnemonic(mnemonic)
-  mnemonic = null
-  return wallet.connect(provider)
-}
+  let mnemonic = await SecureStore.getItemAsync('mnemonic');
+  const wallet = new ethers.Wallet.fromMnemonic(mnemonic);
+  mnemonic = null;
+  return wallet.connect(provider);
+};
 
 const getBalance = async () => {
   const provider = new ethers.providers.InfuraProvider('kovan', env.infuraKey);
-  const walletAddress = await getWalletAddress()
-  const contractDai = new ethers.Contract(env.DAI.contractAddress, env.DAI.contractAbi, provider)
-  const daiBalanceinWei = await contractDai.balanceOf(walletAddress)
-  return daiBalanceinWei
-}
+  const walletAddress = await getWalletAddress();
+  const contractDai = new ethers.Contract(env.DAI.contractAddress, env.DAI.contractAbi, provider);
+  const daiBalanceinWei = await contractDai.balanceOf(walletAddress);
+  return daiBalanceinWei;
+};
 
 const signDAITransaction = async (amountInDai, toAddress) => {
-  const wallet = await getEthersWallet()
-  const numberOfTokensToSend = ethers.utils.parseUnits(amountInDai, Currencies.DAI.decimals)
-  const contract = new ethers.Contract(env.DAI.contractAddress, env.DAI.contractAbi, wallet)
+  const wallet = await getEthersWallet();
+  const numberOfTokensToSend = ethers.utils.parseUnits(amountInDai, Currencies.DAI.decimals);
+  const contract = new ethers.Contract(env.DAI.contractAddress, env.DAI.contractAbi, wallet);
 
-  var options = {
+  const options = {
     gasLimit: 200000,
     gasPrice: ethers.utils.parseUnits('10.0', 'gwei')
   };
 
   try {
-    const tx = await contract.transfer(toAddress, numberOfTokensToSend, options)
-    await tx.wait()
-    return tx
+    const tx = await contract.transfer(toAddress, numberOfTokensToSend, options);
+    await tx.wait();
+    return tx;
   } catch (error) {
-    throw error
+    throw error;
   }
-}
+};
 
 const signMessage = async (message) => {
-  const wallet = await getEthersWallet()
-  return wallet.signMessage(message)
-}
+  const wallet = await getEthersWallet();
+  return wallet.signMessage(message);
+};
 
-const verifyMessage = async (message, signature) => {
-  return ethers.utils.verifyMessage(message, signature)
-}
+const verifyMessage = async (message, signature) => ethers.utils.verifyMessage(message, signature);
 
-const weiToInteger = (amountInWei) => {
-  return formatToCurrency(Number(ethers.utils.formatEther(amountInWei)))
-}
+const weiToInteger = (amountInWei) => formatToCurrency(Number(ethers.utils.formatEther(amountInWei)));
 
-const formatToCurrency = (number) => {
-  return Number(number).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-}
+const formatToCurrency = (number) => Number(number).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-export default { generateMnemonic, deriveWalletAddress, tryMnemonic, getWalletAddress, validateAddress, getEthersWallet, getStoredMnemonic, getBalance, signDAITransaction, weiToInteger, formatToCurrency, signMessage, verifyMessage }
+export default {
+  generateMnemonic,
+  deriveWalletAddress,
+  tryMnemonic,
+  getWalletAddress,
+  validateAddress,
+  getEthersWallet,
+  getStoredMnemonic,
+  getBalance,
+  signDAITransaction,
+  weiToInteger,
+  formatToCurrency,
+  signMessage,
+  verifyMessage
+};

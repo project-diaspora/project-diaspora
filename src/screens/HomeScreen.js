@@ -21,14 +21,14 @@ const HomeScreen = () => {
   useEffect(() => {
     (async () => {
       setBalance(await Crypto.getBalance());
-      getTransactions(authState.walletAddress)
+      getTransactions(authState.walletAddress);
     })();
   }, []);
 
   _onRefresh = async () => {
     setRefreshing(true);
     setBalance(await Crypto.getBalance());
-    await getTransactions(authState.walletAddress)
+    await getTransactions(authState.walletAddress);
     setRefreshing(false);
   };
 
@@ -37,12 +37,12 @@ const HomeScreen = () => {
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
-          refreshControl={(
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={_onRefresh}
-              tintColor={Colors.green}
-            />
+        refreshControl={(
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={_onRefresh}
+            tintColor={Colors.green}
+          />
           )}
       >
         <View style={styles.walletBalanceContainer}>

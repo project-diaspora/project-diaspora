@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
+import AppButton from '../components/AppButton';
 
 const SelectAmountScreen = ({ navigation }) => {
   const [integers, setIntegers] = useState('0');
@@ -53,8 +54,8 @@ const SelectAmountScreen = ({ navigation }) => {
     if (decimals && decimals !== '.') {
       amountInUsd = amountInUsd.concat(decimals);
     }
-    navigation.navigate('SelectContact', { amount: amountInUsd })
-  }
+    navigation.navigate('SelectContact', { amount: amountInUsd });
+  };
 
   return (
     <View style={styles.keyboardContainer}>
@@ -140,12 +141,17 @@ const SelectAmountScreen = ({ navigation }) => {
         </View>
       </View>
 
-      <View style={styles.nextButtonContainer}>
-        <TouchableOpacity style={styles.nextButton} onPress={() => next()}><Text
-          style={styles.nextButtonText}
-        >Next
-        </Text>
-        </TouchableOpacity>
+      <View style={styles.container}>
+        <View style={styles.actionContainer}>
+          <AppButton
+            buttonStyle="primaryButton"
+            textStyle="primaryText"
+            title="Next"
+            onSubmit={() => {
+              next();
+            }}
+          />
+        </View>
       </View>
     </View>
   );
@@ -234,29 +240,23 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
   },
-  nextButton: {
-    backgroundColor: Colors.green,
-    paddingVertical: 10,
-    paddingHorizontal: 100,
-    marginHorizontal: 20,
-    borderRadius: 10,
+  actionContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    maxWidth: 150
   },
-  nextButtonText: {
-    color: 'white',
-    fontSize: 16,
-    textAlign: 'center',
-    textTransform: 'uppercase',
-    letterSpacing: 0.05,
-    fontWeight: '600',
-  },
-  nextButtonContainer: {
+  container: {
     position: 'absolute',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     bottom: 0,
     left: 0,
     right: 0,
-    alignItems: 'center',
-    paddingBottom: 50,
-  },
+    paddingBottom: 50
+  }
 });
 
 export default SelectAmountScreen;
