@@ -56,13 +56,13 @@ const AddCardScreen = ({ navigation }) => {
     if (decimals && decimals !== '.') {
       amountInUsd = amountInUsd.concat(decimals);
     }
-    let paymentProtocol
+    let paymentProtocol;
     switch (Platform.OS) {
       case 'ios':
-        paymentProtocol = 'apple-pay'
+        paymentProtocol = 'apple-pay';
         break;
       default:
-        paymentProtocol = 'google-pay'
+        paymentProtocol = 'google-pay';
         break;
     }
     Alert.alert(

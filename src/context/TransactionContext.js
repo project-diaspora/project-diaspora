@@ -1,5 +1,5 @@
 import createDataContext from './createDataContext';
-import etherscanApi from '../api/etherscan';
+import etherscanApi from "../api/etherscan";
 
 import getEnvVars from '../../environment';
 const env = getEnvVars();

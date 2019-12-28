@@ -1,9 +1,12 @@
 import React, { useState, useContext } from 'react';
 import {
-  StyleSheet, Text, View, TouchableOpacity, TextInput
+  StyleSheet, Text, View, TextInput
 } from 'react-native';
-import Colors from '../constants/Colors';
+import { NavigationEvents } from 'react-navigation';
 import { Context as AuthContext } from '../context/AuthContext';
+import InfoAlert from '../components/InfoAlert';
+import AppButton from '../components/AppButton';
+import Spacer from '../components/Spacer';
 
 
 const SignUpScreen = () => {
@@ -12,24 +15,32 @@ const SignUpScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Enter a username</Text>
+      <NavigationEvents
+        onWillBlur={clearErrorMessage}
+      />
+      <Text style={styles.header}>Create a username</Text>
       <TextInput
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-        autoCompleteType={'off'}
-        autoCapitalize={'none'}
+        style={styles.inputStyles}
+        autoCompleteType="off"
+        autoCapitalize="none"
         autoCorrect={false}
-        autoFocus={true}
-        importantForAutofill={'no'}
+        autoFocus
+        placeholder="johndoe"
+        importantForAutofill="no"
         onChangeText={(usernameUpdate) => setUsername(usernameUpdate)}
       />
-      <TouchableOpacity
-        style={[styles.button, styles.signUpButton]}
-        onPress={() => {
+      <Spacer />
+      {state.errorMessage !== '' ? <InfoAlert type="error" message={state.errorMessage} /> : null}
+      <AppButton
+        isDisabled={state.isLoading}
+        isLoading={state.isLoading}
+        buttonStyle="primaryButton"
+        textStyle="primaryText"
+        title="Sign Up"
+        onSubmit={() => {
           signup(username);
         }}
-      >
-        <Text style={[styles.buttonText, styles.signUpButtonText]}>Sign Up</Text>
-      </TouchableOpacity>
+      />
     </View>
   );
 };
@@ -38,35 +49,21 @@ const SignUpScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 10,
-  },
-  button: {
-    backgroundColor: Colors.grey200,
-    paddingVertical: 10,
-    paddingHorizontal: 100,
-    marginHorizontal: 20,
-    borderRadius: 10,
-    marginVertical: 5,
-  },
-  buttonText: {
-    fontSize: 16,
-    textAlign: 'center',
-    textTransform: 'uppercase',
-    letterSpacing: 0.05,
-    fontWeight: '700',
-  },
-  signUpButton: {
-    backgroundColor: Colors.green,
-  },
-  signUpButtonText: {
-    color: 'white',
+    paddingHorizontal: 15,
+    marginTop: 100
   },
   header: {
-    marginTop: 40,
-    marginBottom: 20,
-    marginHorizontal: 20,
-    fontSize: 24,
+    marginBottom: 6,
+    fontSize: 18,
     fontWeight: '600',
+  },
+  inputStyles: {
+    borderRadius: 10,
+    height: 50,
+    paddingLeft: 6,
+    borderWidth: 1,
+    borderColor: 'grey',
+    overflow: 'hidden'
   }
 });
 

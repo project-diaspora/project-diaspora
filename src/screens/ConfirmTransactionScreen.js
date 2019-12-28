@@ -13,25 +13,28 @@ const ConfirmTransactionScreen = ({ navigation }) => {
   const [processing, setProcessing] = useState(false);
 
   const submitTransaction = async (amount, toAddress) => {
-    setProcessing(true)
+    setProcessing(true);
     try {
-      await Crypto.signDAITransaction(amount, toAddress);      
-      setProcessing(false)
-      navigation.dismiss()
+      await Crypto.signDAITransaction(amount, toAddress);
+      setProcessing(false);
+      navigation.dismiss();
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
   const shortenAddress = (address) => {
-    const firstSix = address.substring(0, 6)
-    const lastSix = address.substring(address.length - 6, address.length)
-    return `${firstSix}...${lastSix}`
-  }
+    const firstSix = address.substring(0, 6);
+    const lastSix = address.substring(address.length - 6, address.length);
+    return `${firstSix}...${lastSix}`;
+  };
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: 1, justifyContent: 'center', marginBottom: 100, paddingHorizontal: 50 }}>
+      <View style={{
+        flex: 1, justifyContent: 'center', marginBottom: 100, paddingHorizontal: 50
+      }}
+      >
         <View>
           <Text style={styles.header}>Send</Text>
           <Text style={styles.amountText}>${Crypto.formatToCurrency(navigation.getParam('amount'))}</Text>

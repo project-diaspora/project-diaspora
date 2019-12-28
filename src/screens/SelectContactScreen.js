@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import {
   Text, View, StyleSheet, Modal, TouchableOpacity, SafeAreaView, TextInput, KeyboardAvoidingView
 } from 'react-native';
-import Colors from '../constants/Colors'
-import Crypto from '../components/utils/Crypto'
 import * as Permissions from 'expo-permissions';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Ionicons } from '@expo/vector-icons';
+import Crypto from '../components/utils/Crypto';
+import Colors from '../constants/Colors';
 import api from '../api/backend';
+import AppButton from '../components/AppButton';
+import Spacer from '../components/Spacer';
+import InfoAlert from '../components/InfoAlert';
 
 
 export default function SelectContactScreen({ navigation }) {
@@ -15,7 +18,8 @@ export default function SelectContactScreen({ navigation }) {
   const [scannerVisible, setScannerVisible] = useState(false);
   const [scanned, setScanned] = useState(false);
   const [username, setUsername] = useState('');
-  const [addressError, setAddressError] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -25,21 +29,20 @@ export default function SelectContactScreen({ navigation }) {
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
-    setAddressError(null)
+    setErrorMessage(null);
     setScanned(true);
-    let address
+    let address;
     if (data.includes(':')) {
-      address = data.split(':')[1]
+      address = data.split(':')[1];
     }
     try {
-      Crypto.validateAddress(address)
-      setScannerVisible(false)
-      next(address)
+      Crypto.validateAddress(address);
+      setScannerVisible(false);
+      next(address);
     } catch (err) {
-      setAddressError('Invalid address')
+      setErrorMessage('Invalid address');
     }
     setScanned(false);
-    return
   };
 
   const openScanner = async () => {
@@ -47,46 +50,47 @@ export default function SelectContactScreen({ navigation }) {
       const { status } = await Permissions.askAsync(Permissions.CAMERA);
       setHasPermission(status === 'granted');
     } else if (hasPermission === false) {
-      return new Error('no access to camera')
+      return new Error('no access to camera');
     }
-    setScannerVisible(true)
-  }
+    setScannerVisible(true);
+  };
 
+  // TODO: Abstract away all validation logic from components
   const checkInput = async (input) => {
-    setAddressError(null)
+    setIsLoading(true);
+    setErrorMessage(null);
     try {
-      Crypto.validateAddress(input)
-      next(input)
+      Crypto.validateAddress(input);
+      next(input);
     } catch (error) {
-      const user = await api.searchUser(input)
+      const user = await api.searchUser(input);
       if (user) {
-        next(user.walletAddress, user.username)
+        next(user.walletAddress, user.username);
       } else {
-        setAddressError('Invalid username')
+        setErrorMessage('Invalid username or address');
       }
     }
-  }
+  };
 
   const next = (address, username) => {
-    let navObject = { amount: navigation.getParam('amount'), toAddress: address }
+    const navObject = { amount: navigation.getParam('amount'), toAddress: address };
     if (username) {
-      navObject.toUsername = username
+      navObject.toUsername = username;
     }
     navigation.navigate('ConfirmTransaction', navObject);
-  }
+  };
 
   return (
     <View style={styles.container}>
-
       <View style={styles.searchBox}>
         <TextInput
           style={styles.inputSearch}
-          autoCompleteType={'off'}
-          autoCapitalize={'none'}
+          autoCompleteType="off"
+          autoCapitalize="none"
           autoCorrect={false}
-          autoFocus={true}
-          importantForAutofill={'no'}
-          placeholder={'Search for a username or address'}
+          autoFocus
+          importantForAutofill="no"
+          placeholder="Search for a username or address"
           placeholderTextColor={Colors.grey700}
           onChangeText={(usernameUpdate) => setUsername(usernameUpdate)}
         />
@@ -98,22 +102,32 @@ export default function SelectContactScreen({ navigation }) {
           />
         </TouchableOpacity>
       </View>
-
-      {addressError && (<View>
-        <Text style={styles.errorText}>{addressError}</Text>
-      </View>)}
-
-      <TouchableOpacity style={styles.nextButton} onPress={() => checkInput(username)}>
-        <Text style={styles.nextButtonText}>Search</Text>
-      </TouchableOpacity>
-
+      {errorMessage ? <InfoAlert type="info" message={errorMessage} /> : null}
+      <Spacer />
+      <AppButton
+        isDisabled={isLoading}
+        isLoading={isLoading}
+        buttonStyle="primaryButton"
+        textStyle="primaryText"
+        title="Search"
+        onSubmit={() => {
+          checkInput(username).catch((err) => {
+            // TODO: FOR DEBUG ONLY
+            // FIXME: Returns a 503 on search - check API
+            console.log(err);
+            setErrorMessage('We couldn\'t find anyone by that name or address');
+            setIsLoading(false);
+          });
+        }}
+      />
       <Modal
         animationType="slide"
         transparent={false}
         visible={scannerVisible}
         onRequestClose={() => {
           Alert.alert('Modal has been closed.');
-        }}>
+        }}
+      >
         <SafeAreaView style={{ flex: 1 }}>
           <BarCodeScanner
             onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
@@ -122,12 +136,13 @@ export default function SelectContactScreen({ navigation }) {
           <View style={{ flex: 1, justifyContent: 'space-between' }}>
             <TouchableOpacity
               style={{ padding: 20 }}
-              onPress={() => setScannerVisible(!scannerVisible)}>
+              onPress={() => setScannerVisible(!scannerVisible)}
+            >
               <Ionicons
                 style={{ textAlign: 'right' }}
                 name="ios-close-circle"
                 size={30}
-                color={'white'}
+                color="white"
               />
             </TouchableOpacity>
             <Text style={styles.scannerText}>Scan a QR code</Text>
@@ -157,7 +172,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'transparent',
   },
-  scannerText: { 
+  scannerText: {
     textAlign: 'center',
     color: 'white',
     fontSize: 20,
@@ -211,4 +226,4 @@ const styles = StyleSheet.create({
     paddingVertical: 9,
     paddingHorizontal: 10
   },
-})
+});
