@@ -58,18 +58,21 @@ const signup = (dispatch) => async (username) => {
 };
 
 
-const signin = (dispatch) => async (username, mnemonic) => {
+const signin = (dispatch) => async (mnemonic) => {
   try {
     dispatch({ type: 'set_loading_flag' });
     await Crypto.tryMnemonic(mnemonic);
     mnemonic = null;
+    const userInfo = await api.loginUser();
+    if (!userInfo.data[0]) {
+      dispatch({ type: 'add_error_message', payload: 'Oops! This recovery phrase is not associated to a Massari account.' });
+    }
     const walletAddress = await Crypto.getWalletAddress();
     await SecureStore.setItemAsync('username', username);
     dispatch({ type: 'signin', payload: { username, walletAddress } });
     navigate('mainFlow');
   } catch (err) {
-    console.log(err);
-    dispatch({ type: 'add_error_message', payload: 'Oops! We couldn\'t find your username or validate your mnemonic.' });
+    dispatch({ type: 'add_error_message', payload: 'Oops! We couldn\'t validate your mnemonic.' });
   }
 };
 

@@ -6,7 +6,7 @@ import { Platform } from 'react-native';
 
 const ENV = {
   dev: {
-    apiUrl: 'https://massari-server.herokuapp.com',
+    apiUrl: 'http://localhost:3030',
     infuraKey: 'cbbe19ff896840748997c040127968ff',
     etherscanKey: 'YourApiKeyToken',
     // etherscanUrl: 'https://api-kovan.etherscan.io',
@@ -22,7 +22,7 @@ const ENV = {
     }
   },
   staging: {
-    apiUrl: 'https://massari-server.herokuapp.com',
+    apiUrl: 'https://dev-api.massari.app',
     infuraKey: 'cbbe19ff896840748997c040127968ff',
     etherscanKey: 'YourApiKeyToken',
     // etherscanUrl: 'https://api-kovan.etherscan.io',
