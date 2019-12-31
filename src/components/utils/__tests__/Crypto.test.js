@@ -23,14 +23,11 @@ test('Validate a valid mnemonic', async () => {
 test('Validate an invalid mnemonic', async () => {
     SecureStore.setItemAsync.mockResolvedValue(true)
     const invalidMnemonic = 'concert sunny girl regular civil pencil scrap hazard dry task can bitcoin'
-    let error;
-
     try {
         await Crypto.tryMnemonic(invalidMnemonic)
-    } catch (e) {
-        error = e
+    } catch (err) {
+        expect(err).toBeTruthy();
     }
-    expect(error).toEqual('Invalid mnemonic')
 })
 
 test('Validate a valid address', () => {

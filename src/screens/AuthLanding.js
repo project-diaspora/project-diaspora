@@ -1,29 +1,28 @@
 import React from 'react';
-import {
-  StyleSheet, Text, View, TouchableOpacity,
-} from 'react-native';
-import Colors from '../constants/Colors';
-
+import { StyleSheet, View } from 'react-native';
+import AppButton from '../components/AppButton';
+import Spacer from '../components/Spacer';
 
 const AuthLandingScreen = ({ navigation }) => (
   <View style={styles.container}>
-    <TouchableOpacity
-      style={[styles.button, styles.signUpButton]}
-      onPress={() => {
+    <AppButton
+      buttonStyle="primaryButton"
+      textStyle="primaryText"
+      title="Sign Up"
+      onSubmit={() => {
         navigation.navigate('SignUp');
       }}
-    >
-      <Text style={[styles.buttonText, styles.signUpButtonText]}>Sign up</Text>
-    </TouchableOpacity>
-    <TouchableOpacity
-      style={styles.button}
-      onPress={() => {
+    />
+    <Spacer />
+    <AppButton
+      buttonStyle="secondaryButton"
+      textStyle="secondaryText"
+      title="Sign In"
+      onSubmit={() => {
         navigation.navigate('SignIn');
       }}
-    >
-      <Text style={styles.buttonText}>Sign in</Text>
-    </TouchableOpacity>
-
+    />
+    <Spacer />
   </View>
 );
 
@@ -36,34 +35,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     paddingBottom: 50,
-  },
-  button: {
-    backgroundColor: Colors.grey200,
-    paddingVertical: 10,
-    paddingHorizontal: 100,
-    marginHorizontal: 20,
-    borderRadius: 10,
-    marginVertical: 5,
-  },
-  buttonText: {
-    fontSize: 16,
-    textAlign: 'center',
-    textTransform: 'uppercase',
-    letterSpacing: 0.05,
-    fontWeight: '700',
-  },
-  signUpButton: {
-    backgroundColor: Colors.green,
-  },
-  signUpButtonText: {
-    color: 'white',
-  },
-  transactions: {
-    marginTop: 40,
-    marginBottom: 20,
-    marginHorizontal: 20,
-    fontSize: 24,
-    fontWeight: '600',
+    paddingHorizontal: 15
   }
 });
 

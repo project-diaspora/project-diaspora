@@ -1,50 +1,55 @@
 import React from 'react';
-import {
-  View, Text, StyleSheet, TouchableOpacity
-} from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import Colors from '../constants/Colors';
+import AppButton from './AppButton';
 
 const WalletActionButtons = ({ navigation }) => (
-  <View style={{
-    flex: 1, flexDirection: 'row', justifyContent: 'center', marginBottom: 20
-  }}
-  >
-    <TouchableOpacity
-      style={styles.walletActionButton}
-      onPress={() => {
-        navigation.navigate('AddMoney');
-      }}
-    >
-      <Text style={styles.walletActionText}>Add money</Text>
-    </TouchableOpacity>
-    <TouchableOpacity
-      style={styles.walletActionButton}
-      onPress={() => {
-        navigation.navigate('sendMoneyFlow');
-      }}
-    >
-      <Text style={styles.walletActionText}>Send</Text>
-    </TouchableOpacity>
+  <View style={styles.container}>
+    <View style={styles.actionWrapper}>
+      <View style={styles.buttonContainer}>
+        <AppButton
+          buttonStyle="primaryButton"
+          textStyle="primaryText"
+          title="Add Money"
+          onSubmit={() => {
+            navigation.navigate('AddMoney');
+          }}
+        />
+      </View>
+      <View style={styles.buttonContainer}>
+        <AppButton
+          buttonStyle="primaryButton"
+          textStyle="primaryText"
+          title="Send"
+          onSubmit={() => {
+            navigation.navigate('sendMoneyFlow');
+          }}
+        />
+      </View>
+    </View>
   </View>
 );
 
 const styles = StyleSheet.create({
-  walletActionButton: {
-    width: 160,
-    backgroundColor: Colors.green,
-    marginHorizontal: 10,
-    paddingVertical: 12,
-    borderRadius: 10,
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20
   },
-  walletActionText: {
-    textAlign: 'center',
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '700',
-    textTransform: 'uppercase',
-    letterSpacing: 0.05,
+  actionWrapper: {
+    maxWidth: 300,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '80%',
+    margin: '2%'
+  }
 });
 
 export default withNavigation(WalletActionButtons);

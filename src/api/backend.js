@@ -6,22 +6,22 @@ import getEnvVars from '../../environment';
 const env = getEnvVars();
 
 const signMessage = async (message) => {
-  const mnemonic = await SecureStore.getItemAsync('mnemonic')
-  const wallet = new ethers.Wallet.fromMnemonic(mnemonic)
-  return wallet.signMessage(message)
+  const mnemonic = await SecureStore.getItemAsync('mnemonic');
+  const wallet = new ethers.Wallet.fromMnemonic(mnemonic);
+  return wallet.signMessage(message);
 }
 
 const constructOptions = async (options) => {
-  const timestamp = Date.now()
-  const signature = await signMessage(`${options.path}|${timestamp}`)
+  const timestamp = Date.now();
+  const signature = await signMessage(`${options.path}|${timestamp}`);
   
   options.url = `${env.apiUrl}/${options.path}`
   options.headers = {
     'x-massari-signature': signature,
     'x-massari-timestamp': timestamp,
-  }
+  };
   delete options.path;
-  return options
+  return options;
 }
 
 export default {
@@ -30,12 +30,12 @@ export default {
       method: 'GET',
       path: `users/${username}`
     };
-    const options = await constructOptions(prepareOptions)
+    const options = await constructOptions(prepareOptions);
     try {
       const res = await axios(options);
-      return res.data
+      return res.data;
     } catch (err) {
-      throw err
+      throw err;
     }
   },
 
@@ -44,11 +44,11 @@ export default {
       method: 'POST',
       path: 'users',
       data: {
-        username: username,
-        walletAddress: walletAddress
+        username,
+        walletAddress
       }
     };
-    const options = await constructOptions(prepareOptions)
+    const options = await constructOptions(prepareOptions);
     try {
       const res = await axios(options);
       return res.data
@@ -56,4 +56,19 @@ export default {
       throw err
     }
   },
+
+  loginUser: async () => {
+    const prepareOptions = {
+      method: 'GET',
+      path: 'users'
+    };
+    const options = await constructOptions(prepareOptions);
+    try {
+      const res = await axios(options);
+      return res.data
+    } catch (err) {
+      throw err
+    }
+
+  }
 }
