@@ -8,7 +8,7 @@ const createUsername = `abc${Date.now()}`;
 
 test('create user', async () => {
     SecureStore.getItemAsync.mockResolvedValue(mnemonic);
-    const res = await api.createUser(createUsername, '0x76c929f92878b6DF73E81B2d30F0039c5A68AC35');
+    const res = await api.createUser(createUsername);
     expect(res).toBeTruthy();
 })
 
@@ -21,7 +21,7 @@ test('search for specific user', async () => {
 test('create user duplicate username', async () => {
     SecureStore.getItemAsync.mockResolvedValue(mnemonic)
     try {
-        await api.createUser(createUsername, `wallet_${Date.now()}`)
+        await api.createUser(createUsername)
     } catch (err) {
         expect(err).toExist
     }

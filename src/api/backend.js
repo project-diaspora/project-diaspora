@@ -39,13 +39,12 @@ export default {
     }
   },
 
-  createUser: async (username, walletAddress) => {
+  createUser: async (username) => {
     const prepareOptions = {
       method: 'POST',
       path: 'users',
       data: {
         username,
-        walletAddress
       }
     };
     const options = await constructOptions(prepareOptions);

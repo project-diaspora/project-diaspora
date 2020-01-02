@@ -40,6 +40,10 @@ const clearErrorMessage = (dispatch) => () => {
 };
 
 const signup = (dispatch) => async (username) => {
+  if (!username) {
+    dispatch({ type: 'add_error_message', payload: 'Username can\'t be empty.' });
+    return;
+  }
   try {
     dispatch({ type: 'set_loading_flag' });
     await SecureStore.deleteItemAsync('walletAddress');
@@ -47,7 +51,7 @@ const signup = (dispatch) => async (username) => {
     await SecureStore.deleteItemAsync('username');
     await Crypto.generateMnemonic();
     const walletAddress = await Crypto.getWalletAddress();
-    await api.createUser(username, walletAddress);
+    await api.createUser(username);
     await SecureStore.setItemAsync('username', username);
     await SecureStore.setItemAsync('walletAddress', walletAddress);
     dispatch({ type: 'signin', payload: { username, walletAddress } });
