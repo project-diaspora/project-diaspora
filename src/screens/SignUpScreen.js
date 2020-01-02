@@ -28,7 +28,6 @@ const SignUpScreen = () => {
           autoCompleteType="off"
           autoCapitalize="none"
           autoCorrect={false}
-          autoCompleteType="off"
           autoFocus
           enablesReturnKeyAutomatically
           placeholder="KahlilGibran"
@@ -84,8 +83,8 @@ const styles = StyleSheet.create({
   },
   inputStyles: {
     fontSize: 16,
-    paddingLeft: 5,
-    height: 50,
+    paddingHorizontal: 5,
+    paddingVertical: 15,
     overflow: 'hidden'
   }
 });
