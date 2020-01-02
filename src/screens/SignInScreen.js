@@ -7,6 +7,7 @@ import { Context as AuthContext } from '../context/AuthContext';
 import InfoAlert from '../components/InfoAlert';
 import AppButton from '../components/AppButton';
 import Spacer from '../components/Spacer';
+import Colors from '../constants/Colors';
 
 
 const SignInScreen = () => {
@@ -19,22 +20,18 @@ const SignInScreen = () => {
       <NavigationEvents
         onWillBlur={clearErrorMessage}
       />
-      <Text style={styles.header}>Enter your username</Text>
+      <Text style={styles.header}>Enter Recovery Phrase (12 Words)</Text>
       <TextInput
         style={styles.inputStyles}
         autoCapitalize="none"
         autoCorrect={false}
-        onChangeText={(usernameUpdate) => setUsername(usernameUpdate)}
-        placeholder="johnsmith"
-      />
-      <Spacer />
-      <Text style={styles.header}>Enter 12-word your mnemonic</Text>
-      <TextInput
-        style={styles.inputStyles}
-        autoCapitalize="none"
-        autoCorrect={false}
+        autoCompleteType="off"
+        autoFocus
+        enablesReturnKeyAutomatically
+        multiline
+        placeholderTextColor={Colors.grey800}
         onChangeText={(mnemonicUpdate) => setMnemonic(mnemonicUpdate)}
-        placeholder="cat bear door cow ..."
+        placeholder="fish jeans million animal ..."
       />
       <Spacer />
       {state.errorMessage !== '' ? <InfoAlert type="error" message={state.errorMessage} /> : null}
@@ -54,24 +51,33 @@ const SignInScreen = () => {
   );
 };
 
+SignInScreen.navigationOptions = {
+  headerStyle: {
+    shadowColor: 'transparent',
+    elevation: 0,
+    borderBottomWidth: 0,
+  },
+};
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 15,
-    marginTop: 100
+    marginTop: 50
   },
   header: {
     marginBottom: 6,
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: '600',
   },
   inputStyles: {
-    borderRadius: 10,
-    height: 50,
-    paddingLeft: 6,
+    borderColor: Colors.grey300,
     borderWidth: 1,
-    borderColor: 'grey',
+    backgroundColor: Colors.grey300,
+    borderRadius: 5,
+    height: 50,
+    padding: 10,
     overflow: 'hidden'
   }
 });
