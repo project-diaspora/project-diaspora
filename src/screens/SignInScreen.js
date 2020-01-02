@@ -43,7 +43,7 @@ const SignInScreen = () => {
         textStyle="primaryText"
         title="Sign In"
         onSubmit={() => {
-          signin(username, mnemonic);
+          signin(mnemonic);
           setMnemonic('');
         }}
       />
