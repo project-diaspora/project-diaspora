@@ -61,6 +61,4 @@ export default {
     };
     return callBackend(prepareOptions);
   },
-
-  }
 }
