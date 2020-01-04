@@ -61,4 +61,12 @@ export default {
     };
     return callBackend(prepareOptions);
   },
+
+  getTransactions: async () => {
+    const prepareOptions = {
+      method: 'GET',
+      path: 'transactions'
+    }
+    return callBackend(prepareOptions);
+  }
 }
