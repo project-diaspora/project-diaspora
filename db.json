@@ -2,5 +2,15 @@
   "users": [{
     "username": "mm",
     "wallet_address": "0x8900eDbFaC8B564e3da285F031B4c70F97c6c318"
+  }],
+  "transactions": [{
+      "fromAddress": "123",
+      "fromUsername": "satoshi",
+      "toAddress": "321",
+      "toUsername": "hal",
+      "amountInBasicUnit": "1.2350123123",
+      "currency": "DAI",
+      "hash": "0xhash1234",
+      "note": "a message"
   }]
 }
