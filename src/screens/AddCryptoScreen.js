@@ -1,8 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity, Clipboard
+  Platform, View, Text, StyleSheet, TouchableOpacity, Clipboard
 } from 'react-native';
-import QRCode from 'react-native-qrcode';
+import QRAndroid from 'react-native-qrcode';
+import QRIos from 'react-native-qrcode-svg';
 import Currencies from '../constants/Currencies';
 import { Context as AuthContext } from '../context/AuthContext';
 import Colors from '../constants/Colors'
@@ -33,11 +34,16 @@ const AddCryptoScreen = ({ navigation }) => {
       {crypto && (
         <View>
           <Text style={styles.cryptoHeader}>{Currencies[crypto].name} ({crypto})</Text>
+          <Text style={styles.warningMessage}>KOVAN TESTNET ONLY</Text>
           <View style={styles.qrCode}>
-            <QRCode
+            {Platform.OS === 'android' && <QRAndroid
               value={state.walletAddress}
               size={200}
-            />
+            />}
+            {Platform.OS === 'ios' && <QRIos
+              value={state.walletAddress}
+              size={200}
+            />}
           </View>
           <Text style={styles.cryptoAddress}>{state.walletAddress}</Text>
           <TouchableOpacity style={styles.copyButton} onPress={() => copyWallet(state.walletAddress)}>
@@ -71,6 +77,15 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '600',
     textAlign: 'center',
+  },
+  warningMessage: {
+    backgroundColor: Colors.red,
+    color: 'white',
+    paddingVertical: 5,
+    fontWeight: '800',
+    textTransform: 'uppercase',
+    textAlign: 'center',
+    fontSize: 24
   },
   copyButton: {
     flexDirection: 'row',
