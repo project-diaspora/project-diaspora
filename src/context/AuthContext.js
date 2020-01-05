@@ -68,10 +68,10 @@ const signin = (dispatch) => async (mnemonic) => {
     await Crypto.tryMnemonic(mnemonic);
     mnemonic = null;
     const userInfo = await api.loginUser();
-    if (!userInfo[0]) {
+    if (!userInfo.data[0]) {
       dispatch({ type: 'add_error_message', payload: 'Oops! This recovery phrase is not associated to a Massari account.' });
     }
-    const username = userInfo[0].username;
+    const { username } = userInfo.data[0];
     const walletAddress = await Crypto.getWalletAddress();
     await SecureStore.setItemAsync('username', username);
     dispatch({ type: 'signin', payload: { username, walletAddress } });

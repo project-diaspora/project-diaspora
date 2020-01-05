@@ -8,15 +8,28 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import Crypto from '../components/utils/Crypto';
+import api from '../api/backend';
+import { Context as AuthContext } from '../context/AuthContext';
 
 const ConfirmTransactionScreen = ({ navigation }) => {
   const [processing, setProcessing] = useState(false);
+  const { state, clearErrorMessage } = useContext(AuthContext);
 
   const submitTransaction = async (amount, toAddress) => {
     setProcessing(true);
     try {
-      await Crypto.signDAITransaction(amount, toAddress);
+      const tx = await Crypto.signDAITransaction(amount, toAddress);
       setProcessing(false);
+      api.submitTransaction({
+        fromAddress: tx.from,
+        fromUsername: state.username,
+        toAddress: tx.to,
+        toUsername: navigation.getParam('toUsername'),
+        amountInBasicUnit: Crypto.integertoWei(amount),
+        currency: 'DAI',
+        transactionHash: tx.hash,
+        note: 'hello' //for later
+      })
       navigation.dismiss();
     } catch (err) {
       console.log(err);
