@@ -14,7 +14,7 @@ const signMessage = async (message) => {
 const constructOptions = async (options) => {
   const timestamp = Date.now();
   const signature = await signMessage(`${options.path}|${timestamp}`);
-  
+
   options.url = `${env.apiUrl}/${options.path}`
   options.headers = {
     'x-massari-signature': signature,
@@ -51,7 +51,7 @@ export default {
         username,
       }
     };
-    return callBackend(prepareOptions);  
+    return callBackend(prepareOptions);
   },
 
   loginUser: async () => {

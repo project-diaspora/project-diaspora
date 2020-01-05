@@ -25,11 +25,11 @@ const TransactionList = () => {
   const transactionName = (item) => {
     switch (item.type) {
       case 'credit':
-        return 'Deposit'        
+        return item.fromUsername || 'Deposit';
       case 'debit':
-        return 'Withdrawal'
+        return item.toUsername || 'Withdrawal';
       default:
-        return 'Blockchain'
+        return 'Blockchain';
     }
   };
 

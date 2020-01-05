@@ -32,14 +32,48 @@ const getEthereumTransactions = async (walletAddress) => {
 };
 
 const mergeTxs = (ethereumTxs, massariTxs) => {
+  const merged = [...ethereumTxs];
+  // console.log(massariTxs);
 
+
+  for (let i = 0; i < massariTxs.length; i++) {
+    for (let j = 0; j < merged.length; j++) {
+      if (massariTxs[i].transactionHash.toLowerCase() === merged[j].hash.toLowerCase()) {
+        merged[j] = {
+          ...merged[j],
+          fromUsername: massariTxs[i].fromUsername,
+          toUsername: massariTxs[i].toUsername,
+          note: massariTxs[i].note,
+        };
+      }
+    }
+  }
+  console.log(merged);
+
+  return merged;
+
+  /**
+   * with the has try to find that has in ETH and then Inject the meta data
+   * for transacitons that aren't a massari transactions the username and not won't exist
+   * {
+   *   fromUserNAme
+   *   fromAddress
+   *   toAddress
+   *   toUserNAme
+   *   amount
+   *   currency
+   *   type
+   *   note
+   *   timestamp
+   * }
+   */
 };
 
 const getTransactions = (dispatch) => async (walletAddress) => {
   const ethereumTxs = await getEthereumTransactions(walletAddress);
   const massariTxs = await api.getTransactions();
-  dispatch({ type: 'get_transactions', payload: mergeTxs(ethereumTxs, massariTxs) });
-  return;
+  dispatch({ type: 'get_transactions', payload: mergeTxs(ethereumTxs, massariTxs.data) });
+  // return;
 };
 
 export const { Provider, Context } = createDataContext(
