@@ -2,23 +2,28 @@ import React from 'react';
 import {
   Platform, View, Text, StyleSheet, Image, TouchableOpacity, Linking
 } from 'react-native';
+import Constants from 'expo-constants';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 
 const AddMoneyScreen = ({ navigation }) => (
   <View style={styles.modalContainer}>
 
-    <Text style={styles.paymentTypes}>Credit Card</Text>
+    {Constants.manifest.releaseChannel === 'prod' && (
+      <View>
+        <Text style={styles.paymentTypes}>Credit Card</Text>
 
-    <TouchableOpacity
-      style={styles.paymentButton}
-      onPress={() => {
-        navigation.navigate('AddCard');
-      }}
-    >
-      <Ionicons name="ios-card" size={35} color={Colors.green} />
-      <Text style={styles.paymentText}>{Platform.OS === 'ios' ? 'Pay with Apple Pay' : 'Pay with Google Pay'}</Text>
-    </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.paymentButton}
+          onPress={() => {
+            navigation.navigate('AddCard');
+          }}
+        >
+          <Ionicons name="ios-card" size={35} color={Colors.green} />
+          <Text style={styles.paymentText}>{Platform.OS === 'ios' ? 'Pay with Apple Pay' : 'Pay with Google Pay'}</Text>
+        </TouchableOpacity>
+      </View>
+    )}
 
     <Text style={styles.paymentTypes}>Digital Currencies</Text>
 
