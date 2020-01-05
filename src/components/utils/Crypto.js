@@ -93,6 +93,8 @@ const verifyMessage = async (message, signature) => ethers.utils.verifyMessage(m
 
 const weiToInteger = (amountInWei) => formatToCurrency(Number(ethers.utils.formatEther(amountInWei)));
 
+const integertoWei = (amountInInteger) => ethers.utils.parseEther(amountInInteger).toString(10);
+
 const formatToCurrency = (number) => Number(number).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 export default {
@@ -106,6 +108,7 @@ export default {
   getBalance,
   signDAITransaction,
   weiToInteger,
+  integertoWei,
   formatToCurrency,
   signMessage,
   verifyMessage

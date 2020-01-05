@@ -68,5 +68,14 @@ export default {
       path: 'transactions'
     }
     return callBackend(prepareOptions);
+  },
+
+  submitTransaction: async (tx) => {
+    const prepareOptions = {
+      method: 'POST',
+      path: 'transactions',
+      data: tx
+    }
+    return callBackend(prepareOptions);
   }
 }
