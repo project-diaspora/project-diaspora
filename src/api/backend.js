@@ -24,37 +24,34 @@ const constructOptions = async (options) => {
   return options;
 }
 
+const callBackend = async (preparedOptions) => {
+  const options = await constructOptions(preparedOptions);
+  try {
+    const res = await axios(options)
+    return res.data
+  } catch (err) {
+    throw err
+  }
+};
+
 export default {
   searchUser: async (username) => {
     const prepareOptions = {
       method: 'GET',
       path: `users/${username}`
     };
-    const options = await constructOptions(prepareOptions);
-    try {
-      const res = await axios(options);
-      return res.data;
-    } catch (err) {
-      throw err;
-    }
+    return callBackend(prepareOptions);
   },
 
-  createUser: async (username, walletAddress) => {
+  createUser: async (username) => {
     const prepareOptions = {
       method: 'POST',
       path: 'users',
       data: {
         username,
-        walletAddress
       }
     };
-    const options = await constructOptions(prepareOptions);
-    try {
-      const res = await axios(options);
-      return res.data
-    } catch (err) {
-      throw err
-    }
+    return callBackend(prepareOptions);  
   },
 
   loginUser: async () => {
@@ -62,13 +59,8 @@ export default {
       method: 'GET',
       path: 'users'
     };
-    const options = await constructOptions(prepareOptions);
-    try {
-      const res = await axios(options);
-      return res.data
-    } catch (err) {
-      throw err
-    }
+    return callBackend(prepareOptions);
+  },
 
   }
 }

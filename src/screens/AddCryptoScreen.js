@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, Clipboard
 } from 'react-native';
-import QRCode from 'react-native-qrcode-svg';
+import QRCode from 'react-native-qrcode';
 import Currencies from '../constants/Currencies';
 import { Context as AuthContext } from '../context/AuthContext';
 import Colors from '../constants/Colors'

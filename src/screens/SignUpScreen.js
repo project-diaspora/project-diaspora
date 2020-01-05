@@ -7,6 +7,8 @@ import { Context as AuthContext } from '../context/AuthContext';
 import InfoAlert from '../components/InfoAlert';
 import AppButton from '../components/AppButton';
 import Spacer from '../components/Spacer';
+import Colors from '../constants/Colors';
+import { Ionicons } from '@expo/vector-icons';
 
 
 const SignUpScreen = () => {
@@ -18,17 +20,22 @@ const SignUpScreen = () => {
       <NavigationEvents
         onWillBlur={clearErrorMessage}
       />
-      <Text style={styles.header}>Create a username</Text>
-      <TextInput
-        style={styles.inputStyles}
-        autoCompleteType="off"
-        autoCapitalize="none"
-        autoCorrect={false}
-        autoFocus
-        placeholder="johndoe"
-        importantForAutofill="no"
-        onChangeText={(usernameUpdate) => setUsername(usernameUpdate)}
-      />
+      <Text style={styles.header}>Create a Username</Text>
+      <View style={styles.usernameContainer}>
+        <Ionicons name="ios-at" size={25} color={Colors.grey800} />
+        <TextInput
+          style={styles.inputStyles}
+          autoCompleteType="off"
+          autoCapitalize="none"
+          autoCorrect={false}
+          autoFocus
+          enablesReturnKeyAutomatically
+          placeholder="KahlilGibran"
+          placeholderTextColor={Colors.grey700}
+          importantForAutofill="no"
+          onChangeText={(usernameUpdate) => setUsername(usernameUpdate)}
+        />
+      </View>
       <Spacer />
       {state.errorMessage !== '' ? <InfoAlert type="error" message={state.errorMessage} /> : null}
       <AppButton
@@ -45,24 +52,39 @@ const SignUpScreen = () => {
   );
 };
 
+SignUpScreen.navigationOptions = {
+  headerStyle: {
+    shadowColor: 'transparent',
+    elevation: 0,
+    borderBottomWidth: 0,
+  },
+};
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 15,
-    marginTop: 100
+    marginTop: 50
   },
   header: {
     marginBottom: 6,
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: '600',
   },
-  inputStyles: {
-    borderRadius: 10,
-    height: 50,
-    paddingLeft: 6,
+  usernameContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.grey300,
+    borderColor: Colors.grey300,
     borderWidth: 1,
-    borderColor: 'grey',
+    borderRadius: 5,
+    paddingLeft: 15,
+  },
+  inputStyles: {
+    fontSize: 16,
+    paddingHorizontal: 5,
+    paddingVertical: 15,
     overflow: 'hidden'
   }
 });

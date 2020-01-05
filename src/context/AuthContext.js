@@ -40,6 +40,10 @@ const clearErrorMessage = (dispatch) => () => {
 };
 
 const signup = (dispatch) => async (username) => {
+  if (!username) {
+    dispatch({ type: 'add_error_message', payload: 'Username can\'t be empty.' });
+    return;
+  }
   try {
     dispatch({ type: 'set_loading_flag' });
     await SecureStore.deleteItemAsync('walletAddress');
@@ -47,7 +51,7 @@ const signup = (dispatch) => async (username) => {
     await SecureStore.deleteItemAsync('username');
     await Crypto.generateMnemonic();
     const walletAddress = await Crypto.getWalletAddress();
-    await api.createUser(username, walletAddress);
+    await api.createUser(username);
     await SecureStore.setItemAsync('username', username);
     await SecureStore.setItemAsync('walletAddress', walletAddress);
     dispatch({ type: 'signin', payload: { username, walletAddress } });
@@ -64,9 +68,10 @@ const signin = (dispatch) => async (mnemonic) => {
     await Crypto.tryMnemonic(mnemonic);
     mnemonic = null;
     const userInfo = await api.loginUser();
-    if (!userInfo.data[0]) {
+    if (!userInfo[0]) {
       dispatch({ type: 'add_error_message', payload: 'Oops! This recovery phrase is not associated to a Massari account.' });
     }
+    const username = userInfo[0].username;
     const walletAddress = await Crypto.getWalletAddress();
     await SecureStore.setItemAsync('username', username);
     dispatch({ type: 'signin', payload: { username, walletAddress } });
