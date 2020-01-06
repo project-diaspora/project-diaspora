@@ -21,8 +21,6 @@ const ConfirmTransactionScreen = ({ navigation }) => {
       const tx = await Crypto.signDAITransaction(amount, toAddress);
       setProcessing(false);
       api.submitTransaction({
-        fromAddress: tx.from,
-        fromUsername: state.username,
         toAddress: tx.to,
         toUsername: navigation.getParam('toUsername'),
         amountInBasicUnit: Crypto.integertoWei(amount),
