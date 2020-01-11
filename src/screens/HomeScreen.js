@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.05,
   },
   walletBalanceText: {
-    fontSize: 40,
+    fontSize: 48,
     color: '#2d3748',
     fontWeight: '600',
     textAlign: 'center',

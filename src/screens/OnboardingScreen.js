@@ -54,14 +54,26 @@ const OnboardingScreen = ({ navigation }) => (
           ),
         },
         {
+          title: 'Currently on Kovan TESTNET',
+          subtitle: 'All money on Massari is currently on a testnet, which means it is not real money.',
+          backgroundColor: Colors.green,
+          image: (
+            <View style={styles.imageBackground}>
+              <Ionicons name="ios-construct" size={150} color={Colors.grey700} />
+            </View>
+          ),
+        },
+        {
           title: 'We\'re all set',
           subtitle: (
-            <TouchableOpacity style={styles.nextButton} onPress={() => navigation.navigate('mainFlow')}>
-              <Text
-                style={styles.nextButtonText}
-              >Let&apos;s go
-              </Text>
-            </TouchableOpacity>
+            <View>
+              <TouchableOpacity style={styles.nextButton} onPress={() => navigation.navigate('mainFlow')}>
+                <Text
+                  style={styles.nextButtonText}
+                >Get Started
+                </Text>
+              </TouchableOpacity>
+            </View>
           ),
           backgroundColor: Colors.green,
           image: (
