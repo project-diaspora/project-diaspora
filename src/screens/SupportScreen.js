@@ -31,7 +31,7 @@ const SupportScreen = ({ navigation }) => {
           </View>
         </TouchableHighlight>
         <TouchableHighlight onPress={() => {
-          Linking.openURL('https://twitter.com/ProjctDiaspora');
+          Linking.openURL('https://twitter.com/MassariApp');
         }}
         >
           <View style={[styles.option, styles.optionView]}>
@@ -40,7 +40,7 @@ const SupportScreen = ({ navigation }) => {
           </View>
         </TouchableHighlight>
         <TouchableHighlight onPress={() => {
-          Linking.openURL('https://www.instagram.com/projectdiasporaleb/');
+          Linking.openURL('https://www.instagram.com/massariapp/');
         }}
         >
           <View style={[styles.option, styles.optionView]}>
@@ -69,12 +69,12 @@ const SupportScreen = ({ navigation }) => {
           </View>
         </TouchableHighlight>
         <TouchableHighlight onPress={() => {
-          Linking.openURL('mailto:project.diaspora.leb@gmail.com');
+          Linking.openURL('mailto:support@massari.app');
         }}
         >
           <View style={[styles.option, styles.optionView]}>
             <Ionicons name="ios-at" size={20} color={Colors.grey800} />
-            <Text style={{ paddingLeft: 10, fontSize: 16 }}>project.diaspora.leb@gmail.com</Text>
+            <Text style={{ paddingLeft: 10, fontSize: 16 }}>support@massari.app</Text>
           </View>
         </TouchableHighlight>
       </ScrollView>
