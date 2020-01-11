@@ -1,16 +1,11 @@
 import Constants from 'expo-constants';
-import { Platform } from 'react-native';
-
-// const localhost =
-//   Platform.OS === 'ios' ? 'https://ba1423c0.ngrok.io' : 'https://ba1423c0.ngrok.io';
 
 const ENV = {
   dev: {
     apiUrl: 'https://massari.app',
-    // apiUrl: 'https://f59c5483.ngrok.io',
     infuraKey: 'cbbe19ff896840748997c040127968ff',
     etherscanKey: 'YourApiKeyToken',
-    // etherscanUrl: 'https://api-kovan.etherscan.io',
+    etherscanUrl: 'https://api-kovan.etherscan.io',
     DAI: {
       contractAddress: '0x4f96fe3b7a6cf9725f59d353f723c1bdb64ca6aa',
       contractAbi: [{
@@ -26,7 +21,7 @@ const ENV = {
     apiUrl: 'https://massari.app',
     infuraKey: 'cbbe19ff896840748997c040127968ff',
     etherscanKey: 'YourApiKeyToken',
-    // etherscanUrl: 'https://api-kovan.etherscan.io',
+    etherscanUrl: 'https://api-kovan.etherscan.io',
     DAI: {
       contractAddress: '0x4f96fe3b7a6cf9725f59d353f723c1bdb64ca6aa',
       contractAbi: [{
@@ -42,7 +37,7 @@ const ENV = {
     apiUrl: '[production.api.here]',
     infuraKey: '[Enter your key here]',
     etherscanKey: 'YourApiKeyToken',
-    // etherscanUrl: 'https://api.etherscan.io',
+    etherscanUrl: 'https://api.etherscan.io',
     DAI: {
       contractAddress: '0x6b175474e89094c44da98b954eedeac495271d0f',
       contractAbi: [{
