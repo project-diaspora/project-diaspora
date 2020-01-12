@@ -35,11 +35,11 @@ const ENV = {
   },
   production: {
     apiUrl: 'https://massari.app',
-    infuraKey: '[Enter your key here]',
+    infuraKey: 'cbbe19ff896840748997c040127968ff',
     etherscanKey: 'YourApiKeyToken',
-    etherscanUrl: 'https://api.etherscan.io',
+    etherscanUrl: 'https://api-kovan.etherscan.io',
     DAI: {
-      contractAddress: '0x6b175474e89094c44da98b954eedeac495271d0f',
+      contractAddress: '0x4f96fe3b7a6cf9725f59d353f723c1bdb64ca6aa',
       contractAbi: [{
         constant: true, inputs: [], name: 'name', outputs: [{ name: '', type: 'bytes32' }], payable: false, stateMutability: 'view', type: 'function'
       }, {
