@@ -2,7 +2,7 @@ import Constants from 'expo-constants';
 
 const ENV = {
   dev: {
-    apiUrl: 'https://massari.app',
+    apiUrl: 'https://staging.massari.app',
     infuraKey: 'cbbe19ff896840748997c040127968ff',
     etherscanKey: 'YourApiKeyToken',
     etherscanUrl: 'https://api-kovan.etherscan.io',
@@ -18,7 +18,7 @@ const ENV = {
     }
   },
   staging: {
-    apiUrl: 'https://massari.app',
+    apiUrl: 'https://staging.massari.app',
     infuraKey: 'cbbe19ff896840748997c040127968ff',
     etherscanKey: 'YourApiKeyToken',
     etherscanUrl: 'https://api-kovan.etherscan.io',
@@ -33,8 +33,8 @@ const ENV = {
       }]
     }
   },
-  prod: {
-    apiUrl: '[production.api.here]',
+  production: {
+    apiUrl: 'https://massari.app',
     infuraKey: '[Enter your key here]',
     etherscanKey: 'YourApiKeyToken',
     etherscanUrl: 'https://api.etherscan.io',
@@ -56,8 +56,8 @@ const getEnvVars = (env = Constants.manifest.releaseChannel) => {
     return ENV.dev;
   } else if (env === 'staging') {
     return ENV.staging;
-  } else if (env === 'prod') {
-    return ENV.prod;
+  } else if (env === 'production') {
+    return ENV.production;
   }
 };
 
