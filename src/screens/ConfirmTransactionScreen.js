@@ -24,7 +24,7 @@ const ConfirmTransactionScreen = ({ navigation }) => {
       const tx = await Crypto.signDAITransaction(amount, toAddress);
       setProcessing(false);
       let txData = {
-        toAddress: tx.to,
+        toAddress: toAddress,
         amountInBasicUnit: Crypto.integertoWei(amount),
         currency: 'DAI',
         transactionHash: tx.hash,
