@@ -1,16 +1,11 @@
 import Constants from 'expo-constants';
-import { Platform } from 'react-native';
-
-// const localhost =
-//   Platform.OS === 'ios' ? 'https://ba1423c0.ngrok.io' : 'https://ba1423c0.ngrok.io';
 
 const ENV = {
   dev: {
-    // apiUrl: 'https://massari-server.herokuapp.com',
-    apiUrl: 'https://f59c5483.ngrok.io',
+    apiUrl: 'https://staging.massari.app',
     infuraKey: 'cbbe19ff896840748997c040127968ff',
     etherscanKey: 'YourApiKeyToken',
-    // etherscanUrl: 'https://api-kovan.etherscan.io',
+    etherscanUrl: 'https://api-kovan.etherscan.io',
     DAI: {
       contractAddress: '0x4f96fe3b7a6cf9725f59d353f723c1bdb64ca6aa',
       contractAbi: [{
@@ -23,10 +18,10 @@ const ENV = {
     }
   },
   staging: {
-    apiUrl: 'https://dev-api.massari.app',
+    apiUrl: 'https://staging.massari.app',
     infuraKey: 'cbbe19ff896840748997c040127968ff',
     etherscanKey: 'YourApiKeyToken',
-    // etherscanUrl: 'https://api-kovan.etherscan.io',
+    etherscanUrl: 'https://api-kovan.etherscan.io',
     DAI: {
       contractAddress: '0x4f96fe3b7a6cf9725f59d353f723c1bdb64ca6aa',
       contractAbi: [{
@@ -38,13 +33,13 @@ const ENV = {
       }]
     }
   },
-  prod: {
-    apiUrl: '[production.api.here]',
-    infuraKey: '[Enter your key here]',
+  production: {
+    apiUrl: 'https://massari.app',
+    infuraKey: 'cbbe19ff896840748997c040127968ff',
     etherscanKey: 'YourApiKeyToken',
-    // etherscanUrl: 'https://api.etherscan.io',
+    etherscanUrl: 'https://api-kovan.etherscan.io',
     DAI: {
-      contractAddress: '0x6b175474e89094c44da98b954eedeac495271d0f',
+      contractAddress: '0x4f96fe3b7a6cf9725f59d353f723c1bdb64ca6aa',
       contractAbi: [{
         constant: true, inputs: [], name: 'name', outputs: [{ name: '', type: 'bytes32' }], payable: false, stateMutability: 'view', type: 'function'
       }, {
@@ -57,12 +52,12 @@ const ENV = {
 };
 
 const getEnvVars = (env = Constants.manifest.releaseChannel) => {
-  if (__DEV__) {
+  if (__DEV__ || !env || env === undefined || env === null) {
     return ENV.dev;
   } else if (env === 'staging') {
     return ENV.staging;
-  } else if (env === 'prod') {
-    return ENV.prod;
+  } else if (env === 'production') {
+    return ENV.production;
   }
 };
 

@@ -31,6 +31,9 @@ import SupportScreen from './src/screens/SupportScreen';
 import TabBarIcon from './src/components/TabBarIcon';
 import Colors from './src/constants/Colors';
 
+import { useScreens } from 'react-native-screens';
+useScreens();
+
 const switchNavigator = createSwitchNavigator({
   ResolveAuth: ResolveAuthScreen,
   loginFlow: createStackNavigator({

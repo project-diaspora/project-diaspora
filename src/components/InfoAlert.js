@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     marginVertical: 15,
     borderWidth: 1,
-    borderRadius: 10,
   },
   error: {
     borderColor: '#f5c6cb',

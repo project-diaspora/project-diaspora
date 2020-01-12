@@ -10,27 +10,38 @@ import Colors from '../constants/Colors';
 import Crypto from '../components/utils/Crypto';
 import api from '../api/backend';
 import { Context as AuthContext } from '../context/AuthContext';
+import InfoAlert from '../components/InfoAlert';
 
 const ConfirmTransactionScreen = ({ navigation }) => {
   const [processing, setProcessing] = useState(false);
-  const { state, clearErrorMessage } = useContext(AuthContext);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const { state } = useContext(AuthContext);
 
   const submitTransaction = async (amount, toAddress) => {
     setProcessing(true);
+    setErrorMessage(null);
     try {
       const tx = await Crypto.signDAITransaction(amount, toAddress);
       setProcessing(false);
-      api.submitTransaction({
-        toAddress: tx.to,
-        toUsername: navigation.getParam('toUsername'),
+      let txData = {
+        toAddress: toAddress,
         amountInBasicUnit: Crypto.integertoWei(amount),
         currency: 'DAI',
         transactionHash: tx.hash,
-        note: 'hello' //for later
-      })
+      };
+      if (navigation.getParam('toUsername')) {
+        txData.toUsername = navigation.getParam('toUsername');
+      }
+      api.submitTransaction(txData)
       navigation.dismiss();
     } catch (err) {
-      console.log(err);
+      if (err.message.includes('Insufficient funds')) {
+        setErrorMessage('Not enough ETH! Either add some or join us on our Discord channel and we\'ll send you some!');
+      } else if (err.reason.includes('transaction failed')) {
+        setErrorMessage('Not enough DAI! Either add some or join us on our Discord channel and we\'ll send you some!');
+      } else {
+        setErrorMessage('Something went wrong');
+      }
     }
   };
 
@@ -56,6 +67,7 @@ const ConfirmTransactionScreen = ({ navigation }) => {
           )}
           <Text style={[navigation.getParam('toUsername') ? styles.smalleAddress : styles.largeAddress]}>{shortenAddress(navigation.getParam('toAddress'))}</Text>
         </View>
+        {errorMessage ? <InfoAlert type="error" message={errorMessage} /> : null}
       </View>
 
       <View style={styles.submitButtonContainer}>
