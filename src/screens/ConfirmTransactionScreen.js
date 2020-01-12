@@ -28,7 +28,6 @@ const ConfirmTransactionScreen = ({ navigation }) => {
         amountInBasicUnit: Crypto.integertoWei(amount),
         currency: 'DAI',
         transactionHash: tx.hash,
-        note: 'hello' //for later
       };
       if (navigation.getParam('toUsername')) {
         txData.toUsername = navigation.getParam('toUsername');
