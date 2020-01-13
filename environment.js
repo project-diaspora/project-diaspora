@@ -52,13 +52,16 @@ const ENV = {
 };
 
 const getEnvVars = (env = Constants.manifest.releaseChannel) => {
-  if (__DEV__ || !env || env === undefined || env === null) {
+  if (__DEV__ || !env) {
     return ENV.dev;
-  } else if (env === 'staging') {
+  }
+  if (env === 'staging') {
     return ENV.staging;
-  } else if (env === 'production') {
+  }
+  if (env === 'production') {
     return ENV.production;
   }
+  return ENV.dev;
 };
 
 export default getEnvVars;

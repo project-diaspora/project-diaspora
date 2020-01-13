@@ -6,7 +6,7 @@ import QRAndroid from 'react-native-qrcode';
 import QRIos from 'react-native-qrcode-svg';
 import Currencies from '../constants/Currencies';
 import { Context as AuthContext } from '../context/AuthContext';
-import Colors from '../constants/Colors'
+import Colors from '../constants/Colors';
 
 const AddCryptoScreen = ({ navigation }) => {
   const [crypto, setCrypto] = useState(null);
@@ -18,12 +18,12 @@ const AddCryptoScreen = ({ navigation }) => {
   });
 
   const copyWallet = (wallet) => {
-    Clipboard.setString(wallet)
-    setcopyText('Copied!')
+    Clipboard.setString(wallet);
+    setcopyText('Copied!');
     setTimeout(() => {
-      setcopyText('Copy')
+      setcopyText('Copy');
     }, 2000);
-  }
+  };
 
   const getCrypto = () => {
     setCrypto(navigation.getParam('crypto'));
@@ -36,14 +36,18 @@ const AddCryptoScreen = ({ navigation }) => {
           <Text style={styles.cryptoHeader}>{Currencies[crypto].name} ({crypto})</Text>
           <Text style={styles.warningMessage}>KOVAN TESTNET ONLY</Text>
           <View style={styles.qrCode}>
-            {Platform.OS === 'android' && <QRAndroid
+            {Platform.OS === 'android' && (
+            <QRAndroid
               value={state.walletAddress}
               size={200}
-            />}
-            {Platform.OS === 'ios' && <QRIos
+            />
+            )}
+            {Platform.OS === 'ios' && (
+            <QRIos
               value={state.walletAddress}
               size={200}
-            />}
+            />
+            )}
           </View>
           <Text style={styles.cryptoAddress}>{state.walletAddress}</Text>
           <TouchableOpacity style={styles.copyButton} onPress={() => copyWallet(state.walletAddress)}>

@@ -2,11 +2,11 @@ import React, { useState, useContext } from 'react';
 import {
   Platform, Alert, View, Text, StyleSheet, Linking, TouchableOpacity
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import { Context as AuthContext } from '../context/AuthContext';
+import Keypad from '../components/Keypad';
 
-const AddCardScreen = ({ navigation }) => {
+const AddCardScreen = () => {
   const { state } = useContext(AuthContext);
 
   const [integers, setIntegers] = useState('0');
@@ -92,91 +92,11 @@ const AddCardScreen = ({ navigation }) => {
           <Text style={styles.maxButtonText}>Max</Text>
         </TouchableOpacity>
       </View>
-
-      <View style={styles.keyboard}>
-        <View style={styles.keyboardRow}>
-          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('1')}>
-            <Text
-              style={styles.keyboardText}
-            >1
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('2')}>
-            <Text
-              style={styles.keyboardText}
-            >2
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('3')}>
-            <Text
-              style={styles.keyboardText}
-            >3
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.keyboardRow}>
-          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('4')}>
-            <Text
-              style={styles.keyboardText}
-            >4
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('5')}>
-            <Text
-              style={styles.keyboardText}
-            >5
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('6')}>
-            <Text
-              style={styles.keyboardText}
-            >6
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.keyboardRow}>
-          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('7')}>
-            <Text
-              style={styles.keyboardText}
-            >7
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('8')}>
-            <Text
-              style={styles.keyboardText}
-            >8
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('9')}>
-            <Text
-              style={styles.keyboardText}
-            >9
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.keyboardRow}>
-          <TouchableOpacity style={styles.keyboardButton} onPress={() => addDecimal()}>
-            <Text
-              style={styles.keyboardText}
-            >.
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.keyboardButton} onPress={() => add('0')}>
-            <Text
-              style={styles.keyboardText}
-            >0
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.keyboardButton} onPress={() => backspace()}><Ionicons
-            style={{ textAlign: 'center' }}
-            name="ios-backspace"
-            size={30}
-            color={Colors.green}
-          />
-          </TouchableOpacity>
-        </View>
-      </View>
-
+      <Keypad
+        onAddInt={add}
+        onAddDecimal={addDecimal}
+        onBackspace={backspace}
+      />
       <View style={styles.nextButtonContainer}>
         <TouchableOpacity style={styles.nextButton} onPress={() => next()}>
           <Text
@@ -225,28 +145,6 @@ const styles = StyleSheet.create({
   },
   maxButton: {
     padding: 10,
-  },
-  keyboardRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-  },
-  keyboard: {
-    // flex: 1,
-    marginBottom: 100,
-  },
-  keyboardButton: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '33%',
-    height: 80,
-  },
-  keyboardText: {
-    textAlign: 'center',
-    color: Colors.green,
-    fontSize: 28,
-    fontWeight: '600',
-    paddingVertical: 'auto',
   },
   backspace: {
     height: 30,
