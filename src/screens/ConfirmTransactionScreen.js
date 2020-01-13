@@ -23,8 +23,8 @@ const ConfirmTransactionScreen = ({ navigation }) => {
     try {
       const tx = await Crypto.signDAITransaction(amount, toAddress);
       setProcessing(false);
-      let txData = {
-        toAddress: toAddress,
+      const txData = {
+        toAddress,
         amountInBasicUnit: Crypto.integertoWei(amount),
         currency: 'DAI',
         transactionHash: tx.hash,
@@ -32,7 +32,7 @@ const ConfirmTransactionScreen = ({ navigation }) => {
       if (navigation.getParam('toUsername')) {
         txData.toUsername = navigation.getParam('toUsername');
       }
-      api.submitTransaction(txData)
+      api.submitTransaction(txData);
       navigation.dismiss();
     } catch (err) {
       if (err.message.includes('Insufficient funds')) {

@@ -3,12 +3,12 @@ import {
   StyleSheet, Text, View, TextInput
 } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
+import { Ionicons } from '@expo/vector-icons';
 import { Context as AuthContext } from '../context/AuthContext';
 import InfoAlert from '../components/InfoAlert';
 import AppButton from '../components/AppButton';
 import Spacer from '../components/Spacer';
 import Colors from '../constants/Colors';
-import { Ionicons } from '@expo/vector-icons';
 
 
 const SignUpScreen = () => {

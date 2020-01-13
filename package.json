@@ -10,7 +10,8 @@
     "tunnel": "ngrok http 3030",
     "test": "jest --watchAll",
     "test:ci": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix"
   },
   "jest": {
     "preset": "jest-expo",

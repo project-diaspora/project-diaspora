@@ -4,8 +4,9 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Platform, StatusBar } from 'react-native';
-import { setNavigator } from './src/navigationRef';
 import { registerRootComponent } from 'expo';
+import { useScreens } from 'react-native-screens';
+import { setNavigator } from './src/navigationRef';
 
 // Providers
 import { Provider as AuthProvider } from './src/context/AuthContext';
@@ -31,7 +32,7 @@ import SupportScreen from './src/screens/SupportScreen';
 import TabBarIcon from './src/components/TabBarIcon';
 import Colors from './src/constants/Colors';
 
-import { useScreens } from 'react-native-screens';
+
 useScreens();
 
 const switchNavigator = createSwitchNavigator({
